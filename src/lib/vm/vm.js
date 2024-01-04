@@ -35,6 +35,7 @@ import jsx from "acorn-jsx";
 import { ethers } from "ethers";
 import { Web3ConnectButton } from "../components/ethers";
 import { isValidAttribute } from "dompurify";
+import UrbitApi from "@urbit/http-api";
 
 // Radix:
 import * as Accordion from "@radix-ui/react-accordion";
@@ -1490,6 +1491,9 @@ export default class VM {
       widgetConfigs.findLast((config) => config && config.networkId)
         ?.networkId || near.config.networkId;
 
+    this.urbitApi = new UrbitApi('');
+    this.urbitApi.ship = window.ship;
+
     this.globalFunctions = this.initGlobalFunctions();
   }
 
@@ -1846,6 +1850,28 @@ export default class VM {
           return this.currentVmStack?.isTrusted
             ? navigator.clipboard.writeText(...args)
             : Promise.reject(new Error("Not trusted (not a click)"));
+        },
+      },
+      Urbit: {
+        poke: async (app, mark, msg) => {
+          try {
+            if (!this.urbitApi || !window.ship) {
+              throw new Error("Urbit API or ship not properly initialized");
+            }
+
+            const response = await this.urbitApi.poke({
+              app: app,
+              mark: mark,
+              json: msg,
+              onSuccess: () => console.log("Poke successful"),
+              onError: (err) => console.error("Poke failed:", err)
+            });
+
+            return response;
+          } catch (error) {
+            console.error('Error in Urbit arbitrary_poke:', error);
+            throw error;
+          }
         },
       },
       VM: {
