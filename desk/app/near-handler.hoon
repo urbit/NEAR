@@ -1,17 +1,17 @@
-/+  dbug, default-agent, etch
+/-  *near-handler
+/+  dbug, default-agent, *near-handler
+::
 |%
-+$  acc  @uxH
-+$  action 
-  $%  [%add =acc]
-      [%del =acc]
-  ==
+::
 +$  versioned-state
   $%  state-0
   ==
+::
 +$  state-0 
   $:  %0  
       accs=(set acc)
   ==
+::
 +$  card  card:agent:gall
 --
 !:
@@ -23,7 +23,7 @@
   |_  =bowl:gall
   +*  this  .
       def   ~(. (default-agent this %|) bowl)
-      hc    ~(. ^hc bowl)
+      hc    ~(. +> bowl)
 ::
   ++  on-init 
   ^-  (quip card _this)
@@ -44,56 +44,60 @@
   ++  on-poke  
     |=  [=mark =vase]
     ^-  (quip card _this)
-    ?+    mark  (on-poke:def mark vase)
+    ?+  mark  (on-poke:def mark vase)
       %action
-        ?>  =(src.bowl our.bowl)
-        =/  act  !<(action vase)
-        =^  cards  state 
-          (handle-action:hc act)
-        [cards this]
+    ?>  =(src.bowl our.bowl)
+    =/  act  !<(action vase)
+    =^  cards 
+      state  
+    (handle-action act)
+    [cards this]
     ==
 ::
   ++  on-peek  
     |=  =path
     ^-  (unit (unit cage))
     ?+  path  (on-peek:def path)
-    [%x %accs ~]
-      :^  ~  ~  %json
-      !>  ^-  json
-      (accs:enjs:hc accs)
+      [%x %accs ~]
+    :^    ~  
+        ~  
+      %near-handler-update
+    !>  ^-  update
+    [%accs accs]
     ==
-  ++  on-watch  on-watch:def 
+  ++  on-watch  
+    |=  =path
+    ^-  (quip card _this)
+    ?>  =(src.bowl our.bowl)
+    ?+  path  (on-watch:def path)
+      [%accs ~]
+    :_  this
+    give-accs
+    ==
 ::
   ++  on-leave  on-leave:def
   ++  on-agent  on-agent:def
   ++  on-arvo   on-arvo:def
   ++  on-fail   on-fail:def
 --
-|%  
-::
-++  hc
-   |_  =bowl:gall
+|_  =bowl:gall
 ::
   ++  handle-action
   |=  act=action
   ^-  (quip card _state)
   ?-  -.act
     %add 
-    :_  state(accs (~(put in accs) +.act))
-    [%give %fact ~[/accs] %json !>((accs:enjs accs))]~
+  =.  accs  (~(put in accs) +.act)
+  :_  state
+  give-accs
     ::
     %del 
-    :_  state(accs (~(del in accs) +.act))
-    [%give %fact ~[/accs] %json !>((accs:enjs accs))]~
+  =.  accs  (~(del in accs) +.act)
+  :_  state
+  give-accs
   ==  
-  ++  enjs
-  |%
-    ++  accs
-      |=  accs=(set acc)
-      ^-  json 
-      %:  en-vase:etch 
-      !>  ^-  (set acc)  accs
-      ==
-    --
---
+  ::
+  ++  give-accs
+  ^-  (list card)
+  [%give %fact ~[/accs] %near-handler-update !>([%accs accs])]~
 --
