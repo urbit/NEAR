@@ -14,90 +14,106 @@
 ::
 +$  card  card:agent:gall
 --
-!:
+::
+%-  agent:dbug
 =|  state-0
 =*  state  -
-%-  agent:dbug
+::
 ^-  agent:gall
+::
 =<
   |_  =bowl:gall
   +*  this  .
       def   ~(. (default-agent this %|) bowl)
-      hc    ~(. +> bowl)
-::
-  ++  on-init 
-  ^-  (quip card _this)
-  `this
-::
+      eng   ~(. +> [bowl ~])
+  ++  on-init
+    ^-  (quip card _this)
+    =^  cards  state  abet:init:eng
+    [cards this]
+  ::
   ++  on-save
     ^-  vase
     !>(state)
-::
+  ::
   ++  on-load
-    |=  old-state=vase
+    |=  =vase
     ^-  (quip card _this)
-    =/  old  !<(versioned-state old-state)
-    ?-  -.old
-      %0  `this(state old)
-    ==
-::
-  ++  on-poke  
+    =^  cards  state  abet:(load:eng vase)
+    [cards this]
+  ::
+  ++  on-poke
     |=  [=mark =vase]
     ^-  (quip card _this)
-    ?+  mark  (on-poke:def mark vase)
-      %action
-    ?>  =(src.bowl our.bowl)
-    =/  act  !<(action vase)
-    =^  cards 
-      state  
-    (handle-action act)
+    =^  cards  state  abet:(poke:eng mark vase)
     [cards this]
-    ==
-::
-  ++  on-peek  
-    |=  =path
-    ^-  (unit (unit cage))
-    ?+  path  (on-peek:def path)
-      [%x %accs ~]
-    :^    ~  
-        ~  
-      %near-handler-update
-    !>  ^-  update
-    [%accs accs]
-    ==
-  ++  on-watch  
+  ::
+  ++  on-peek  peek:eng
+  ::
+  ++  on-watch
     |=  =path
     ^-  (quip card _this)
-    ?>  =(src.bowl our.bowl)
-    ?+  path  (on-watch:def path)
-      [%accs ~]
-    :_  this
-    give-accs
-    ==
-::
-  ++  on-leave  on-leave:def
+    =^  cards  state  abet:(watch:eng path)
+    [cards this]
+  ::
   ++  on-agent  on-agent:def
   ++  on-arvo   on-arvo:def
   ++  on-fail   on-fail:def
---
-|_  =bowl:gall
+  ++  on-leave  on-leave:def
+  --
+|_  [=bowl:gall dek=(list card)]
++*  dat  .
+++  emit  |=(=card dat(dek [card dek]))
+++  emil  |=(lac=(list card) dat(dek (welp lac dek)))
+++  abet  ^-((quip card _state) [(flop dek) state])
 ::
-  ++  handle-action
-  |=  act=action
-  ^-  (quip card _state)
+++  from-self  =(our src):bowl
+::
+++  init
+  ^+  dat
+  dat
+::
+++  load
+  |=  vaz=vase
+  ^+  dat
+  ?>  ?=([%0 *] q.vaz)
+  dat(state !<(state-0 vaz))
+::
+++  poke 
+  |=  [=mark =vase]
+  ^+  dat
+  ?+  mark  dat
+    %action
+  ?>  from-self
+  =+  !<(act=action vase)
   ?-  -.act
-    %add 
+    %add
   =.  accs  (~(put in accs) +.act)
-  :_  state
-  give-accs
-    ::
-    %del 
+  (emit give-accs)
+    %del
   =.  accs  (~(del in accs) +.act)
-  :_  state
-  give-accs
-  ==  
-  ::
-  ++  give-accs
-  ^-  (list card)
-  [%give %fact ~[/accs] %near-handler-update !>([%accs accs])]~
+  (emit give-accs)
+  ==
+==
+::
+++  peek
+  |=  =path
+  ^-  (unit (unit cage))
+  ?+  path  [~ ~]
+    [%x %accs ~]  
+  ``near-handler-update+!>([%accs accs])
+  ==
+::
+++  watch
+  |=  =path
+  ^+  dat
+  ?+    path   ~|(bad-watch-path+path !!)
+      [%accs ~]  
+    ?>  from-self
+    (emit give-accs)
+  ==
+::
+++  give-accs
+  ^-  card
+  [%give %fact ~[/accs] %near-handler-update !>([%accs accs])]
+::
 --
