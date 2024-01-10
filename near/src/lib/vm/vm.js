@@ -1868,12 +1868,12 @@ export default class VM {
               mark: mark,
               json: json,
               onSuccess: () => null,
-              onError: (err) => console.error("Error in arbitraryPoke(): ", err)
+              onError: (err) => console.error("Error in Urbit.arbitraryPoke(): ", err)
             });
 
             return response;
           } catch (error) {
-            console.error("Error in arbitraryPoke(): ", error);
+            console.error("Error in Urbit.arbitraryPoke(): ", error);
             throw error;
           }
         },
