@@ -1878,7 +1878,7 @@ export default class VM {
           }
         },
         pokeNearHandler: (json) => {
-          aribtraryPoke("near-handler", "action", json)
+          return aribtraryPoke("near-handler", "action", json)
         },
       },
       VM: {
