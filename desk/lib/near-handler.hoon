@@ -16,8 +16,9 @@
   |=  accs=(set acc)
   ^-  json 
   %:  en-vase:etch 
-    !>  ^-  (list acc)  
-    ~(tap in accs)
+    !>  ^-  (list @t) 
+    %+  turn  ~(tap in accs)
+    |=(=acc `@t`(scot %ux acc))
   ==
   --
 --

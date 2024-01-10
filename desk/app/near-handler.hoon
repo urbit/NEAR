@@ -24,11 +24,11 @@
 =<
   |_  =bowl:gall
   +*  this  .
-      def   ~(. (default-agent this %|) bowl)
-      eng   ~(. +> [bowl ~])
+      def  ~(. (default-agent this %|) bowl)
+      hc   ~(. +> [bowl ~])
   ++  on-init
     ^-  (quip card _this)
-    =^  cards  state  abet:init:eng
+    =^  cards  state  abet:init:hc
     [cards this]
   ::
   ++  on-save
@@ -38,21 +38,21 @@
   ++  on-load
     |=  =vase
     ^-  (quip card _this)
-    =^  cards  state  abet:(load:eng vase)
+    =^  cards  state  abet:(load:hc vase)
     [cards this]
   ::
   ++  on-poke
     |=  [=mark =vase]
     ^-  (quip card _this)
-    =^  cards  state  abet:(poke:eng mark vase)
+    =^  cards  state  abet:(poke:hc mark vase)
     [cards this]
   ::
-  ++  on-peek  peek:eng
+  ++  on-peek  peek:hc
   ::
   ++  on-watch
     |=  =path
     ^-  (quip card _this)
-    =^  cards  state  abet:(watch:eng path)
+    =^  cards  state  abet:(watch:hc path)
     [cards this]
   ::
   ++  on-agent  on-agent:def
@@ -60,38 +60,38 @@
   ++  on-fail   on-fail:def
   ++  on-leave  on-leave:def
   --
-|_  [=bowl:gall dek=(list card)]
-+*  dat  .
-++  emit  |=(=card dat(dek [card dek]))
-++  emil  |=(lac=(list card) dat(dek (welp lac dek)))
-++  abet  ^-((quip card _state) [(flop dek) state])
+|_  [=bowl:gall deck=(list card)]
++*  that  .
+++  emit  |=(=card that(deck [card deck]))
+++  emil  |=(lac=(list card) that(deck (welp lac deck)))
+++  abet  ^-((quip card _state) [(flop deck) state])
 ::
 ++  from-self  =(our src):bowl
 ::
 ++  init
-  ^+  dat
-  dat
+  ^+  that
+  that
 ::
 ++  load
   |=  vaz=vase
-  ^+  dat
+  ^+  that
   ?>  ?=([%0 *] q.vaz)
-  dat(state !<(state-0 vaz))
+  that(state !<(state-0 vaz))
 ::
 ++  poke 
   |=  [=mark =vase]
-  ^+  dat
-  ?+  mark  dat
-    %action
+  ^+  that
+  ?+  mark  that
+    %near-handler-action
   ?>  from-self
   =+  !<(act=action vase)
   ?-  -.act
     %add
   =.  accs  (~(put in accs) +.act)
-  (emit give-accs)
+  give-accs
     %del
   =.  accs  (~(del in accs) +.act)
-  (emit give-accs)
+  give-accs
   ==
 ==
 ::
@@ -105,15 +105,15 @@
 ::
 ++  watch
   |=  =path
-  ^+  dat
+  ^+  that
   ?+    path   ~|(bad-watch-path+path !!)
       [%accs ~]  
     ?>  from-self
-    (emit give-accs)
+    give-accs
   ==
 ::
 ++  give-accs
-  ^-  card
+  %-  emit
   [%give %fact ~[/accs] %near-handler-update !>([%accs accs])]
 ::
 --
