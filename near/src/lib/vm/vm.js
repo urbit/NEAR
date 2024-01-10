@@ -1853,23 +1853,27 @@ export default class VM {
         },
       },
       Urbit: {
-        poke: async (app, mark, msg) => {
+        aribtraryPoke: async (app, mark, json) => {
           try {
-            if (!this.urbitApi || !window.ship) {
-              throw new Error("Urbit API or ship not properly initialized");
+            if (!this.urbitApi) {
+              throw new Error("Urbit HTTP API not properly initialized");
+            }
+
+            if (!window.ship) {
+              throw new Error("No Urbit server connected");
             }
 
             const response = await this.urbitApi.poke({
               app: app,
               mark: mark,
-              json: msg,
-              onSuccess: () => console.log("Poke successful"),
-              onError: (err) => console.error("Poke failed:", err)
+              json: json,
+              onSuccess: () => null,
+              onError: (err) => console.error("Error in arbitraryPoke(): ", err)
             });
 
             return response;
           } catch (error) {
-            console.error('Error in Urbit arbitrary_poke:', error);
+            console.error("Error in arbitraryPoke(): ", error);
             throw error;
           }
         },
