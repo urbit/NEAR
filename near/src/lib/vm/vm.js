@@ -1877,6 +1877,9 @@ export default class VM {
             throw error;
           }
         },
+        pokeNearHandler: (json) => {
+          aribtraryPoke("near-handler", "action", json)
+        },
       },
       VM: {
         require: this.vmRequire.bind(this),
