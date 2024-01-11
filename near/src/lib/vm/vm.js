@@ -35,7 +35,7 @@ import jsx from "acorn-jsx";
 import { ethers } from "ethers";
 import { Web3ConnectButton } from "../components/ethers";
 import { isValidAttribute } from "dompurify";
-import UrbitApi from "@urbit/http-api";
+import Urbit from "@urbit/http-api";
 
 // Radix:
 import * as Accordion from "@radix-ui/react-accordion";
@@ -1491,8 +1491,8 @@ export default class VM {
       widgetConfigs.findLast((config) => config && config.networkId)
         ?.networkId || near.config.networkId;
 
-    this.urbitApi = new UrbitApi('');
-    this.urbitApi.ship = window.ship;
+    this.UrbitApi = new Urbit('');
+    this.UrbitApi.ship = window.ship;
 
     this.globalFunctions = this.initGlobalFunctions();
   }
@@ -1836,7 +1836,7 @@ export default class VM {
     const Urbit = {
       aribtraryPoke: async (app, mark, json) => {
         try {
-          if (!this.urbitApi) {
+          if (!this.UrbitApi) {
             throw new Error("Urbit HTTP API not properly initialized");
           }
 
@@ -1844,7 +1844,7 @@ export default class VM {
             throw new Error("No Urbit server connected");
           }
 
-          const response = await this.urbitApi.poke({
+          const response = await this.UrbitApi.poke({
             app: app,
             mark: mark,
             json: json,
@@ -1859,7 +1859,13 @@ export default class VM {
         }
       },
       pokeNearHandler: (json) => {
-        return aribtraryPoke("near-handler", "action", json)
+        return aribtraryPoke("near-handler", "action", json);
+      },
+      scryUrbit: (app, path) => {
+        return UrbitApi.scry(app, path);
+      },
+      scryNearHandler: (path) => {
+        return scryUrbit("near-handler", path);
       },
     };
 
