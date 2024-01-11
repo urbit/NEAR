@@ -1,6 +1,15 @@
 /-  *near-handler
 /+  dbug, default-agent, *near-handler
 ::
+::
+::Look into what kind of mark and data you get from %pals 
+::
+::  scry to pals .^((set ship) %gx /(scot %p our.bowl)/pals/(scot %da now.bowl)/mutuals/noun)
+::  
+::  subscribe for updates return %pals-effect [?(%meet %part %near %away) =ship]
+::  [%pass /load %agent [our.bowl %pals] %watch /targets]
+::
+::
 |%
 ::
 +$  versioned-state
@@ -12,7 +21,7 @@
       accs=(set acc)
   ==
 ::
-+$  card  card:agent:gall
++$  card  $+(card card:agent:gall)
 --
 ::
 %-  agent:dbug
@@ -55,7 +64,11 @@
     =^  cards  state  abet:(watch:hc path)
     [cards this]
   ::
-  ++  on-agent  on-agent:def
+  ++  on-agent  
+    |=  [=wire =sign:agent:gall]
+    ^-  (quip card _this)
+    =^  cards  state  abet:(agent:hc wire sign)
+    [cards this]
   ++  on-arvo   on-arvo:def
   ++  on-fail   on-fail:def
   ++  on-leave  on-leave:def
@@ -89,9 +102,15 @@
     %add
   =.  accs  (~(put in accs) +.act)
   give-accs
+  ::
     %del
   =.  accs  (~(del in accs) +.act)
   give-accs
+  ::
+    %poke-to
+  ~&  >  data.act
+  %-  emit
+  [%pass /poke-to/[dude.act] %agent [our.bowl dude.act] %poke-as mark.act [%noun !>(data.act)]]
   ==
 ==
 ::
@@ -110,6 +129,17 @@
       [%accs ~]  
     ?>  from-self
     give-accs
+  ==
+::
+++  agent 
+  |=  [=wire =sign:agent:gall]
+  ^+  that
+  ?+    wire  ~|(bad-agent-wire+wire !!)
+      [%poke-to * ~]
+    ?.  ?=(%poke-ack -.sign)  that
+    ?~  p.sign  that
+  %-  (slog 'Failed to poke' `@t`(scot %tas -.+.wire) ~)
+  that
   ==
 ::
 ++  give-accs
