@@ -1,15 +1,6 @@
 /-  *near-handler
 /+  dbug, default-agent, *near-handler
 ::
-::
-::Look into what kind of mark and data you get from %pals 
-::
-::  scry to pals .^((set ship) %gx /(scot %p our.bowl)/pals/(scot %da now.bowl)/mutuals/noun)
-::  
-::  subscribe for updates return %pals-effect [?(%meet %part %near %away) =ship]
-::  [%pass /load %agent [our.bowl %pals] %watch /targets]
-::
-::
 |%
 ::
 +$  versioned-state
@@ -108,9 +99,8 @@
   give-accs
   ::
     %poke-to
-  ~&  >  data.act
   %-  emit
-  [%pass /poke-to/[dude.act] %agent [our.bowl dude.act] %poke-as mark.act [%noun !>(data.act)]]
+  [%pass /poke-to/[dude.act] %agent [our.bowl dude.act] %poke-as mark.act [%json !>(json.act)]]
   ==
 ==
 ::
@@ -138,8 +128,8 @@
       [%poke-to * ~]
     ?.  ?=(%poke-ack -.sign)  that
     ?~  p.sign  that
-  %-  (slog 'Failed to poke' `@t`(scot %tas -.+.wire) ~)
-  that
+    %-  (slog 'Failed to poke' `@t`(scot %tas -.+.wire) ~)
+    that
   ==
 ::
 ++  give-accs
