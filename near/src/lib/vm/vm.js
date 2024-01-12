@@ -1834,7 +1834,7 @@ export default class VM {
     };
 
     const Urbit = {
-      aribtraryPoke: async (app, mark, json) => {
+      pokeUrbit: async (app, mark, json) => {
         try {
           if (!this.UrbitApi) {
             throw new Error("Urbit HTTP API not properly initialized");
@@ -1849,17 +1849,17 @@ export default class VM {
             mark: mark,
             json: json,
             onSuccess: () => null,
-            onError: (err) => console.error("Error in Urbit.arbitraryPoke(): ", err)
+            onError: (err) => console.error("Error in Urbit.pokeUrbit(): ", err)
           });
 
           return response;
         } catch (error) {
-          console.error("Error in Urbit.arbitraryPoke(): ", error);
+          console.error("Error in Urbit.pokeUrbit(): ", error);
           throw error;
         }
       },
       pokeNearHandler: (json) => {
-        return aribtraryPoke("near-handler", "action", json);
+        return pokeUrbit("near-handler", "near-handler-action", json);
       },
       scryUrbit: (app, path) => {
         return UrbitApi.scry(app, path);
