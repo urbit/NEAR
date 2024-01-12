@@ -11,5 +11,5 @@
 ?-  act
 %del   [%near-handler-action [%del acc]]
 %add   [%near-handler-action [%add acc]]
-%poke  [%near-handler-action [%poke-to [%test %test-action [%poke 1]]]]
+%poke  [%near-handler-action [%poke-to [%test %test-action (need (de:json:html '{"poke":1}'))]]]
 ==
