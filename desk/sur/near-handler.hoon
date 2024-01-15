@@ -3,7 +3,7 @@
 +$  action 
   $%  [%add =acc]
       [%del =acc]
-      [%poke-to [=dude:gall =mark =json]]
+      [%poke [=dude:gall =mark json=(unit json)]]
   ==
 +$  update
   $%  [%accs accs=(set acc)]
