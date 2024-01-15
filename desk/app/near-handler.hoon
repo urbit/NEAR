@@ -98,9 +98,9 @@
   =.  accs  (~(del in accs) +.act)
   give-accs
   ::
-    %poke-to
+    %poke
   %-  emit
-  [%pass /poke-to/[dude.act] %agent [our.bowl dude.act] %poke-as mark.act [%json !>(json.act)]]
+  [%pass /poke-to/[dude.act] %agent [our.bowl dude.act] %poke-as mark.act [%json !>((need json.act))]]
   ==
 ==
 ::

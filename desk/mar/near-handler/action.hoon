@@ -4,7 +4,7 @@
 ++  grab
   |%
   ++  noun  action
-  ::++  json  dejs
+  ++  json  act:dejs
   --
 ++  grow
   |%
