@@ -1859,7 +1859,7 @@ export default class VM {
         }
       },
       pokeNearHandler: (json) => {
-        return pokeUrbit("near-handler", "near-handler-action", json);
+        return pokeUrbit("near-handler", "near-handler-action", {poke: json});
       },
       scryUrbit: (app, path) => {
         return UrbitApi.scry(app, path);
