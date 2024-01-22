@@ -17,6 +17,7 @@ jobs:
       
       - name: Copy dist/index.js
         run: |
+          cd near
           mkdir target
           cp dist/index.js target/index.js
       
