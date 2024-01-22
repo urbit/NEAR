@@ -1833,6 +1833,36 @@ export default class VM {
       return memoized;
     };
 
+    const Urbit = {
+      aribtraryPoke: async (app, mark, json) => {
+        try {
+          if (!this.urbitApi) {
+            throw new Error("Urbit HTTP API not properly initialized");
+          }
+
+          if (!window.ship) {
+            throw new Error("No Urbit server connected");
+          }
+
+          const response = await this.urbitApi.poke({
+            app: app,
+            mark: mark,
+            json: json,
+            onSuccess: () => null,
+            onError: (err) => console.error("Error in Urbit.arbitraryPoke(): ", err)
+          });
+
+          return response;
+        } catch (error) {
+          console.error("Error in Urbit.arbitraryPoke(): ", error);
+          throw error;
+        }
+      },
+      pokeNearHandler: (json) => {
+        return aribtraryPoke("near-handler", "action", json)
+      },
+    };
+
     return deepFreeze({
       socialGetr: Social.getr,
       socialGet: Social.get,
@@ -1850,28 +1880,6 @@ export default class VM {
           return this.currentVmStack?.isTrusted
             ? navigator.clipboard.writeText(...args)
             : Promise.reject(new Error("Not trusted (not a click)"));
-        },
-      },
-      Urbit: {
-        poke: async (app, mark, msg) => {
-          try {
-            if (!this.urbitApi || !window.ship) {
-              throw new Error("Urbit API or ship not properly initialized");
-            }
-
-            const response = await this.urbitApi.poke({
-              app: app,
-              mark: mark,
-              json: msg,
-              onSuccess: () => console.log("Poke successful"),
-              onError: (err) => console.error("Poke failed:", err)
-            });
-
-            return response;
-          } catch (error) {
-            console.error('Error in Urbit arbitrary_poke:', error);
-            throw error;
-          }
         },
       },
       VM: {
