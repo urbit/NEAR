@@ -1880,6 +1880,7 @@ export default class VM {
       initState: State.init,
       State,
       Storage,
+      Urbit,
       console: vmConsole,
       clipboard: {
         writeText: (...args) => {
