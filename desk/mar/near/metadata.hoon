@@ -7,6 +7,6 @@
   --
 ++  grab
   |%
-  ++  noun  [identifier metadata]
+  ++  noun  ,[identifier metadata]
   --
 --

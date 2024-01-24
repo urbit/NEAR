@@ -117,18 +117,21 @@
   ^+  that
   ?+    path    ~|(bad-watch-path+path !!)
     [%~.~ %gossip %source ~]  that
-  ==
+   ==
 ++  agent 
   |=  [=wire =sign:agent:gall]
   ^+  that
   ?+    wire  ~|(bad-agent-wire+wire !!)
     [%~.~ %gossip %gossip ~]
+    ~&  >>  [wire sign]
     ?+    -.sign  ~|([%unexpected-gossip-sign -.sign] !!)
       %fact
       =*  mark  p.cage.sign
       =*  vase  q.cage.sign
       ?.  =(%metadata mark)  that
       ::add new gateway to heard 
+      ~&  >>  'got fact'
+      ~&  >>  !<([id=identifier =metadata] vase)
         =+  !<([id=identifier =metadata] vase)
         =.  heard  (~(put by heard) id metadata)
         that
