@@ -12,5 +12,6 @@
   ==
 +$  gateway-action 
   $%  [%publish =metadata]
+      [%install =identifier =metadata]
   ==
 --
