@@ -109,19 +109,14 @@
   ?>  from-self
   =+  !<(act=gateway-action vase)
   ?-  -.act
-      %publish
-    =/  id=identifier  [our.bowl `@ud`eny.bowl] ::entropy?
-    =.  published  (~(put by published) id +.act)
-    %-  emit
-    %+  invent:gossip
-      %metadata 
-    !>  ^-  [identifier metadata]
-    [id +.act]
+      %publish 
+    %+  start-gateway-glob
+      %near-handler 
+    path.act
     ::
-      %install
-    ::  get and host glob on handle/get at some path/name/
-    ::  where would gateways glob file system will be stored, if in docket.hoon state need to scry(doesn't work, return glob.chad as ~)
-    ::  host each path alike payload-from-glob
+    %install
+    :: get and host glob on handle/get at some path/name/
+    :: host each path alike payload-from-glob
     =.  installed  (~(put by installed) +.act)
     that
     ::
@@ -141,7 +136,6 @@
   ?+  method.request  
       %-  emil 
       %-  send  [405 ~ [%stock ~]]
-  ::
     %'GET'
   ?+  [site ext]:request-line  
     %-  emil  
@@ -156,6 +150,7 @@
     %-  send
     %+  from-glob 
       (snag 2 site.request-line)  
+    ::[ext.request-line site.request-line args.request-line]
     request-line(site (slag 2 `(list @ta)`site.request-line))
     ==
   ::
@@ -166,8 +161,8 @@
 ::
 ++  from-glob
   |=  [from=@ta request=request-line:server]
-  ::  how to get glob files out of docket to host ?
-  ::  returns charges.state without glob
+  :: get glob files out to host 
+  ~&  >>  [from request]
   =/  charge-update  .^(charge-update:docket %gx /(scot %p our.bowl)/docket/(scot %da now.bowl)/charges/noun)
   ~&  >>  ['suffix' (weld site.request (drop ext.request))]
   ?+  -.charge-update  [404 ~ [%stock ~]]
@@ -176,6 +171,20 @@
   [200 ~ [%plain "welcome to %near-gateway"]]
   ==
 ::  
+++  start-gateway-glob
+|=  [=desk =path]
+^+  that 
+=/  tid  `@ta`(cat 3 'near-' (scot %uv (sham eny.bowl)))
+=/  ta-now  `@ta`(scot %da now.bowl)
+=/  arg-vase  !>(`[desk path])
+=/  =cage  :-  %spider-start
+           !>([~ `tid byk.bowl(r da+now.bowl) %gateway-glob arg-vase])
+=.  path  (weld /thread/glob/[ta-now] path)
+%-  emil
+  :~  [%pass path %agent [our.bowl %spider] %poke cage]
+      [%pass path %agent [our.bowl %spider] %watch /thread-result/[tid]]
+      ==
+::
 ++  watch 
   |=  =path
   ^+  that
@@ -191,20 +200,55 @@
     ^-  card
     [%give %fact ~ %metadata !>([identifier metadata])]
   ==
-::
 ++  agent 
   |=  [=wire =sign:agent:gall]
   ^+  that
   ?+    wire  ~|(bad-agent-wire+wire !!)
-    [%~.~ %gossip %gossip ~]
-    ?+    -.sign  ~|([%unexpected-gossip-sign -.sign] !!)
-      %fact
+      [%~.~ %gossip %gossip ~]
+    ?+  -.sign  ~|([%unexpected-gossip-sign -.sign] !!)
+        %fact
       =*  mark  p.cage.sign
       =*  vase  q.cage.sign
       ?.  =(%metadata mark)  that
+      ::add new gateway to heard 
+      ~&  >>  'got fact'
+      ~&  >>  !<([id=identifier =metadata] vase)
         =+  !<([id=identifier =metadata] vase)
         =.  heard  (~(put by heard) id metadata)
         that
+    ==
+    ::
+      [%thread %glob @ @ *]
+    ?-  -.sign 
+        %kick  that
+        ?(%poke-ack %watch-ack)
+      ?~  p.sign  
+          that
+      ~&  'Thread failed to start'
+      that
+      ::
+        %fact 
+      ?+  p.cage.sign  that
+          %thread-fail
+        ~&  >>>  ['thread-failed to glob' (slag 2 `(list @ta)`wire)]
+        ::add some back up logic?
+        that
+        ::
+          %thread-done 
+        =/  hash  !<(hash=@t q.cage.sign)
+        =/  data=metadata
+          :-  'app-name'  ::name of an app ??
+            %-  crip  
+            :: here we can add s3 path where it will be stored
+            ;:(weld "http://" (trip hash) ".glob")
+        =/  id=identifier  [our.bowl `@ud`eny.bowl] ::entropy?
+        =.  published  (~(put by published) id data)
+        %-  emit
+        %+  invent:gossip
+          %metadata 
+        !>  ^-  [identifier metadata]
+        [id data]
+     ==
     ==
   ==
 ::
@@ -215,7 +259,7 @@
       [%eyre ~]
     ?.  ?=([%eyre %bound *] sign-arvo)  that
     ?:  accepted.sign-arvo  that
-    ~&  ['Failde to bind' path.binding.sign-arvo] 
+    ~&  ['Failed to bind' path.binding.sign-arvo] 
     that
   ==
   --

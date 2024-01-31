@@ -11,7 +11,7 @@
   $%  [%accs accs=(set acc)]
   ==
 +$  gateway-action 
-  $%  [%publish =metadata]
+  $%  [%publish =path]  ::=metadata]
       [%install =identifier =metadata]
   ==
 --
