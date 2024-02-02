@@ -13,7 +13,7 @@
   ::  (map identifier=[ship id] metadata=[name url])
       heard=(map identifier metadata)  
       published=(map identifier metadata)  
-      installed=(map identifier glob)
+      installed=(map identifier glob:docket)
   ==
 ::
 +$  card  $+(card card:agent:gall)
@@ -82,7 +82,7 @@
 |_  [=bowl:gall deck=(list card)]
 +*  that  .
 ++  emit  |=(=card that(deck [card deck]))
-++  emil  |=(lac=(list card) that(deck (welp lac deck)))
+++  emil  |=(lac=(list card) that(deck (welp (flop lac) deck)))
 ++  abet  ^-((quip card _state) [(flop deck) state])
 ::
 ++  from-self  =(our src):bowl
@@ -122,7 +122,6 @@
     that
     ::
       %install  ::[%install =identifier =metadata]
-    ::  get and host glob on handle/get at some path/name/
     %+  get-gateway-glob
       metadata.act
     identifier.act
@@ -144,19 +143,21 @@
     %'GET'
   ?+  [site ext]:request-line  
     %-  emil  
-    %-  send  dump
+    %-  send  [302 ~ [%redirect './apps/near']]
     ::
       [[%apps %near ~] *]
     %-  emil  
     %-  send  [200 ~ [%plain "welcome to %near-gateway"]] ::for now
     ::
-      [[%apps %near @ @ *] *]
+      [[%apps %near @ @ *] *] 
     =/  new-site  
     %+  weld 
       %+  slag  4 
       ;;  (list @ta)  site.request-line
     %-  drop 
     ext.request-line
+      ~&  >  request-line
+      ~&  >>  ['site' (weld (slag 4 `(list @ta)`site.request-line) (drop ext.request-line))]
     %-  emil
     %+  give-simple-payload:app:server 
       id
@@ -174,8 +175,10 @@
 ++  from-glob
   |=  [identifier=[=ship id=@uvH] request=request-line:server]
   ^-  simple-payload:http
+  ~&  (~(has by installed) identifier)
   ?.  (~(has by installed) identifier)  not-found:gen:server
-  =/  =glob  (~(got by installed) identifier)
+  =/  =glob:docket  (~(got by installed) identifier)
+  ::?:  =(suffix /desk/js)
   =/  requested  ?:  (~(has by glob) site.request)  
                     site.request
                   /index/html
@@ -188,13 +191,14 @@
      ~[max-1-wk:gen:server]
 ::  
 ++  get-gateway-glob
-  |=  [data=metadata =identifier]  
+  |=  [data=metadata =identifier]  ::[name=@t url=@t]
   ^+  that 
   =/  tid  `@ta`(cat 3 'near-' (scot %uv (sham eny.bowl)))
   =/  ta-now  `@ta`(scot %da now.bowl)
-  =/  ted-cage=cage  %glob !>(`url.data)
-  =/  =cage  :-  %spider-start
-             !>([~ `tid byk.bowl(r da+now.bowl) ted-cage])
+  =/  ted-cage=cage  :-  %glob  
+                      !>(`url.data)
+  =/  cage  :-  %spider-start
+            !>([~ `tid byk.bowl(r da+now.bowl) ted-cage])
   =/  id-path  
   ;;  (list @ta)
     :~  name.data 
@@ -205,7 +209,7 @@
   =/  path  `(list @ta)`(weld /glob/[ta-now] id-path)
   %-  emil
     :~  [%pass path %agent [our.bowl %spider] %poke cage]
-        [%pass path %agent [our.bowl %spider] %watch /thread-result/[tid]]
+    [%pass path %agent [our.bowl %spider] %watch /thread-result/[tid]]
     ==
 ::
 ++  watch 
@@ -233,6 +237,8 @@
       =*  mark  p.cage.sign
       =*  vase  q.cage.sign
       ?.  =(%metadata mark)  that
+      ~&  >>  'got fact'
+      ~&  >>  !<([id=identifier =metadata] vase)
         =+  !<([id=identifier =metadata] vase)
         =.  heard  (~(put by heard) id metadata)
         that
@@ -256,12 +262,13 @@
         that
         ::
           %thread-done 
-        =/  glob  !<(glob q.cage.sign)
+        =/  glob  !<(glob:docket q.cage.sign)
         =/  id    (id-from-wire wire)
         =/  had=metadata  (~(got by published) id)
+        =/  path  ;;  (list @ta)  wire
         =/  got=metadata
-          :-  (snag 2 wire)
-          (snag 3 wire)
+          :-  (snag 2 path)
+          (snag 3 path)
         ?.  =(url.had url.got)
           ~&  >>>  'glob url mismatch'
           that
@@ -285,7 +292,7 @@
   |=  [=wire =sign-arvo]
   ^+  that 
   ?+  wire   that
-      [%eyre ~]
+      [%eyre %connect ~]
     ?.  ?=([%eyre %bound *] sign-arvo)  that
     ?:  accepted.sign-arvo  that
     ~&  ['Failed to bind' path.binding.sign-arvo] 

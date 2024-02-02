@@ -1,6 +1,6 @@
 |%
 +$  acc  @uxH
-+$  glob  (map path mime)
+:: +$  glob  (map path mime)
 +$  metadata  [name=@t url=@t]  
 +$  identifier  [=ship id=@uvH]
 +$  action 
