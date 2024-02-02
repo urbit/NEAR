@@ -1,7 +1,8 @@
 |%
 +$  acc  @uxH
++$  glob  (map path mime)
 +$  metadata  [name=@t url=@t]  
-+$  identifier  [=ship id=@ud]
++$  identifier  [=ship id=@uvH]
 +$  action 
   $%  [%add =acc]
       [%del =acc]
@@ -11,7 +12,7 @@
   $%  [%accs accs=(set acc)]
   ==
 +$  gateway-action 
-  $%  [%publish =path]  ::=metadata]
+  $%  [%publish =metadata]
       [%install =identifier =metadata]
   ==
 --

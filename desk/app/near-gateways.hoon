@@ -13,7 +13,7 @@
   ::  (map identifier=[ship id] metadata=[name url])
       heard=(map identifier metadata)  
       published=(map identifier metadata)  
-      installed=(map identifier metadata)
+      installed=(map identifier glob)
   ==
 ::
 +$  card  $+(card card:agent:gall)
@@ -105,21 +105,27 @@
     %handle-http-request
   =+  !<([id=@ta request=inbound-request:eyre] vase)
   (handle-http-request id request)
+  ::
     %near-action
   ?>  from-self
   =+  !<(act=gateway-action vase)
   ?-  -.act
-      %publish 
-    %+  start-gateway-glob
-      %near-handler 
-    path.act
     ::
-    %install
-    :: get and host glob on handle/get at some path/name/
-    :: host each path alike payload-from-glob
-    =.  installed  (~(put by installed) +.act)
+      %publish 
+    ?~  (find ~[metadata.act] ~(val by published))
+      =/  id=identifier  [our.bowl (sham eny.bowl)] 
+      =.  published  (~(put by published) id metadata.act)
+      %+  get-gateway-glob
+        metadata.act
+      id
+    ~&  'Alredy globbed and installed'
     that
     ::
+      %install  ::[%install =identifier =metadata]
+    ::  get and host glob on handle/get at some path/name/
+    %+  get-gateway-glob
+      metadata.act
+    identifier.act
   ==
 ==
 ++  dump  [404 ~ [%plain "404 - Not Found"]]
@@ -127,7 +133,6 @@
   |=  [id=@ta inbound-request:eyre]
   ^+  that 
   =/  request-line  (parse-request-line:server url.request)
-  ::  %-  emil
   =+  send=(cury response:schooner id)
   ?.  authenticated
     %-  emil
@@ -145,13 +150,20 @@
     %-  emil  
     %-  send  [200 ~ [%plain "welcome to %near-gateway"]] ::for now
     ::
-      [[%apps %near @ *] *]
+      [[%apps %near @ @ *] *]
+    =/  new-site  
+    %+  weld 
+      %+  slag  4 
+      ;;  (list @ta)  site.request-line
+    %-  drop 
+    ext.request-line
     %-  emil
-    %-  send
+    %+  give-simple-payload:app:server 
+      id
     %+  from-glob 
-      (snag 2 site.request-line)  
-    ::[ext.request-line site.request-line args.request-line]
-    request-line(site (slag 2 `(list @ta)`site.request-line))
+      :-  (slav %p (snag 2 site.request-line))  ::ship
+      (slav %uv (snag 3 site.request-line))     ::id
+    request-line(site new-site)
     ==
   ::
     %'POST'  
@@ -160,30 +172,41 @@
   ==
 ::
 ++  from-glob
-  |=  [from=@ta request=request-line:server]
-  :: get glob files out to host 
-  ~&  >>  [from request]
-  =/  charge-update  .^(charge-update:docket %gx /(scot %p our.bowl)/docket/(scot %da now.bowl)/charges/noun)
-  ~&  >>  ['suffix' (weld site.request (drop ext.request))]
-  ?+  -.charge-update  [404 ~ [%stock ~]]
-    %initial
-  ~&  (~(get by initial.charge-update) from)
-  [200 ~ [%plain "welcome to %near-gateway"]]
-  ==
+  |=  [identifier=[=ship id=@uvH] request=request-line:server]
+  ^-  simple-payload:http
+  ?.  (~(has by installed) identifier)  not-found:gen:server
+  =/  =glob  (~(got by installed) identifier)
+  =/  requested  ?:  (~(has by glob) site.request)  
+                    site.request
+                  /index/html
+  =/  =mime  (~(got by glob) requested)
+  =/  mime-type=@t  (rsh 3 (crip <p.mime>)) 
+   =;  headers
+      [[200 headers] `q.mime]
+     :-  content-type+mime-type
+     ?:  =(/index/html requested)  ~
+     ~[max-1-wk:gen:server]
 ::  
-++  start-gateway-glob
-|=  [=desk =path]
-^+  that 
-=/  tid  `@ta`(cat 3 'near-' (scot %uv (sham eny.bowl)))
-=/  ta-now  `@ta`(scot %da now.bowl)
-=/  arg-vase  !>(`[desk path])
-=/  =cage  :-  %spider-start
-           !>([~ `tid byk.bowl(r da+now.bowl) %gateway-glob arg-vase])
-=.  path  (weld /thread/glob/[ta-now] path)
-%-  emil
-  :~  [%pass path %agent [our.bowl %spider] %poke cage]
-      [%pass path %agent [our.bowl %spider] %watch /thread-result/[tid]]
-      ==
+++  get-gateway-glob
+  |=  [data=metadata =identifier]  
+  ^+  that 
+  =/  tid  `@ta`(cat 3 'near-' (scot %uv (sham eny.bowl)))
+  =/  ta-now  `@ta`(scot %da now.bowl)
+  =/  ted-cage=cage  %glob !>(`url.data)
+  =/  =cage  :-  %spider-start
+             !>([~ `tid byk.bowl(r da+now.bowl) ted-cage])
+  =/  id-path  
+  ;;  (list @ta)
+    :~  name.data 
+        url.data 
+        (scot %p -.identifier) 
+        (scot %uv +.identifier)
+    ==
+  =/  path  `(list @ta)`(weld /glob/[ta-now] id-path)
+  %-  emil
+    :~  [%pass path %agent [our.bowl %spider] %poke cage]
+        [%pass path %agent [our.bowl %spider] %watch /thread-result/[tid]]
+    ==
 ::
 ++  watch 
   |=  =path
@@ -192,7 +215,7 @@
       [%http-response *]
     that
     ::
-      [%~.~ %gossip %source ~]
+      [%~.~ %gossip %source ~] 
     %-  emil
     %+  turn
       ~(tap by published)
@@ -210,47 +233,53 @@
       =*  mark  p.cage.sign
       =*  vase  q.cage.sign
       ?.  =(%metadata mark)  that
-      ::add new gateway to heard 
-      ~&  >>  'got fact'
-      ~&  >>  !<([id=identifier =metadata] vase)
         =+  !<([id=identifier =metadata] vase)
         =.  heard  (~(put by heard) id metadata)
         that
     ==
-    ::
-      [%thread %glob @ @ *]
+      [%glob @ @ @ *]
     ?-  -.sign 
         %kick  that
         ?(%poke-ack %watch-ack)
       ?~  p.sign  
+          ~&  'Thread started succesfully' 
           that
-      ~&  'Thread failed to start'
+      ~&  'Thread fail to start'
       that
       ::
         %fact 
       ?+  p.cage.sign  that
           %thread-fail
         ~&  >>>  ['thread-failed to glob' (slag 2 `(list @ta)`wire)]
-        ::add some back up logic?
+        =/  id    (id-from-wire wire)
+        =.  published  (~(del by published) id)
         that
         ::
           %thread-done 
-        =/  hash  !<(hash=@t q.cage.sign)
-        =/  data=metadata
-          :-  'app-name'  ::name of an app ??
-            %-  crip  
-            :: here we can add s3 path where it will be stored
-            ;:(weld "http://" (trip hash) ".glob")
-        =/  id=identifier  [our.bowl `@ud`eny.bowl] ::entropy?
-        =.  published  (~(put by published) id data)
+        =/  glob  !<(glob q.cage.sign)
+        =/  id    (id-from-wire wire)
+        =/  had=metadata  (~(got by published) id)
+        =/  got=metadata
+          :-  (snag 2 wire)
+          (snag 3 wire)
+        ?.  =(url.had url.got)
+          ~&  >>>  'glob url mismatch'
+          that
+        =.  installed  (~(put by installed) id glob)
         %-  emit
         %+  invent:gossip
           %metadata 
         !>  ^-  [identifier metadata]
-        [id data]
+        [id got]
      ==
     ==
   ==
+::
+++  id-from-wire
+|=  =wire 
+^-  identifier 
+:-  (slav %p (snag 4 wire))
+(slav %uv (snag 5 wire))
 ::
 ++  arvo 
   |=  [=wire =sign-arvo]
