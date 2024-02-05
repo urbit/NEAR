@@ -1,0 +1,24 @@
+{
+  "name": "urbit-playground",
+  "version": "0.0.0",
+  "description": "",
+  "author": "",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "bos-workspace dev",
+    "build": "bos-workspace build"
+  },
+  "devDependencies": {
+    "bos-workspace": "^0.0.1-alpha.4",
+    "concurrently": "^8.2.2"
+  },
+  "workspaces": [
+    "VM",
+    "gateway"
+  ],
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
