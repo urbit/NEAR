@@ -4,7 +4,9 @@
 ++  grab
   |%
   ++  noun  gateway-action
-  ::++  json  act:dejs
+  ++  json  
+  ~&  >>>  json  
+  gateway-act:dejs
   --
 ++  grow
   |%

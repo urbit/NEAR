@@ -1,4 +1,4 @@
-/-  spider, *near-handler, docket
+/-  spider, *near-handler
 /+  strandio
 =,  strand=strand:spider
 ^-  thread:spider
@@ -6,14 +6,12 @@
 =/  m  (strand ,vase)
 ^-  form:m
 =+  !<([~ url=@t] arg)
-;<  =glob:docket  bind:m
-  %+  (retry:strandio ,glob:docket)  `5
-  =/  n  (strand ,(unit glob:docket))
+;<  =glob  bind:m
+  %+  (retry:strandio ,glob)  `5
+  =/  n  (strand ,(unit glob))
   ;<  =cord  bind:n  (fetch-cord:strandio (trip url))
-  ~&  >  cord
   %-  pure:n
   %-  mole
   |.
-  ;;(=glob:docket (cue cord))
-~&  >>  glob
+  ;;(=glob (cue cord))
 (pure:m !>(glob))

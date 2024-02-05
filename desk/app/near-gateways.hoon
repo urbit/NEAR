@@ -1,4 +1,4 @@
-/-  *near-handler, docket
+/-  *near-handler
 /+  dbug, default-agent, *near-handler, gossip, server, schooner
 /$  grab-metadata  %noun  %near-metadata
 ::
@@ -13,7 +13,7 @@
   ::  (map identifier=[ship id] metadata=[name url])
       heard=(map identifier metadata)  
       published=(map identifier metadata)  
-      installed=(map identifier glob:docket)
+      installed=(map identifier glob)
   ==
 ::
 +$  card  $+(card card:agent:gall)
@@ -75,7 +75,7 @@
     =^  cards  state  abet:(arvo:hc wire sign-arvo)
     [cards this]
   ::
-  ++  on-peek   on-peek:def
+  ++  on-peek   peek:hc
   ++  on-fail   on-fail:def
   ++  on-leave  on-leave:def
   --
@@ -109,6 +109,7 @@
     %near-action
   ?>  from-self
   =+  !<(act=gateway-action vase)
+  ~&  >>>  act
   ?-  -.act
     ::
       %publish 
@@ -121,7 +122,7 @@
     ~&  'Alredy globbed and installed'
     that
     ::
-      %install  ::[%install =identifier =metadata]
+      %install  
     %+  get-gateway-glob
       metadata.act
     identifier.act
@@ -131,7 +132,7 @@
 ++  handle-http-request
   |=  [id=@ta inbound-request:eyre]
   ^+  that 
-  =/  request-line  (parse-request-line:server url.request)
+  =/  req=request-line:server  (parse-request-line:server url.request)
   =+  send=(cury response:schooner id)
   ?.  authenticated
     %-  emil
@@ -141,30 +142,38 @@
       %-  emil 
       %-  send  [405 ~ [%stock ~]]
     %'GET'
-  ?+  [site ext]:request-line  
+  ?+  [site ext]:req  
     %-  emil  
-    %-  send  [302 ~ [%redirect './apps/near']]
+    %-  send  [302 ~ [%redirect '../near']]
     ::
       [[%apps %near ~] *]
     %-  emil  
     %-  send  [200 ~ [%plain "welcome to %near-gateway"]] ::for now
     ::
-      [[%apps %near @ @ *] *] 
+      [[%apps %near @ @ *] *]
+    ?.  (gte (lent site.req) 5)
+      %-  emil
+      %-  send  dump
+    =/  identifier  :-  (slav %p (snag 2 site.req))
+                    (slav %uv (snag 3 site.req))
+    ?.  (~(has by installed) identifier) 
+      %-  emil
+      %-  send  dump
+    ~&  >  ['hash' (sham (~(get by installed) identifier))]
     =/  new-site  
     %+  weld 
       %+  slag  4 
-      ;;  (list @ta)  site.request-line
+      ;;  (list @ta)  site.req
     %-  drop 
-    ext.request-line
-      ~&  >  request-line
-      ~&  >>  ['site' (weld (slag 4 `(list @ta)`site.request-line) (drop ext.request-line))]
+    ext.req
+      ~&  >  req
+      ~&  >>  ['site' (weld (slag 4 `(list @ta)`site.req) (drop ext.req))]
     %-  emil
     %+  give-simple-payload:app:server 
       id
     %+  from-glob 
-      :-  (slav %p (snag 2 site.request-line))  ::ship
-      (slav %uv (snag 3 site.request-line))     ::id
-    request-line(site new-site)
+      identifier
+    req(site new-site)
     ==
   ::
     %'POST'  
@@ -175,10 +184,10 @@
 ++  from-glob
   |=  [identifier=[=ship id=@uvH] request=request-line:server]
   ^-  simple-payload:http
+  ~&  >  request
   ~&  (~(has by installed) identifier)
   ?.  (~(has by installed) identifier)  not-found:gen:server
-  =/  =glob:docket  (~(got by installed) identifier)
-  ::?:  =(suffix /desk/js)
+  =/  =glob  (~(got by installed) identifier)
   =/  requested  ?:  (~(has by glob) site.request)  
                     site.request
                   /index/html
@@ -191,7 +200,7 @@
      ~[max-1-wk:gen:server]
 ::  
 ++  get-gateway-glob
-  |=  [data=metadata =identifier]  ::[name=@t url=@t]
+  |=  [data=metadata =identifier] 
   ^+  that 
   =/  tid  `@ta`(cat 3 'near-' (scot %uv (sham eny.bowl)))
   =/  ta-now  `@ta`(scot %da now.bowl)
@@ -227,6 +236,7 @@
     ^-  card
     [%give %fact ~ %metadata !>([identifier metadata])]
   ==
+::
 ++  agent 
   |=  [=wire =sign:agent:gall]
   ^+  that
@@ -237,8 +247,6 @@
       =*  mark  p.cage.sign
       =*  vase  q.cage.sign
       ?.  =(%metadata mark)  that
-      ~&  >>  'got fact'
-      ~&  >>  !<([id=identifier =metadata] vase)
         =+  !<([id=identifier =metadata] vase)
         =.  heard  (~(put by heard) id metadata)
         that
@@ -248,21 +256,20 @@
         %kick  that
         ?(%poke-ack %watch-ack)
       ?~  p.sign  
-          ~&  'Thread started succesfully' 
           that
-      ~&  'Thread fail to start'
+      ~&  'Thread failed to start'
       that
       ::
         %fact 
       ?+  p.cage.sign  that
           %thread-fail
-        ~&  >>>  ['thread-failed to glob' (slag 2 `(list @ta)`wire)]
+        ~&  >>>  ['Thread-failed to glob' (slag 2 `(list @ta)`wire)]
         =/  id    (id-from-wire wire)
         =.  published  (~(del by published) id)
         that
         ::
           %thread-done 
-        =/  glob  !<(glob:docket q.cage.sign)
+        =/  glob  !<(glob q.cage.sign)
         =/  id    (id-from-wire wire)
         =/  had=metadata  (~(got by published) id)
         =/  path  ;;  (list @ta)  wire
@@ -270,8 +277,9 @@
           :-  (snag 2 path)
           (snag 3 path)
         ?.  =(url.had url.got)
-          ~&  >>>  'glob url mismatch'
+          ~&  >>>  'Glob url mismatch'
           that
+        ~&  >  'Gateway globbed successfully'
         =.  installed  (~(put by installed) id glob)
         %-  emit
         %+  invent:gossip
@@ -294,8 +302,18 @@
   ?+  wire   that
       [%eyre %connect ~]
     ?.  ?=([%eyre %bound *] sign-arvo)  that
-    ?:  accepted.sign-arvo  that
+    ?:  accepted.sign-arvo  
+    that
     ~&  ['Failed to bind' path.binding.sign-arvo] 
     that
+  ==
+++  peek
+  |=  =path
+  ^-  (unit (unit cage))
+  ?+  path  [~ ~]
+  ::  add dbug mime pretty printer 
+  [%x %heard ~]      ``json+!>((id-data:enjs heard))
+  [%x %published ~]  ``json+!>((id-data:enjs published))
+  [%x %installed ~]  ``json+!>((id-glob:enjs ~(tap in ~(key by installed))))
   ==
   --
