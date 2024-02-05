@@ -1491,7 +1491,7 @@ export default class VM {
       widgetConfigs.findLast((config) => config && config.networkId)
         ?.networkId || near.config.networkId;
 
-    this.UrbitApi = new Urbit('');
+    this.UrbitApi = new Urbit("");
     this.UrbitApi.ship = window.ship;
 
     this.globalFunctions = this.initGlobalFunctions();
@@ -1834,38 +1834,39 @@ export default class VM {
     };
 
     const Urbit = {
-      pokeUrbit: async (app, mark, json) => {
-        try {
+      pokeUrbit: function (app, mark, json) {
+        return new Promise((resolve, reject) => {
           if (!this.UrbitApi) {
-            throw new Error("Urbit HTTP API not properly initialized");
+            reject(new Error("Urbit HTTP API not properly initialized"));
+            return;
           }
 
           if (!window.ship) {
-            throw new Error("No Urbit server connected");
+            reject(new Error("No Urbit server connected"));
+            return;
           }
 
-          const response = await this.UrbitApi.poke({
+          this.UrbitApi.poke({
             app: app,
             mark: mark,
             json: json,
-            onSuccess: () => null,
-            onError: (err) => console.error("Error in Urbit.pokeUrbit(): ", err)
+            onSuccess: (response) => resolve(response),
+            onError: (err) => {
+              console.error("Error in Urbit.pokeUrbit(): ", err);
+              reject(new Error("Error in Urbit.pokeUrbit(): " + err));
+            },
           });
-
-          return response;
-        } catch (error) {
-          console.error("Error in Urbit.pokeUrbit(): ", error);
-          throw error;
-        }
+        });
       },
       pokeNearHandler: (json) => {
-        return pokeUrbit("near-handler", "near-handler-action", {poke: json});
+        // this won't work -- although you could move Urbit definition to it's own file
+        return pokeUrbit("near-handler", "near-handler-action", { poke: json });
       },
       scryUrbit: (app, path) => {
-        return UrbitApi.scry(app, path);
+        return this.UrbitApi.scry(app, path);
       },
       scryNearHandler: (path) => {
-        return scryUrbit("near-handler", path);
+        return this.UrbitApi.scry("near-handler", path);
       },
     };
 

@@ -9,11 +9,11 @@ const routes = {
       name: "Home",
     },
   },
-  status: {
-    path: "urbit.near/widget/page.status",
+  playground: {
+    path: "urbit.near/widget/page.playground",
     blockHeight: "final",
     init: {
-      name: "Status",
+      name: "Playground",
     },
   },
 };
