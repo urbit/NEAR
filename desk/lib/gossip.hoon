@@ -445,8 +445,8 @@
     |=  inner=agent:gall
     =|  state-1
     =*  state  -
-    %+  verb  |
-    %-  agent:dbug
+    :: %+  verb  |
+    :: %-  agent:dbug
     ^-  agent:gall
     |_  =bowl:gall
     +*  this    .
@@ -689,8 +689,8 @@
         =/  dat  (on-peek:og path)
         ?:  ?=(?(~ [~ ~]) dat)  ~
         (fall ((soft (list mass)) q.q.u.u.dat) ~)
-      ?:  =(/x/dbug/state path)
-        ``noun+(slop on-save:og !>(gossip=state))
+      :: ?:  =(/x/dbug/state path)
+      ::   ``noun+(slop on-save:og !>(gossip=state))
       ?.  ?=([@ %~.~ %gossip *] path)
         (on-peek:og path)
       ?.  ?=(%x i.path)  [~ ~]

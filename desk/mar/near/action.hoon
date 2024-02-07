@@ -1,16 +1,16 @@
 /-  *near-handler
 /+  *near-handler
-|_  =gateway-action 
+|_  act=gateway-action 
 ++  grab
   |%
   ++  noun  gateway-action
   ++  json  
-  ~&  >>>  json  
+  ~&  >>>  'poke to near-gateways json'
   gateway-act:dejs
   --
 ++  grow
   |%
-  ++  noun  gateway-action 
+  ++  noun  act
   --
 ++  grad  %noun
 --

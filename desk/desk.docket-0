@@ -1,0 +1,10 @@
+:~
+  title+'near-gateway'
+  info+'NEAR gateway manager'
+  color+0xa6.7bc4
+  base+'near'
+  site+/apps/near
+  version+[0 0 1]
+  website+'https://github.com/urbit'
+  license+'MIT'
+==

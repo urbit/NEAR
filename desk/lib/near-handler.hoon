@@ -43,6 +43,7 @@
 --
 ::
 ++  dejs
+!:
 =,  dejs:format
   |%
   ++  act
@@ -65,8 +66,10 @@
   ::
   ++  gateway-act
   |=  =json
+  ~&  >  json
+  ~&  ((of :~([%install (ot :~([%identifier (ot :~([%ship (se %p)] [%id (se %uv)]))] [%metadata some]))])) json)
+    ::~&  ((of :~([%install (ot :~([%identifier (ot :~([%ship (se %p)] [%name some]))] [%metadata some]))])) json)
   ^-  gateway-action 
-  ~&  >>  json
   %.  json
   %-  of 
   :~  
@@ -82,7 +85,7 @@
   ++  to-identifier
   %-  ot
   :~  [%ship (se %p)]
-      [%id (se %ux)]
+      [%id (se %uv)]
   ==
   ::
   ++  to-metadata
