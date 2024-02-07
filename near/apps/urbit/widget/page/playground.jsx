@@ -68,15 +68,16 @@ return (
           });
         }}
       >
-        poke
+        pokeUrbit
       </Button>
+      <Button disabled={true}>pokeNearHandler</Button>
       <Button
         onClick={() => {
-          const data = Urbit.scryNearHandler("path");
+          const data = Urbit.scryNearHandler("/accs");
           setResponse(data);
         }}
       >
-        scry
+        scryNearHandler /accs
       </Button>
     </Section>
     <Section as="div" style={{ flexDirection: "column" }}>
