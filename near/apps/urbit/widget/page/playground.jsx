@@ -61,8 +61,16 @@ return (
     <Section as="div" style={{ flexDirection: "column" }}>
       <Button
         onClick={() => {
-          Urbit.pokeUrbit("near-handler", "near-handler-action", {
-            poke: {},
+          Urbit.pokeUrbit({
+            app: 'blog',
+            mark: 'blog-action',
+            json: {}
+            // json: {
+            //   'save-draft': {
+            //     path: '/poke-urbit-post',
+            //     md: 'poke-urbit-near-test-1'
+            //   }
+            // }
           }).then((res) => {
             setResponse(res);
           });
@@ -74,6 +82,7 @@ return (
       <Button
         onClick={() => {
           const data = Urbit.scryNearHandler("/accs");
+          console.log('scryNearHandler data: ', data)
           setResponse(data);
         }}
       >

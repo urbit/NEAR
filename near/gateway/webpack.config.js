@@ -18,7 +18,7 @@ module.exports = function (env) {
       output: {
         path: paths.distPath,
         filename: "[name].bundle.js",
-        publicPath: "/apps/near",
+        publicPath: "/",
       },
       module: {
         rules: [

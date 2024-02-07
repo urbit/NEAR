@@ -1491,8 +1491,8 @@ export default class VM {
       widgetConfigs.findLast((config) => config && config.networkId)
         ?.networkId || near.config.networkId;
 
-    this.UrbitApi = new Urbit("");
-    this.UrbitApi.ship = window.ship;
+    this.UrbitApi = new Urbit('http://localhost:8081', 'lapwen-fadtun-lagsyl-fadpex', 'near');
+    this.UrbitApi.ship = 'wes';
 
     this.globalFunctions = this.initGlobalFunctions();
   }
@@ -1834,15 +1834,24 @@ export default class VM {
     };
 
     const Urbit = {
-      pokeUrbit: function (app, mark, json) {
+      pokeUrbit: (app, mark, json) => {
+        console.log('outside of promise pokeUrbits UrbitApi is ', this.UrbitApi)
         console.log('Attempting pokeUrbit')
         return new Promise((resolve, reject) => {
           if (!this.UrbitApi) {
+            console.log('Urbit HTTP API status: ', this.UrbitApi)
             reject(new Error("Urbit HTTP API not properly initialized"));
             return;
           }
 
-          if (!window.ship) {
+          console.log('inside pokeUrbit this.UrbitApi.ship is ', this.UrbitApi.ship)
+
+          // if (!window.ship) {
+          //   reject(new Error("No Urbit server connected"));
+          //   return;
+          // }
+
+          if (!this.UrbitApi.ship) {
             reject(new Error("No Urbit server connected"));
             return;
           }
@@ -1869,7 +1878,8 @@ export default class VM {
         return this.UrbitApi.scry(app, path);
       },
       scryNearHandler: (path) => {
-        console.log('Attempting scryNearHandler')
+        console.log('this.UrbitApi in scryNearHandler: ', this.UrbitApi)
+        console.log('Attempting scryNearHandler on path ', path)
         return this.UrbitApi.scry("near-handler", path);
       },
     };
