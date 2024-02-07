@@ -1835,6 +1835,7 @@ export default class VM {
 
     const Urbit = {
       pokeUrbit: function (app, mark, json) {
+        console.log('Attempting pokeUrbit')
         return new Promise((resolve, reject) => {
           if (!this.UrbitApi) {
             reject(new Error("Urbit HTTP API not properly initialized"));
@@ -1859,13 +1860,16 @@ export default class VM {
         });
       },
       pokeNearHandler: (json) => {
+        console.log('Attempting pokeNearHandler')
         // this won't work -- although you could move Urbit definition to it's own file
         return pokeUrbit("near-handler", "near-handler-action", { poke: json });
       },
       scryUrbit: (app, path) => {
+        console.log('Attempting scryUrbit')
         return this.UrbitApi.scry(app, path);
       },
       scryNearHandler: (path) => {
+        console.log('Attempting scryNearHandler')
         return this.UrbitApi.scry("near-handler", path);
       },
     };
