@@ -84,7 +84,6 @@ return (
         onClick={() => {
           const data = Urbit.scryNearHandler("/accs");
           console.log('scryNearHandler data: ', data)
-          setResponse(data);
         }}
       >
         scryNearHandler /accs

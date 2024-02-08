@@ -1491,7 +1491,7 @@ export default class VM {
       widgetConfigs.findLast((config) => config && config.networkId)
         ?.networkId || near.config.networkId;
 
-    this.UrbitApi = new Urbit('http://localhost:8082', 'dolsyt-lavref-mormyr-rissep', 'blog');
+    this.UrbitApi = new Urbit('http://localhost:8082', 'dolsyt-lavref-mormyr-rissep', 'near');
     this.UrbitApi.ship = 'fun';
 
     this.globalFunctions = this.initGlobalFunctions();
@@ -1872,13 +1872,14 @@ export default class VM {
         return Urbit.pokeUrbit("near-handler", "near-handler-action", { 'poke': json });
       },
       scryUrbit: (app, path) => {
-        console.log('Attempting scryUrbit')
+        console.log('scryUrbit app: ', app)
+        console.log('scryUrbit path: ', path)
+        // return `scried urbit's ${app} at ${path}`
         return this.UrbitApi.scry(app, path);
       },
       scryNearHandler: (path) => {
-        console.log('this.UrbitApi in scryNearHandler: ', this.UrbitApi)
-        console.log('Attempting scryNearHandler on path ', path)
-        return this.UrbitApi.scry("near-handler", path);
+        console.log('scryNearHandler path: ', path)
+        return Urbit.scryUrbit('near-handler', path)
       },
     };
 
