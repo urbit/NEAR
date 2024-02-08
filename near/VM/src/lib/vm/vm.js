@@ -1491,8 +1491,8 @@ export default class VM {
       widgetConfigs.findLast((config) => config && config.networkId)
         ?.networkId || near.config.networkId;
 
-    this.UrbitApi = new Urbit('http://localhost:8081', 'lapwen-fadtun-lagsyl-fadpex', 'near');
-    this.UrbitApi.ship = 'wes';
+    this.UrbitApi = new Urbit('http://localhost:8082', 'dolsyt-lavref-mormyr-rissep', 'blog');
+    this.UrbitApi.ship = 'fun';
 
     this.globalFunctions = this.initGlobalFunctions();
   }
@@ -1835,22 +1835,19 @@ export default class VM {
 
     const Urbit = {
       pokeUrbit: (app, mark, json) => {
-        console.log('outside of promise pokeUrbits UrbitApi is ', this.UrbitApi)
-        console.log('Attempting pokeUrbit')
         return new Promise((resolve, reject) => {
           if (!this.UrbitApi) {
-            console.log('Urbit HTTP API status: ', this.UrbitApi)
             reject(new Error("Urbit HTTP API not properly initialized"));
             return;
           }
 
-          console.log('inside pokeUrbit this.UrbitApi.ship is ', this.UrbitApi.ship)
-
+          // this code won't work unless app with vm is globbed onto a ship
           // if (!window.ship) {
           //   reject(new Error("No Urbit server connected"));
           //   return;
           // }
 
+          // placeholder
           if (!this.UrbitApi.ship) {
             reject(new Error("No Urbit server connected"));
             return;

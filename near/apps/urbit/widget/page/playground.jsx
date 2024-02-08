@@ -61,16 +61,9 @@ return (
     <Section as="div" style={{ flexDirection: "column" }}>
       <Button
         onClick={() => {
-          Urbit.pokeUrbit({
-            app: 'blog',
-            mark: 'blog-action',
-            json: {}
-            // json: {
-            //   'save-draft': {
-            //     path: '/poke-urbit-post',
-            //     md: 'poke-urbit-near-test-1'
-            //   }
-            // }
+          Urbit.pokeUrbit('near-handler', 'near-handler-action', {
+            // hard-coded dummy pubkey
+            'add': '0x11d9.2405.6c6f.f37a.675a.b2f4.0c99.8cfb.ea8b.f032.c83e.79a6.5305.72eb.0e9f.08c0'
           }).then((res) => {
             setResponse(res);
           });
