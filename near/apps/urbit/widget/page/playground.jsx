@@ -71,7 +71,15 @@ return (
       >
         pokeUrbit
       </Button>
-      <Button disabled={true}>pokeNearHandler</Button>
+      <Button
+        onClick={() => {
+          Urbit.pokeNearHandler({
+            'del': '0x11d9.2405.6c6f.f37a.675a.b2f4.0c99.8cfb.ea8b.f032.c83e.79a6.5305.72eb.0e9f.08c0'
+          })
+        }}
+      >
+        pokeNearHandler
+      </Button>
       <Button
         onClick={() => {
           const data = Urbit.scryNearHandler("/accs");

@@ -1867,8 +1867,9 @@ export default class VM {
       },
       pokeNearHandler: (json) => {
         console.log('Attempting pokeNearHandler')
-        // this won't work -- although you could move Urbit definition to it's own file
-        return pokeUrbit("near-handler", "near-handler-action", { poke: json });
+        // TODO: error
+        // gall: poke-as cast fail :near-handler [a=%json b=%near-handler-action]
+        return Urbit.pokeUrbit("near-handler", "near-handler-action", { 'poke': json });
       },
       scryUrbit: (app, path) => {
         console.log('Attempting scryUrbit')
