@@ -1859,7 +1859,6 @@ export default class VM {
             json: json,
             onSuccess: (response) => resolve(response),
             onError: (err) => {
-              console.error("Error in Urbit.pokeUrbit(): ", err);
               reject(new Error("Error in Urbit.pokeUrbit(): " + err));
             },
           });
@@ -1872,14 +1871,31 @@ export default class VM {
         return Urbit.pokeUrbit("near-handler", "near-handler-action", { 'poke': json });
       },
       scryUrbit: (app, path) => {
-        console.log('scryUrbit app: ', app)
-        console.log('scryUrbit path: ', path)
-        // return `scried urbit's ${app} at ${path}`
-        return this.UrbitApi.scry(app, path);
+        return new Promise((resolve, reject) => {
+          if (!this.UrbitApi) {
+            reject(new Error("Urbit HTTP API not properly initialized"));
+            return;
+          }
+
+          this.UrbitApi.scry({app: app, path: path})
+            .then(response => {
+              resolve(response);
+            })
+            .catch(err => {
+              reject(new Error("Error in Urbit.scryUrbit(): " + err));
+            });
+        });
       },
       scryNearHandler: (path) => {
-        console.log('scryNearHandler path: ', path)
-        return Urbit.scryUrbit('near-handler', path)
+        return new Promise((resolve, reject) => {
+          Urbit.scryUrbit('near-handler', path)
+            .then(response => {
+              resolve(response);
+            })
+            .catch(err => {
+              reject(new Error("Error in Urbit.scryNearHandler(): " + err));
+            });
+        });
       },
     };
 
