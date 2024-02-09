@@ -1,7 +1,3 @@
-::  oninit %publish ui glob
-::  exclude ui-glob from published/installed scry path
-::  host ui-glob at /apps/near
-::  make sure not to gossip ui-glob
 /-  *near-handler
 /+  dbug, default-agent, *near-handler, gossip, server, schooner, verb
 /$  grab-metadata  %noun  %near-metadata
@@ -97,7 +93,6 @@
 ::
 ++  init
   ^+  that
-  ::for now
   %-  emil
   :~
   [%pass /eyre/connect %arvo %e %connect [~ /apps/near] %near-gateways]
@@ -113,7 +108,6 @@
 ++  poke 
   |=  [=mark =vase]
   ^+  that
-  ~&  mark
   ?+  mark  that
     %handle-http-request
   =+  !<([id=@ta request=inbound-request:eyre] vase)
@@ -127,7 +121,6 @@
       %publish 
     ?~  (find ~[metadata.act] ~(val by published))
       =/  id=identifier  [our.bowl (sham eny.bowl)] 
-      ~&  ['publish id' id]
       ?:  =(metadata.act ['ui-main' url])
           =.  ui-glob  [id *glob]
           %+  get-gateway-glob
@@ -152,7 +145,6 @@
   ^+  that 
   =/  req=request-line:server  (parse-request-line:server url.request)
   =+  send=(cury response:schooner id)
-  ~&  >>>  req
   ?.  authenticated
     %-  emil
     %-  send
@@ -192,11 +184,11 @@
       %-  emil
       %-  send  dump
     =/  new-site  
-    %+  weld 
-      %+  slag  4 
-      ;;  (list @ta)  site.req
-    %-  drop 
-    ext.req
+      %+  weld 
+        %+  slag  4 
+        ;;  (list @ta)  site.req
+      %-  drop 
+      ext.req
     %-  emil
     %+  give-simple-payload:app:server 
       id
@@ -213,22 +205,17 @@
 ++  from-glob
   |=  [identifier=[=ship id=@uvH] request=request-line:server]
   ^-  simple-payload:http
-  ~&  identifier
-  ~&  site.request
   =/  =glob
     ?:  =(identifier [ship=~zod id=0v0])  
-    ~&  >   (~(has by +.ui-glob) site.request)
     +.ui-glob
       ?.  (~(has by installed) identifier)  
         ~
   (~(got by installed) identifier)
-~&  >>  'glob'
   ?:  =(glob ~)  not-found:gen:server
   =/  requested  ?:  (~(has by glob) site.request)  
                     site.request
                   /index/html
   =/  =mime  (~(got by glob) requested)
-  ~&  'got mime'
   =/  mime-type=@t  (rsh 3 (crip <p.mime>)) 
     =;  headers
       [[200 headers] `q.mime]
@@ -379,5 +366,5 @@
   ==
 ==
   ::http{s}://{host}/~/scry/{app}{path}.{mark}
-++  url  's3-bucket-url
+++  url  's3-bucket-url'
   --
