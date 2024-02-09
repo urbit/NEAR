@@ -67,7 +67,8 @@
   ++  gateway-act
   |=  =json
   ~&  >  json
-  ~&  ((of :~([%install (ot :~([%identifier (ot :~([%ship (se %p)] [%id (se %uv)]))] [%metadata some]))])) json)
+  ~&  'json arm'
+  ::~&  ((of :~([%install (ot :~([%identifier (ot :~([%ship (se %p)] [%id (se %uv)]))] [%metadata some]))])) json)
     ::~&  ((of :~([%install (ot :~([%identifier (ot :~([%ship (se %p)] [%name some]))] [%metadata some]))])) json)
   ^-  gateway-action 
   %.  json
