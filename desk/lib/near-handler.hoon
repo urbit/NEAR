@@ -12,6 +12,17 @@
   (accs +.update)
   ==
   ::
+  ++  scry-json 
+  |=  =scry
+  ^-  json
+  ?-  -.scry
+    %heard  
+  (id-data +.scry)
+    %published 
+  (id-data +.scry)
+    %installed 
+  (id-glob +.scry)
+  ==
   ++  accs
   |=  accs=(set acc)
   ^-  json 
@@ -56,7 +67,6 @@
       [%poke poke]   
     ==
   ::
-  ::  ::{'poke':{'agent':'test', 'mark':'test-action', 'data':{'poke':1}}}
   ++  poke  
   %-  ot
     :~  [%agent (se %tas)]
@@ -68,8 +78,6 @@
   |=  =json
   ~&  >  json
   ~&  'json arm'
-  ::~&  ((of :~([%install (ot :~([%identifier (ot :~([%ship (se %p)] [%id (se %uv)]))] [%metadata some]))])) json)
-    ::~&  ((of :~([%install (ot :~([%identifier (ot :~([%ship (se %p)] [%name some]))] [%metadata some]))])) json)
   ^-  gateway-action 
   %.  json
   %-  of 

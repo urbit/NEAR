@@ -93,6 +93,7 @@
 ::
 ++  init
   ^+  that
+  ::for now
   %-  emil
   :~
   [%pass /eyre/connect %arvo %e %connect [~ /apps/near] %near-gateways]
@@ -121,6 +122,7 @@
       %publish 
     ?~  (find ~[metadata.act] ~(val by published))
       =/  id=identifier  [our.bowl (sham eny.bowl)] 
+      ~&  ['publish id' id]
       ?:  =(metadata.act ['ui-main' url])
           =.  ui-glob  [id *glob]
           %+  get-gateway-glob
@@ -157,7 +159,6 @@
     %-  emil  
     %-  send  [302 ~ [%redirect '../']]
     [[%apps %near ~] *]
-    ::=/  new-site  ;;  (list @ta)  /index/html\
     %-  emil
     %+  give-simple-payload:app:server 
       id
@@ -174,7 +175,7 @@
       *identifier
     req(site new-site)
     ::
-      [[%apps %near @ @ *] *] ::  /apps/near/ship/id/index/html  /near/~rantul-tobfep-sanpel-fiptev--dollur-dibted-parwel-samzod/0v2.2qs2p.b8227.v71g0.3r0io.714ar/index/html
+      [[%apps %near @ @ *] *] ::  /apps/near/ship/id/index/html
     ?.  (gte (lent site.req) 5)
       %-  emil
       %-  send  dump
@@ -205,6 +206,8 @@
 ++  from-glob
   |=  [identifier=[=ship id=@uvH] request=request-line:server]
   ^-  simple-payload:http
+  ~&  identifier
+  ~&  site.request
   =/  =glob
     ?:  =(identifier [ship=~zod id=0v0])  
     +.ui-glob
@@ -216,6 +219,7 @@
                     site.request
                   /index/html
   =/  =mime  (~(got by glob) requested)
+  ~&  'got mime'
   =/  mime-type=@t  (rsh 3 (crip <p.mime>)) 
     =;  headers
       [[200 headers] `q.mime]
@@ -349,9 +353,9 @@
   ^-  (unit (unit cage))
   ?+  path  [~ ~]
   ::  
-  [%x %heard ~]      ``json+!>((id-data:enjs heard))
-  [%x %published ~]  ``json+!>((id-data:enjs published))
-  [%x %installed ~]  ``json+!>((id-glob:enjs ~(tap in ~(key by installed))))
+  [%x %heard ~]      ``near-scry+!>([%heard heard])
+  [%x %published ~]  ``near-scry+!>([%published published])
+  [%x %installed ~]  ``near-scry+!>([%installed ~(tap in ~(key by installed))])
   [%x %dbug %state ~]  
   =-  ``noun+!>(-)
   %_  state
@@ -366,5 +370,5 @@
   ==
 ==
   ::http{s}://{host}/~/scry/{app}{path}.{mark}
-++  url  's3-bucket-url'
+++  url  's3-bucket-ui'
   --

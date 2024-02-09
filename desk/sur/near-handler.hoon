@@ -15,4 +15,9 @@
   $%  [%publish =metadata]
       [%install =identifier =metadata]
   ==
++$  scry
+  $%  [%heard =(map identifier metadata)]
+      [%published =(map identifier metadata)]
+      [%installed =(list identifier)]
+  ==
 --
