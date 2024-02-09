@@ -23,7 +23,7 @@ function HeardGateways(arg) {
                 'metadata' : {'name' : gateway.name,
                                 'url' : gateway.url} 
             }}, 
-            onSuccess: () => console.log('installed'),  //window.location.reload(), //reload page here
+            onSuccess: () => window.location.reload(), //reload page here
             onError: () => console.log("install of " + gateway.name + " failed")
         })
     }
