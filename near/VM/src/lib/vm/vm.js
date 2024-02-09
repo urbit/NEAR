@@ -1491,6 +1491,8 @@ export default class VM {
       widgetConfigs.findLast((config) => config && config.networkId)
         ?.networkId || near.config.networkId;
 
+    // TODO: hard-coded authentication for a local fake
+    //       urbit ship for debugging purposes; remove
     this.UrbitApi = new Urbit('http://localhost:8082', 'dolsyt-lavref-mormyr-rissep', 'near');
     this.UrbitApi.ship = 'fun';
 
@@ -1876,6 +1878,8 @@ export default class VM {
             reject(new Error("Urbit HTTP API not properly initialized"));
             return;
           }
+
+          // TODO: check window.ship is not null/undefined
 
           this.UrbitApi.scry({app: app, path: path})
             .then(response => {
