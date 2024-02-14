@@ -17,6 +17,7 @@ To run locally:
 1. In one terminal, start the bos-worskspace
 
 ```cmd
+npm install
 npm run dev
 ```
 
@@ -28,6 +29,7 @@ This will serve your local widget code (/apps/urbit/*) to port 8080.
 
 ```cmd
 cd gateway
+npm install (this may take a while)
 npm run dev
 ```
 
