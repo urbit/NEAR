@@ -1,6 +1,7 @@
 node_modules
 .vscode
 .DS_Store
+.nx
 
 /build
 /dist
