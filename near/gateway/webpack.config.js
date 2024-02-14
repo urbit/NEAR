@@ -34,10 +34,16 @@ module.exports = function (env) {
             exclude: path.resolve(__dirname, "node_modules"),
           },
           // Images: Copy image files to build folder
-          { test: /\.(?:ico|gif|png|jpg|jpeg)$/i, type: "asset/resource" },
+          {
+            test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
+            type: "asset/resource",
+          },
 
           // Fonts and SVGs: Inline files
-          { test: /\.(woff(2)?|eot|ttf|otf|svg|)$/, type: "asset/inline" },
+          {
+            test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
+            type: "asset/inline",
+          },
         ],
       },
       resolve: {
@@ -70,9 +76,9 @@ module.exports = function (env) {
           patterns: [
             {
               from: paths.publicPath,
-              to: "assets",
+              to: "./",
               globOptions: {
-                ignore: ["*.DS_Store"],
+                ignore: ["**/*.DS_Store", "**/index.html", "**/favicon.png"],
               },
               noErrorOnMissing: true,
             },
@@ -80,18 +86,23 @@ module.exports = function (env) {
         }),
         new HTMLWebpackPlugin({
           template: `${paths.publicPath}/index.html`,
-          favicon: `${paths.publicPath}/favicon.png`,
-          robots: `${paths.publicPath}/robots.txt`,
-          publicPath: "/",
+          publicPath: process.env.PUBLIC_PATH ?? "/",
+          minify: false,
+        }),
+        new HTMLWebpackPlugin({
+          template: `${paths.publicPath}/index.html`,
+          filename: "404.html",
+          publicPath: process.env.PUBLIC_PATH ?? "/",
+          minify: false,
         }),
         new webpack.ProvidePlugin({
           process: "process/browser",
           Buffer: [require.resolve("buffer/"), "Buffer"],
         }),
-        new ManifestPlugin.WebpackManifestPlugin(),
+        // new ManifestPlugin.WebpackManifestPlugin(),
       ],
     },
     loadConfig(mode),
-    loadPreset(env)
+    loadPreset(env),
   );
 };

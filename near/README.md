@@ -10,40 +10,24 @@ This repository is set up with a clone of the [NearSocial/VM](https://github.com
 
 ## Getting Started
 
-(I was unable to get a nice monorepo working...)
-
 To run locally:
 
-1. In one terminal, start the bos-worskspace
-
+1. From this root (/near), run:
 ```cmd
-npm run dev
+pnpm install
+pnpm run dev
 ```
-
-![bos-workspace](./assets/bos-workspace.png)
 
 This will serve your local widget code (/apps/urbit/*) to port 8080.
 
-2. In another terminal, start the gateway
+![bos-workspace](./assets/bos-workspace.png)
 
-```cmd
-cd gateway
-npm run dev
-```
+and start a react app at port 4000.
 
-This will start a react app at port 4000.
+2. Configure flags on gateway to work with local widgets. Go to `http://localhost:3000/flags` and paste in: `http://127.0.0.1:8080/api/loader`. Components should be loading successfully if localhost:3000 shows a dashboard rather than a white screen.
 
-3. Configure flags on gateway to work with local widgets. Go to `http://localhost:3000/flags` and paste in: `http://127.0.0.1:8080/api/loader`. Components should be loading successfully if localhost:3000 shows a dashboard rather than a white screen.
 
-4. Link the VM to the gateway
-
-```cmd
-cd VM
-yarn link
-cd ../gateway
-yarn link near-social-vm
-```
-If successful, you should see:
+3. Verify VM is connected
 
 ![vm-configured](./assets/vm-configured.png)
 
@@ -53,6 +37,7 @@ This signifies that `Urbit` keyword is recognized.
 
 ```cmd
 cd VM
-npm run build
+pnpm run build
 ```
+
 If linked successfully, gateway should load changes automatically.
