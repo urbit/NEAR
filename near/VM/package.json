@@ -1,6 +1,6 @@
 {
   "name": "near-social-vm",
-  "version": "2.5.3",
+  "version": "0.0.1",
   "description": "Near Social VM",
   "main": "dist/index.js",
   "files": [
@@ -82,10 +82,10 @@
     "https-browserify": "^1.0.0",
     "mini-css-extract-plugin": "^2.8.0",
     "near-api-js": "^3.0.2",
-    "sass": "^1.70.0",
     "os-browserify": "^0.3.0",
     "postcss-loader": "^8.1.0",
     "process": "^0.11.10",
+    "sass": "^1.70.0",
     "sass-loader": "^14.1.0",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
