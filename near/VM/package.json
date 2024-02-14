@@ -1,6 +1,6 @@
 {
   "name": "near-social-vm",
-  "version": "0.0.1",
+  "version": "2.5.6",
   "description": "Near Social VM",
   "main": "dist/index.js",
   "files": [
@@ -45,7 +45,9 @@
     "deep-equal": "^2.2.3",
     "dompurify": "^3.0.8",
     "elliptic": "^6.5.4",
+    "encoding": "^0.1.13",
     "ethers": "^6.11.0",
+    "events": "^3.3.0",
     "idb": "^8.0.0",
     "iframe-resizer-react": "^1.1.0",
     "local-storage": "^2.0.0",
@@ -53,6 +55,7 @@
     "mdast-util-find-and-replace": "^3.0.1",
     "nanoid": "^5.0.5",
     "prettier": "^3.2.5",
+    "punycode": "^2.3.1",
     "react-bootstrap": "^2.10.1",
     "react-bootstrap-typeahead": "^6.3.2",
     "react-error-boundary": "^4.0.12",
@@ -64,7 +67,8 @@
     "react-uuid": "^1.0.2",
     "remark-gfm": "^4.0.0",
     "styled-components": "^6.1.8",
-    "tweetnacl": "^1.0.3"
+    "tweetnacl": "^1.0.3",
+    "util": "^0.12.5"
   },
   "devDependencies": {
     "@babel/core": "^7.23.9",

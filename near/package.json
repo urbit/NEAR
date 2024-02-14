@@ -6,8 +6,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "bos-workspace dev -no-gateway",
-    "build": "bos-workspace build"
+    "dev": "concurrently \"pnpm run dev:gateway\" \"bos-workspace dev\"",
+    "dev:gateway": "npx nx run-many --target=dev --projects=viewer"
   },
   "devDependencies": {
     "bos-workspace": "^0.0.1-alpha.5",
@@ -15,6 +15,7 @@
     "lerna": "^8.1.2"
   },
   "dependencies": {
+    "nx": "^18.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
