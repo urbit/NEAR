@@ -1,0 +1,9 @@
+:~  title+'Near'
+    info+''
+    color+0x9e.9191
+    base+'near'
+    version+[0 0 1]
+    glob-ames+[~zod 0v0]
+    website+'https://github.com/urbit/NEAR'
+    license+'MIT'
+==
