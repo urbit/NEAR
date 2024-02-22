@@ -82,7 +82,7 @@ module.exports = function (env) {
           template: `${paths.publicPath}/index.html`,
           favicon: `${paths.publicPath}/favicon.png`,
           robots: `${paths.publicPath}/robots.txt`,
-          publicPath: "/",
+          publicPath: "./",
         }),
         new webpack.ProvidePlugin({
           process: "process/browser",
