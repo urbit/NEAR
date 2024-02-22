@@ -41,7 +41,7 @@ module.exports = () => ({
   devServer: {
     open: true,
     static: path.resolve(__dirname, "../dist"),
-    port: 3000,
+    port: 3001,
     compress: true,
   },
   plugins: [new HotModuleReplacementPlugin()],
