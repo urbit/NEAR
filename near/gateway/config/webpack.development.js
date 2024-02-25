@@ -41,7 +41,7 @@ module.exports = () => ({
   devServer: {
     open: true,
     static: path.resolve(__dirname, '../dist'),
-    port: 3001,
+    port: 80,
     compress: true,
     historyApiFallback: {
       disableDotRule: true

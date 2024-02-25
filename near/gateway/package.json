@@ -1,7 +1,7 @@
 {
   "name": "viewer",
   "version": "0.12.3",
-  "homepage": "/",
+  "homepage": "./",
   "private": true,
   "dependencies": {
     "@near-wallet-selector/core": "^8.1.0",

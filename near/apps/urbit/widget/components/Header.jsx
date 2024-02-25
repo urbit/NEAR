@@ -35,17 +35,18 @@ const { href } = VM.require("buildhub.near/widget/lib.url") || {
 };
 
 const NavLink = ({ to, children }) => (
-  <Link
-    key={to}
-    to={href({
-      widgetSrc: "urbit.near/widget/app",
-      params: {
-        page: to,
-      },
-    })}
-  >
-    {children}
-  </Link>
+  <div></div>
+  // <Link
+  //   key={to}
+  //   to={href({
+  //     widgetSrc: "urbit.near/widget/app",
+  //     params: {
+  //       page: to,
+  //     },
+  //   })}
+  // >
+  //   {children}
+  // </Link>
 );
 
 const [showMenu, setShowMenu] = useState(false);
@@ -53,7 +54,7 @@ const toggleDropdown = () => setShowMenu(!showMenu);
 
 const AppHeader = ({ page, routes, ...props }) => (
   <Navbar>
-    <Link
+    {/* <Link
       style={{ flex: 1 }}
       to={href({
         widgetSrc: "urbit.near/widget/app",
@@ -66,7 +67,7 @@ const AppHeader = ({ page, routes, ...props }) => (
         style={{ width: 85, objectFit: "cover" }}
         src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Urbit_Logo.svg/1200px-Urbit_Logo.svg.png"
       />
-    </Link>
+    </Link> */}
     <ButtonGroup style={{ flex: 1 }}>
       {routes &&
         (Object.keys(routes) || []).map((k) => {

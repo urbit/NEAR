@@ -12,14 +12,14 @@ const Label = styled.span`
   font-size: 16px;
 `;
 
-const StatusIndicator = ({ isConnected, label }) => {
-  return (
-    <div className="d-flex align-items-center">
-      <GlowLight isConnected={isConnected} />
-      <Label>{label}</Label>
-    </div>
-  );
-};
+// const StatusIndicator = ({ isConnected, label }) => {
+//   return (
+//     <div className="d-flex align-items-center">
+//       <GlowLight isConnected={isConnected} />
+//       <Label>{label}</Label>
+//     </div>
+//   );
+// };
 
 const Container = styled.div`
   display: flex;
@@ -55,7 +55,8 @@ const TextArea = styled.textarea`
 
 const Button = styled.button``;
 const [response, setResponse] = useState("");
-
+//console.log(Urbit)
+const urbitPlayground = () => {
 return (
   <Container>
     <Section as="div" style={{ flexDirection: "column" }}>
@@ -65,6 +66,7 @@ return (
             // hard-coded dummy pubkey
             'add': '0x11d9.2405.6c6f.f37a.675a.b2f4.0c99.8cfb.ea8b.f032.c83e.79a6.5305.72eb.0e9f.08c0'
           }).then((res) => {
+            console.log(Urbit)
             setResponse(res);
           });
         }}
@@ -101,3 +103,5 @@ return (
     </Section>
   </Container>
 );
+      }
+export default urbitPlayground
