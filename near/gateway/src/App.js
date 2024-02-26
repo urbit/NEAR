@@ -17,7 +17,7 @@ import { useAccount, useInitNear, useNear, utils } from 'near-social-vm'
 import React, { useCallback, useEffect, useState } from 'react'
 import 'react-bootstrap-typeahead/css/Typeahead.bs5.css'
 import 'react-bootstrap-typeahead/css/Typeahead.css'
-//import { Link, Route, BrowserRouter as Router, Switch } from 'react-router-dom'
+import { Link, Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import { BosLoaderBanner } from './components/BosLoaderBanner'
 import Core from './components/Core'
 import { NetworkId, Widgets } from './data/widgets'
@@ -25,8 +25,6 @@ import { useBosLoaderInitializer } from './hooks/useBosLoaderInitializer'
 import Flags from './pages/Flags'
 import Viewer from './pages/Viewer'
 
-export const refreshAllowanceObj = {}
-const documentationHref = 'https://social.near-docs.io/'
 export const refreshAllowanceObj = {}
 const documentationHref = 'https://social.near-docs.io/'
 
@@ -37,20 +35,9 @@ function App(props) {
   const [availableStorage, setAvailableStorage] = useState(null)
   const [walletModal, setWalletModal] = useState(null)
   const [widgetSrc, setWidgetSrc] = useState(null)
-  const [connected, setConnected] = useState(false)
-  const [signedIn, setSignedIn] = useState(false)
-  const [signedAccountId, setSignedAccountId] = useState(null)
-  const [availableStorage, setAvailableStorage] = useState(null)
-  const [walletModal, setWalletModal] = useState(null)
-  const [widgetSrc, setWidgetSrc] = useState(null)
 
   useBosLoaderInitializer()
-  useBosLoaderInitializer()
 
-  const { initNear } = useInitNear()
-  const near = useNear()
-  const account = useAccount()
-  const accountId = account.accountId
   const { initNear } = useInitNear()
   const near = useNear()
   const account = useAccount()
@@ -73,16 +60,10 @@ function App(props) {
               bundle: false
             })
           ]
-              gas: '300000000000000',
-              bundle: false
-            })
-          ]
         }),
         customElements: {
           Link: (props) => {
             if (!props.to && props.href) {
-              props.to = props.href
-              delete props.href
               props.to = props.href
               delete props.href
             }
@@ -90,24 +71,18 @@ function App(props) {
               props.to =
                 typeof props.to === 'string' &&
                 isValidAttribute('a', 'href', props.to)
-                typeof props.to === 'string' &&
-                isValidAttribute('a', 'href', props.to)
                   ? props.to
-                  : 'about:blank'
                   : 'about:blank'
             }
             return (
-              <div>
-                <a src={props.to}></a>
-              </div>
-            ) //<Link {...props} />
+              // <div>
+              //   <a src={props.to}></a>
+              // </div>
+              <Link {...props} />
+            )
           }
         },
         config: {
-          defaultFinality: undefined
-        }
-      })
-  }, [initNear])
           defaultFinality: undefined
         }
       })
@@ -116,14 +91,10 @@ function App(props) {
   useEffect(() => {
     if (!near) {
       return
-      return
     }
     near.selector.then((selector) => {
       setWalletModal(
         setupModal(selector, { contractId: near.config.contractName })
-      )
-    })
-  }, [near])
       )
     })
   }, [near])
@@ -133,25 +104,14 @@ function App(props) {
       e && e.preventDefault()
       walletModal.show()
       return false
-      e && e.preventDefault()
-      walletModal.show()
-      return false
     },
     [walletModal]
-  )
   )
 
   const logOut = useCallback(async () => {
     if (!near) {
       return
-      return
     }
-    const wallet = await (await near.selector).wallet()
-    wallet.signOut()
-    near.accountId = null
-    setSignedIn(false)
-    setSignedAccountId(null)
-  }, [near])
     const wallet = await (await near.selector).wallet()
     wallet.signOut()
     near.accountId = null
@@ -167,21 +127,11 @@ function App(props) {
     requestSignIn()
   }, [logOut, requestSignIn])
   refreshAllowanceObj.refreshAllowance = refreshAllowance
-    )
-    await logOut()
-    requestSignIn()
-  }, [logOut, requestSignIn])
-  refreshAllowanceObj.refreshAllowance = refreshAllowance
 
   useEffect(() => {
     if (!near) {
       return
-      return
     }
-    setSignedIn(!!accountId)
-    setSignedAccountId(accountId)
-    setConnected(true)
-  }, [near, accountId])
     setSignedIn(!!accountId)
     setSignedAccountId(accountId)
     setConnected(true)
@@ -194,8 +144,7 @@ function App(props) {
         : Big(0)
     )
   }, [account])
-    )
-  }, [account])
+  //)
 
   const passProps = {
     refreshAllowance: () => refreshAllowance(),
@@ -210,29 +159,27 @@ function App(props) {
     widgets: Widgets,
     documentationHref
   }
-    documentationHref
-  }
 
   return (
-    <div>
-      <BosLoaderBanner />
-      <Flags {...passProps} />
-    </div>
-    // <Router basename={process.env.PUBLIC_URL}>
-    //   <Switch>
-    //     <Route path={'/'}>
-    //       <BosLoaderBanner />
-    //       <Flags {...passProps} />
-    //     </Route>
-    //     {/* <Route path={'/:path*'}>
+    // <div>
+    //   <BosLoaderBanner />
+    //   {/* <Flags {...passProps} /> */}
+    //   <Viewer {...passProps} />
+    // </div>
+    <Router basename={process.env.PUBLIC_URL}>
+      <Switch>
+        <Route path={'/:path*'}>
+          <BosLoaderBanner />
+          <Viewer {...passProps} />
+        </Route>
+        {/* <Route path={'/:path*'}>
     //       <BosLoaderBanner />
     //       <Viewer {...passProps} />
     //       <Core {...passProps} />
     //     </Route> */}
-    //   </Switch>
-    // </Router>
+      </Switch>
+    </Router>
   )
 }
 
-export default App
 export default App
