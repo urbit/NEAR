@@ -1494,20 +1494,6 @@ export default class VM {
     this.UrbitApi = new Urbit('', '', 'near-gateways')
     this.UrbitApi.ship
 
-    const getShip = async () => {
-      const nameResp = await fetch(`${window.location.origin}/~/name`, {
-        method: 'get',
-        credentials: 'include'
-      })
-      const getStream = await nameResp.text()
-      return getStream.substring(1)
-    }
-    getShip().then((value) => {
-      console.log('value', value)
-      this.UrbitApi.ship = value
-      return value
-    })
-
     this.globalFunctions = this.initGlobalFunctions()
   }
 
@@ -1848,6 +1834,26 @@ export default class VM {
     }
 
     const Urbit = {
+      ship: (ship) => {
+        if (ship === '') {
+          const getShip = async () => {
+            const nameResp = await fetch(`${window.location.origin}/~/name`, {
+              method: 'get',
+              credentials: 'include'
+            })
+            const getStream = await nameResp.text()
+            console.log(window.ship)
+            return getStream.substring(1)
+          }
+          getShip().then((value) => {
+            this.UrbitApi.ship = value
+            return
+          })
+        } else {
+          this.UrbitApi.ship = ship
+          return ship
+        }
+      },
       pokeUrbit: (app, mark, json) => {
         return new Promise((resolve, reject) => {
           if (!this.UrbitApi) {

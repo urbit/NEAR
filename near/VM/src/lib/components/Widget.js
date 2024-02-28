@@ -3,11 +3,11 @@ import React, {
   useContext,
   useEffect,
   useLayoutEffect,
-  useState,
-} from "react";
-import { useNear } from "../data/near";
-import ConfirmTransactions from "./ConfirmTransactions";
-import VM from "../vm/vm";
+  useState
+} from 'react'
+import { useNear } from '../data/near'
+import ConfirmTransactions from './ConfirmTransactions'
+import VM from '../vm/vm'
 import {
   deepCopy,
   deepEqual,
@@ -17,15 +17,15 @@ import {
   isFunction,
   Loading,
   TGas,
-  computeSrcOrCode,
-} from "../data/utils";
-import { ErrorBoundary } from "react-error-boundary";
-import { useCache } from "../data/cache";
-import { CommitModal } from "./Commit";
-import { useAccountId } from "../data/account";
-import Big from "big.js";
-import uuid from "react-uuid";
-import { EthersProviderContext } from "./ethers";
+  computeSrcOrCode
+} from '../data/utils'
+import { ErrorBoundary } from 'react-error-boundary'
+import { useCache } from '../data/cache'
+import { CommitModal } from './Commit'
+import { useAccountId } from '../data/account'
+import Big from 'big.js'
+import uuid from 'react-uuid'
+import { EthersProviderContext } from './ethers'
 
 export const Widget = React.forwardRef((props, forwardedRef) => {
   const {
@@ -36,58 +36,58 @@ export const Widget = React.forwardRef((props, forwardedRef) => {
     config: propsConfig,
     props: propsProps,
     ...forwardedProps
-  } = props;
+  } = props
 
-  const [nonce, setNonce] = useState(0);
-  const [code, setCode] = useState(null);
-  const [src, setSrc] = useState(null);
+  const [nonce, setNonce] = useState(0)
+  const [code, setCode] = useState(null)
+  const [src, setSrc] = useState(null)
   const [reactState, setReactState] = useState({
     hooks: [],
-    state: undefined,
-  });
-  const [cacheNonce, setCacheNonce] = useState(0);
-  const [context, setContext] = useState({});
-  const [vm, setVm] = useState(null);
-  const [transactions, setTransactions] = useState(null);
-  const [commitRequest, setCommitRequest] = useState(null);
-  const [prevVmInput, setPrevVmInput] = useState(null);
-  const [configs, setConfigs] = useState(null);
-  const [srcOrCode, setSrcOrCode] = useState(null);
-  const ethersProviderContext = useContext(EthersProviderContext);
+    state: undefined
+  })
+  const [cacheNonce, setCacheNonce] = useState(0)
+  const [context, setContext] = useState({})
+  const [vm, setVm] = useState(null)
+  const [transactions, setTransactions] = useState(null)
+  const [commitRequest, setCommitRequest] = useState(null)
+  const [prevVmInput, setPrevVmInput] = useState(null)
+  const [configs, setConfigs] = useState(null)
+  const [srcOrCode, setSrcOrCode] = useState(null)
+  const ethersProviderContext = useContext(EthersProviderContext)
 
   const networkId =
     configs &&
-    configs.findLast((config) => config && config.networkId)?.networkId;
-  const cache = useCache(networkId);
-  const near = useNear(networkId);
-  const accountId = useAccountId(networkId);
-  const [element, setElement] = useState(null);
+    configs.findLast((config) => config && config.networkId)?.networkId
+  const cache = useCache(networkId)
+  const near = useNear(networkId)
+  const accountId = useAccountId(networkId)
+  const [element, setElement] = useState(null)
 
   useEffect(() => {
     const newConfigs = propsConfig
       ? Array.isArray(propsConfig)
         ? propsConfig
         : [propsConfig]
-      : [];
+      : []
     if (!deepEqual(newConfigs, configs)) {
-      setConfigs(newConfigs);
+      setConfigs(newConfigs)
     }
-  }, [propsConfig, configs]);
+  }, [propsConfig, configs])
 
   useEffect(() => {
-    const computedSrcOrCode = computeSrcOrCode(propsSrc, propsCode, configs);
+    const computedSrcOrCode = computeSrcOrCode(propsSrc, propsCode, configs)
     if (!deepEqual(computedSrcOrCode, srcOrCode)) {
-      setSrcOrCode(computedSrcOrCode);
+      setSrcOrCode(computedSrcOrCode)
     }
-  }, [propsSrc, propsCode, configs, srcOrCode]);
+  }, [propsSrc, propsCode, configs, srcOrCode])
 
   useEffect(() => {
     if (!near) {
-      return;
+      return
     }
     if (srcOrCode?.src) {
-      const src = srcOrCode.src;
-      const [srcPath, version] = src.split("@");
+      const src = srcOrCode.src
+      const [srcPath, version] = src.split('@')
       const code = cache.socialGet(
         near,
         srcPath.toString(),
@@ -95,72 +95,74 @@ export const Widget = React.forwardRef((props, forwardedRef) => {
         version, // may be undefined, meaning `latest`
         undefined,
         () => {
-          setNonce(nonce + 1);
+          setNonce(nonce + 1)
         }
-      );
-      setCode(code);
-      setSrc(src);
+      )
+      console.log('Src Or Code', typeof code)
+      setCode(code)
+      setSrc(src)
     } else if (srcOrCode?.code) {
-      setCode(srcOrCode.code);
-      setSrc(null);
+      console.log('else if', typeof srcOrCode.code)
+      setCode(srcOrCode.code)
+      setSrc(null)
     }
-  }, [near, srcOrCode, nonce]);
+  }, [near, srcOrCode, nonce])
 
   useEffect(() => {
-    setVm(null);
-    setElement(null);
+    setVm(null)
+    setElement(null)
     if (!code) {
       if (code === undefined) {
         setElement(
           <div className="alert alert-danger">
             Source code for "{src}" is not found
           </div>
-        );
+        )
       }
     }
-  }, [code, src]);
+  }, [code, src])
 
   const confirmTransactions = useCallback(
     (transactions) => {
       if (!near || !transactions || transactions.length === 0) {
-        return null;
+        return null
       }
       transactions = transactions.map((t) => ({
         contractName: t.contractName,
         methodName: t.methodName,
         args: t.args || {},
         deposit: t.deposit ? Big(t.deposit) : Big(0),
-        gas: t.gas ? Big(t.gas) : TGas.mul(30),
-      }));
-      console.log("confirm txs", transactions);
-      setTransactions(transactions);
+        gas: t.gas ? Big(t.gas) : TGas.mul(30)
+      }))
+      console.log('confirm txs', transactions)
+      setTransactions(transactions)
     },
     [near]
-  );
+  )
 
   const requestCommit = useCallback(
     (commitRequest) => {
       if (!near) {
-        return null;
+        return null
       }
-      console.log("commit requested", commitRequest);
-      setCommitRequest(commitRequest);
+      console.log('commit requested', commitRequest)
+      setCommitRequest(commitRequest)
     },
     [near]
-  );
+  )
 
   useEffect(() => {
     if (!near || !code) {
-      return;
+      return
     }
-    setReactState({ hooks: [], state: undefined });
+    setReactState({ hooks: [], state: undefined })
     const vm = new VM({
       near,
       rawCode: code,
       setReactState,
       cache,
       refreshCache: () => {
-        setCacheNonce((cacheNonce) => cacheNonce + 1);
+        setCacheNonce((cacheNonce) => cacheNonce + 1)
       },
       confirmTransactions,
       depth,
@@ -168,12 +170,12 @@ export const Widget = React.forwardRef((props, forwardedRef) => {
       requestCommit,
       version: uuid(),
       widgetConfigs: configs,
-      ethersProviderContext,
-    });
-    setVm(vm);
+      ethersProviderContext
+    })
+    setVm(vm)
     return () => {
-      vm.stop();
-    };
+      vm.stop()
+    }
   }, [
     src,
     near,
@@ -182,24 +184,24 @@ export const Widget = React.forwardRef((props, forwardedRef) => {
     requestCommit,
     confirmTransactions,
     configs,
-    ethersProviderContext,
-  ]);
+    ethersProviderContext
+  ])
 
   useEffect(() => {
     if (!near) {
-      return;
+      return
     }
     setContext({
       loading: false,
       accountId: accountId ?? null,
       widgetSrc: src,
-      networkId: near.config.networkId,
-    });
-  }, [near, accountId, src]);
+      networkId: near.config.networkId
+    })
+  }, [near, accountId, src])
 
   useLayoutEffect(() => {
     if (!vm) {
-      return;
+      return
     }
     const vmInput = {
       props: propsProps || {},
@@ -209,15 +211,15 @@ export const Widget = React.forwardRef((props, forwardedRef) => {
       version: vm.version,
       forwardedProps: {
         ...forwardedProps,
-        ref: forwardedRef,
-      },
-    };
-    if (deepEqual(vmInput, prevVmInput)) {
-      return;
+        ref: forwardedRef
+      }
     }
-    setPrevVmInput(deepCopy(vmInput));
+    if (deepEqual(vmInput, prevVmInput)) {
+      return
+    }
+    setPrevVmInput(deepCopy(vmInput))
     try {
-      setElement(vm.renderCode(vmInput) ?? "Execution failed");
+      setElement(vm.renderCode(vmInput) ?? 'Execution failed')
     } catch (e) {
       setElement(
         <div className="alert alert-danger">
@@ -225,8 +227,8 @@ export const Widget = React.forwardRef((props, forwardedRef) => {
           <pre>{e.message}</pre>
           <pre>{e.stack}</pre>
         </div>
-      );
-      console.error(e);
+      )
+      console.error(e)
     }
   }, [
     vm,
@@ -236,14 +238,14 @@ export const Widget = React.forwardRef((props, forwardedRef) => {
     cacheNonce,
     prevVmInput,
     forwardedRef,
-    forwardedProps,
-  ]);
+    forwardedProps
+  ])
 
   return element !== null && element !== undefined ? (
     <ErrorBoundary
       FallbackComponent={ErrorFallback}
       onReset={() => {
-        setElement(null);
+        setElement(null)
       }}
       resetKeys={[element]}
     >
@@ -272,5 +274,5 @@ export const Widget = React.forwardRef((props, forwardedRef) => {
     </ErrorBoundary>
   ) : (
     loading ?? Loading
-  );
-});
+  )
+})

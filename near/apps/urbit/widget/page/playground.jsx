@@ -57,9 +57,11 @@ const Button = styled.button``;
 const [response, setResponse] = useState("");
 //console.log(Urbit)
 const urbitPlayground = () => {
+  const setShip = Urbit.ship('zod')
 return (
   <Container>
     <Section as="div" style={{ flexDirection: "column" }}>
+      <Label>{setShip}</Label>
       <Button
         onClick={() => {
           Urbit.pokeUrbit('near-handler', 'near-handler-action', {

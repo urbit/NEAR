@@ -6,6 +6,7 @@ import urbitNear from '../data/urbitNear.json'
 const SESSION_STORAGE_REDIRECT_MAP_KEY = 'nearSocialVMredirectMap'
 
 function Viewer({ code }) {
+  const [tryCode, setTryCode] = useState(null)
   // const { path } = './' //useParams()
   const location = window.location //useLocation()
   const searchParams = new URLSearchParams(location.search)
@@ -56,6 +57,17 @@ function Viewer({ code }) {
       }
     }
     fetchRedirectMap()
+    // setTryCode(
+    // const Label = styled.span`
+    // font-size: 16px;
+    // `;
+    // return (
+    //   <div>
+    //     <Label>setTryCode Element</Label>
+    //   </div>
+    // )
+    // )
+    console.log('widget', Widget.code)
   }, [])
 
   return (
@@ -68,6 +80,12 @@ function Viewer({ code }) {
       <Widget
         //src={!code && src}
         code={newCode} // prioritize code
+        props={passProps}
+        config={{ redirectMap }}
+      />
+      <Widget
+        //src={!code && src}
+        code={tryCode} // prioritize code
         props={passProps}
         config={{ redirectMap }}
       />
