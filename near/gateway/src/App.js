@@ -161,16 +161,14 @@ function App(props) {
   }
 
   return (
-    // <div>
-    //   <BosLoaderBanner />
-    //   {/* <Flags {...passProps} /> */}
-    //   <Viewer {...passProps} />
-    // </div>
     <Router basename={process.env.PUBLIC_URL}>
       <Switch>
         <Route path={'/:path*'}>
           <BosLoaderBanner />
           <Viewer {...passProps} />
+        </Route>
+        <Route path={'/new'}>
+          <h1>hiii</h1>
         </Route>
         {/* <Route path={'/:path*'}>
     //       <BosLoaderBanner />

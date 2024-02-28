@@ -35,6 +35,7 @@ import jsx from 'acorn-jsx'
 import { ethers } from 'ethers'
 import { Web3ConnectButton } from '../components/ethers'
 import { isValidAttribute } from 'dompurify'
+// import Urbit, { getOurName } from '@urbit/http-api'
 import Urbit from '@urbit/http-api'
 
 // Radix:
@@ -1490,14 +1491,22 @@ export default class VM {
       widgetConfigs.findLast((config) => config && config.networkId)
         ?.networkId || near.config.networkId
 
-    // TODO: hard-coded authentication for a local fake
-    //       urbit ship for debugging purposes; remove
-    this.UrbitApi = new Urbit(
-      'http://localhost:8080',
-      'lidlut-tabwed-pillex-ridrup',
-      'near-handler'
-    )
-    this.UrbitApi.ship = 'zod'
+    this.UrbitApi = new Urbit('', '', 'near-gateways')
+    this.UrbitApi.ship
+
+    const getShip = async () => {
+      const nameResp = await fetch(`${window.location.origin}/~/name`, {
+        method: 'get',
+        credentials: 'include'
+      })
+      const getStream = await nameResp.text()
+      return getStream.substring(1)
+    }
+    getShip().then((value) => {
+      console.log('value', value)
+      this.UrbitApi.ship = value
+      return value
+    })
 
     this.globalFunctions = this.initGlobalFunctions()
   }
