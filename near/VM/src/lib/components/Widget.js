@@ -98,11 +98,9 @@ export const Widget = React.forwardRef((props, forwardedRef) => {
           setNonce(nonce + 1)
         }
       )
-      console.log('Src Or Code', typeof code)
       setCode(code)
       setSrc(src)
     } else if (srcOrCode?.code) {
-      console.log('else if', typeof srcOrCode.code)
       setCode(srcOrCode.code)
       setSrc(null)
     }

@@ -1834,6 +1834,11 @@ export default class VM {
     }
 
     const Urbit = {
+      setTestApi: (host, code) => {
+        this.UrbitApi.url = host
+        this.UrbitApi.code = code
+        return
+      },
       ship: (ship) => {
         if (ship === '') {
           const getShip = async () => {
@@ -1842,7 +1847,6 @@ export default class VM {
               credentials: 'include'
             })
             const getStream = await nameResp.text()
-            console.log(window.ship)
             return getStream.substring(1)
           }
           getShip().then((value) => {
