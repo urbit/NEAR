@@ -175,8 +175,8 @@
       *identifier
     req(site new-site)
     ::
-      [[%apps %near @ @ *] *] ::  /apps/near/ship/id/index/html
-    ?.  (gte (lent site.req) 5)
+      [[%apps %near @ @ %gateway *] *]  ::  /apps/near/ship/id/name/index/html
+    ?.  (gte (lent site.req) 6)::5)
       %-  emil
       %-  send  dump
     =/  identifier  :-  (slav %p (snag 2 site.req))
@@ -186,7 +186,7 @@
       %-  send  dump
     =/  new-site  
       %+  weld 
-        %+  slag  4 
+        %+  slag  5
         ;;  (list @ta)  site.req
       %-  drop 
       ext.req
@@ -207,7 +207,7 @@
   |=  [identifier=[=ship id=@uvH] request=request-line:server]
   ^-  simple-payload:http
   ~&  identifier
-  ~&  site.request
+  ~&  ['site.requset' site.request]
   =/  =glob
     ?:  =(identifier [ship=~zod id=0v0])  
     +.ui-glob
