@@ -159,22 +159,22 @@ function App(props) {
     widgets: Widgets,
     documentationHref
   }
+  //  different ways of fixing router problem either include name of gateway in path when hosting glob /%{ship}/${id}/%{gateway-name}
+  let gateway = 'gateway'
+  let str = window.location.pathname
+  let before = str.substring(0, str.indexOf(`/${gateway}`))
 
   return (
-    <Router basename={process.env.PUBLIC_URL}>
+    <Router basename={`${before}/${gateway}`}>
       <Switch>
-        <Route path={'/:path*'}>
-          <BosLoaderBanner />
+        <Route path={'/urbit'}>
           <Viewer {...passProps} />
         </Route>
         <Route path={'/new'}>
-          <h1>hiii</h1>
+          <div>
+            <h1>page at /new path</h1>
+          </div>
         </Route>
-        {/* <Route path={'/:path*'}>
-    //       <BosLoaderBanner />
-    //       <Viewer {...passProps} />
-    //       <Core {...passProps} />
-    //     </Route> */}
       </Switch>
     </Router>
   )
