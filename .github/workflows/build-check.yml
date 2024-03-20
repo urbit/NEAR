@@ -13,17 +13,18 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: "16.x"
-      
+          node-version: '16.x'
+
       - name: Create target directory and copy file
         run: |
-          mkdir -p near/target
-          cp near/dist/index.js near/target/index.js
-      
+          cd near
+          mkdir target
+          cp dist/index.js target/index.js
+
       - name: Install dependencies
         run: yarn
         working-directory: ./near
-      
+
       - name: Build
         run: yarn build
         working-directory: ./near
@@ -39,5 +40,5 @@ jobs:
         uses: actions/github-script@v3
         with:
           script: |
-              core.setFailed('The dist/index.js seems to be stale. Please run *yarn build* and commit the dist/index.js file.')
+            core.setFailed('The dist/index.js seems to be stale. Please run *yarn build* and commit the dist/index.js file.')
           working-directory: ./near
