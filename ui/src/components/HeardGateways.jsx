@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 function HeardGateways(arg) {
     const api= arg.api
@@ -6,13 +6,17 @@ function HeardGateways(arg) {
     const installed = arg.installed
     const loading = arg.loading
 
+    const [installedGateways, setInstalledGateways] = useState([])
+    const [newGateways, setNewGateways] = useState([])
+
     async function pokeInstall(gateway) {
         console.log(gateway)
         console.log({'install': {
             'identifier' : {'ship' : gateway.ship, 
                             'id' : gateway.id}, 
             'metadata' : {'name' : gateway.name,
-                            'url' : gateway.url} 
+                            'url' : gateway.url,
+                            'about' :gateway.about} 
         }})
         api.poke({
             app:"near-gateways",
@@ -21,47 +25,80 @@ function HeardGateways(arg) {
                 'identifier' : {'ship' : gateway.ship, 
                                 'id' : gateway.id}, 
                 'metadata' : {'name' : gateway.name,
-                                'url' : gateway.url} 
+                                'url' : gateway.url,
+                                'about' :gateway.about} 
             }}, 
-            onSuccess: () => window.location.reload(), //reload page here
+            onSuccess: () => window.location.reload(), 
             onError: () => console.log("install of " + gateway.name + " failed")
         })
     }
     
-const heardContainer = "font-medium p-4 mt-4"
-const gatewayContainer = "border-2 border-gray-100 p-4 grid align-center"
-const btnStyle = "text-white bg-gray-400 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium w-full sm:w-auto px-3 py-2 text-center m-3"
-const header = "text-center p-3"
-const frame = "border-2 border-grey-900 w-fit"
-const linkStyle= "text-center pt-3 hover:font-semibold"
+    const sortHeard = () =>{
+        if (heard  !==  null &&  installed !== null){
+            for (let i = 0; i < heard.length; i++){
+                let gateway = heard[i]
+                let isInstalled = installed.find(instGateway => instGateway.id === gateway.id)
+                console.log(installed.find(instGateway => instGateway.id === gateway.id))
+                if (isInstalled !== undefined){
+                    console.log('gateway installed', gateway)
+                    setInstalledGateways(current => [...current, gateway])
+                }else{
+                    console.log('gatewa not installed', gateway)
+                    setNewGateways(current => [...current, gateway])
+                }
+            }
+        }else if (heard  !==  null &&  installed === null){
+            console.log('no installed but heard')
+            setNewGateways(heard)
+        }else{
+            setNewGateways([])
+        }
+    }
+
+    useEffect(() => {
+        if (heard !== null){
+        sortHeard()
+        }
+      }, [])
 
     return(
-         <div className={heardContainer}>
-        <h2 className={header}>Heard:</h2>
+         <div>
         {(heard !== null) && !loading ?
-        <div>{heard.map((gateway, index) => {
-            let name = gateway.name
-            let isInstalled = installed.find(instGateway => instGateway.id === gateway.id)
-            //let url = 'http://localhost:80/apps/near/' + gateway.ship + '/' + gateway.id + '/index.html'
-            let url = './' + gateway.ship + '/' + gateway.id + '/index.html'
-
-            return(
-            <div key={index} className={gatewayContainer}>
-                {(isInstalled !== undefined) &&
-                <div className="text-center">
-                <iframe src={url} title={url} className={frame}></iframe>
-                <a href={url} className={linkStyle}>visit {name}</a>
-                </div>}
-                <h2 className="text-left">{name}</h2>
-                <h3 className="text-left">{gateway.ship}</h3>
-                {(isInstalled === undefined) &&
-                <button onClick={() => pokeInstall(gateway)} className={btnStyle}
-                >install</button>}
-                </div>)}
-        )
-            }
-        </div> :
-        <div>Yet to be dicovered</div>}
+        <div className='flexBox'>
+            {installedGateways.map((gateway, index) => {
+                let name = gateway.name
+                //let url = 'http://localhost:80/apps/near/' + gateway.ship + '/' + gateway.id + '/gateway/'
+                let url = './near/' + gateway.ship + '/' + gateway.id + '/gateway/'
+                return(
+                <div className='gatewayContainer' id={index} key={index}>
+                    <iframe src={url} title={url} className='frame'></iframe>
+                    <div className='info'>
+                    <h2 className='name' href={url}>{name}</h2>
+                    <h3 className='ship'>{gateway.ship}</h3>
+                    <h4 className='text'>{gateway.about}</h4>
+                    </div>
+                    <div className="git">
+                    <a href={url}>Gateway</a>
+                    </div></div>
+                    )})}
+            {newGateways !== null ?
+            (newGateways.map((gateway, index) =>{
+                return(
+            <div className='gatewayContainer' id='new' key={index}> 
+            <h1 className='addButton'>+</h1>
+            <div className='info'>
+            <h2 className="name">{gateway.name}</h2>
+            <h3 className="ship">{gateway.ship}</h3>
+            <h4 className='text'>{gateway.about}</h4>
+            </div>
+            <div className='install'>
+            <button onClick={() => pokeInstall(gateway)}
+            >Mirror</button>
+            </div>
+            </div>)})):<div></div>}
+        </div>
+        : <div><h2 className="headers">Yet to be dicovered.  Get some %pals</h2></div>
+        }
     </div>
     )
 
