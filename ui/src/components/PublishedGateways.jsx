@@ -8,8 +8,6 @@ function PublishedGateways(props) {
     const loading = props.loading 
     const api = props.api
 
-    // const published = [{name:'react-app-lates', ship:'zod', url:'http://localhost/apps/near/~zod/0v1.1u794.eh94h.2fdr0.ncemq.j4va0/gateway/home', about:'Added Urbit component from testnet chain'}, {name:'gateway', ship:'~zod', url:'http://localhost/apps/near/~zod/0v3.rd4le.ge11r.0jsbv.5mchr.l3rh2/gateway/', about:''}]
-
     return(
         <div>
         <div className="newGateway">
