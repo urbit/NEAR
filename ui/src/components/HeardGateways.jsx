@@ -10,7 +10,6 @@ function HeardGateways(arg) {
     const [newGateways, setNewGateways] = useState([])
 
     async function pokeInstall(gateway) {
-        console.log(gateway)
         console.log({'install': {
             'identifier' : {'ship' : gateway.ship, 
                             'id' : gateway.id}, 
@@ -38,7 +37,6 @@ function HeardGateways(arg) {
             for (let i = 0; i < heard.length; i++){
                 let gateway = heard[i]
                 let isInstalled = installed.find(instGateway => instGateway.id === gateway.id)
-                console.log(installed.find(instGateway => instGateway.id === gateway.id))
                 if (isInstalled !== undefined){
                     console.log('gateway installed', gateway)
                     setInstalledGateways(current => [...current, gateway])

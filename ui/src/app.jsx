@@ -22,18 +22,16 @@ export function App() {
   const [loading, setLoading] = useState(true)
 
   async function scryToGateways() {
-    console.log('scrying to gateways')
+    console.log('scrying to %near-gateways')
     let scryPublish = await api.scry({
       app: 'near-gateways',
       path: '/published'
     })
-    console.log(scryPublish)
     setPublished(scryPublish)
     let scryInstalled = await api.scry({
       app: 'near-gateways',
       path: '/installed'
     })
-    console.log(scryInstalled)
     setInstalled(scryInstalled)
     let scryHeard = await api.scry({ app: 'near-gateways', path: '/heard' })
       setHeard(scryHeard)
