@@ -1,11 +1,12 @@
-/-  spider, *near-handler
+/-  spider, *near-gateway
 /+  strandio
 =,  strand=strand:spider
 ^-  thread:spider
 |=  arg=vase
 =/  m  (strand ,vase)
 ^-  form:m
-=+  !<([~ url=@t] arg)
+::=+  !<([~ url=@t] arg)
+=+  !<([~ url=@t about=@t] arg)
 ;<  =glob  bind:m
   %+  (retry:strandio ,glob)  `5
   =/  n  (strand ,(unit glob))
@@ -14,4 +15,4 @@
   %-  mole
   |.
   ;;(=glob (cue cord))
-(pure:m !>(glob))
+(pure:m !>([glob about]))

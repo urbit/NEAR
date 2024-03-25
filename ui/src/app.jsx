@@ -8,30 +8,24 @@ export function App() {
   const api = new Urbit('', '', 'near-handler');
   api.ship = window.ship;
 
-  // const api = new Urbit(
-  //   'http://localhost:80',
-  //   'lidlut-tabwed-pillex-ridrup',
-  //   'near-handler'
-  // )
-  //api.ship = 'zod'
-
-
   const [heard, setHeard] = useState([])
   const [published, setPublished] = useState([])
   const [installed, setInstalled] = useState([])
   const [loading, setLoading] = useState(true)
 
   async function scryToGateways() {
-    console.log('scrying to %near-gateways')
+    console.log('scrying to gateways')
     let scryPublish = await api.scry({
       app: 'near-gateways',
       path: '/published'
     })
+    console.log(scryPublish)
     setPublished(scryPublish)
     let scryInstalled = await api.scry({
       app: 'near-gateways',
       path: '/installed'
     })
+    console.log(scryInstalled)
     setInstalled(scryInstalled)
     let scryHeard = await api.scry({ app: 'near-gateways', path: '/heard' })
       setHeard(scryHeard)

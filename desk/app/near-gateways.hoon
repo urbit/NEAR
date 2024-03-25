@@ -1,5 +1,5 @@
-/-  *near-handler
-/+  dbug, default-agent, *near-handler, gossip, server, schooner, verb
+/-  *near-gateways
+/+  dbug, default-agent, *near-gateways, gossip, server, schooner, verb
 /$  grab-metadata  %noun  %near-metadata
 ::
 |%
@@ -97,7 +97,7 @@
   %-  emil
   :~
   [%pass /eyre/connect %arvo %e %connect [~ /apps/near] %near-gateways]
-  [%pass /publish-ui %agent [our.bowl %near-gateways] %poke %near-action !>([%publish 'ui-main' url])]
+  [%pass /publish-ui %agent [our.bowl %near-gateways] %poke %near-action !>([%publish 'ui-main' url ''])]
   ==
 ::
 ++  load
@@ -123,7 +123,7 @@
     ?~  (find ~[metadata.act] ~(val by published))
       =/  id=identifier  [our.bowl (sham eny.bowl)] 
       ~&  ['publish id' id]
-      ?:  =(metadata.act ['ui-main' url])
+      ?:  =(metadata.act ['ui-main' url ''])
           =.  ui-glob  [id *glob]
           %+  get-gateway-glob
             metadata.act
@@ -139,6 +139,15 @@
     %+  get-gateway-glob
       metadata.act
     identifier.act
+    ::
+      %delete
+    ?~  (~(get by published) identifier.act)
+      ~&  >>>  'couldnt find in published gateways'
+      that
+    ~&  >  'Deleted gateway'
+    =.  published  (~(del by published) identifier.act)
+    =.  installed  (~(del by installed) identifier.act)
+    that
   ==
 ==
 ++  dump  [404 ~ [%plain "404 - Not Found"]]
@@ -183,7 +192,7 @@
                     (slav %uv (snag 3 site.req))
     ?.  (~(has by installed) identifier) 
       %-  emil
-      %-  send  dump
+      %-  send  [404 ~ [%plain "Downoloading glob"]]
     =/  new-site  
       %+  weld 
         %+  slag  5
@@ -206,20 +215,20 @@
 ++  from-glob
   |=  [identifier=[=ship id=@uvH] request=request-line:server]
   ^-  simple-payload:http
-  ~&  identifier
-  ~&  ['site.requset' site.request]
   =/  =glob
     ?:  =(identifier [ship=~zod id=0v0])  
     +.ui-glob
       ?.  (~(has by installed) identifier)  
         ~
   (~(got by installed) identifier)
-  ?:  =(glob ~)  not-found:gen:server
+  ?:  =(glob ~) 
+    :::_  `(as-octt:mimes:html "Downoloading  %gateway glob")
+    :::-  404  ~
+    not-found:gen:server
   =/  requested  ?:  (~(has by glob) site.request)  
                     site.request
                   /index/html
   =/  =mime  (~(got by glob) requested)
-  ~&  'got mime'
   =/  mime-type=@t  (rsh 3 (crip <p.mime>)) 
     =;  headers
       [[200 headers] `q.mime]
@@ -233,7 +242,8 @@
   =/  tid  `@ta`(cat 3 'near-' (scot %uv (sham eny.bowl)))
   =/  ta-now  `@ta`(scot %da now.bowl)
   =/  ted-cage=cage  :-  %glob  
-                      !>(`url.data)
+                      ::!>(`url.data)
+                      !>(`[url.data about.data])
   =/  cage  :-  %spider-start
             !>([~ `tid byk.bowl(r da+now.bowl) ted-cage])
   =/  id-path  
@@ -274,7 +284,7 @@
         %poke-ack
       ?~  p.sign  
         that
-      ~&  'Poke ui failed'
+      ~&  >>>  'Poke ui failed'
       that
     == 
       ::
@@ -294,7 +304,7 @@
         ?(%poke-ack %watch-ack)
       ?~  p.sign  
           that
-      ~&  'Thread failed to start'
+      ~&  >>>  'Thread failed to start'
       that
       ::
         %fact 
@@ -303,21 +313,26 @@
         ~&  >>>  ['Thread-failed to glob' (slag 2 `(list @ta)`wire)]
         =/  id    (id-from-wire wire)
         =.  published  (~(del by published) id)
+        ::  case for mirror gateway glob that's been deleted from s3-bucket
+        =.  heard  (~(del by heard) id)
+        ~&  >>  ['Deleted from heard or published, glob not exist at address' id]
         that
         ::
           %thread-done 
-        ~&  'thread done fact got'
-        =/  glob  !<(glob q.cage.sign)
+        =/  result  !<([glob @t] q.cage.sign)
+        =/  glob    -.result
         =/  id    (id-from-wire wire)
         :: =/  had=metadata  (~(got by published) id)
         =/  path  ;;  (list @ta)  wire
         =/  got=metadata
-          :-  (snag 2 path)
+          :*  (snag 2 path)
           (snag 3 path)
+          +.result
+          ==
         :: ?.  =(url.had url.got)
         ::   ~&  >>>  'Glob url mismatch'
         ::   that
-        ?:  =(got ['ui-main' url])
+        ?:  =(got ['ui-main' url ''])
           =.  ui-glob  [-.ui-glob glob]
           that
         ~&  >  'Gateway globbed successfully'
@@ -356,6 +371,7 @@
   [%x %heard ~]      ``near-scry+!>([%heard heard])
   [%x %published ~]  ``near-scry+!>([%published published])
   [%x %installed ~]  ``near-scry+!>([%installed ~(tap in ~(key by installed))])
+  [%x %installed @ ~]  ``near-scry+!>([%find-id (find-id -.+.+.path)])
   [%x %dbug %state ~]  
   =-  ``noun+!>(-)
   %_  state
@@ -369,6 +385,16 @@
       |=(=mime mime(q.q 1.337))
   ==
 ==
+++  find-id 
+|=  name=@t
+^-  identifier
+=/  gateway=(list [identifier metadata])
+  %+  skim  ~(tap by published) 
+    |=  [p=identifier q=metadata]
+    =(name name.q)  
+?~  gateway  [~zod 0v0]
+-:(rear gateway)
+  ::
   ::http{s}://{host}/~/scry/{app}{path}.{mark}
-++  url  's3-bucket-ui'
+++  url  'https://s3.lonhep-tamfeb.startram.io/bucket/lonhep-tamfeb/2024.3.11..21.56.12-glob-0v7.l3ulb.vme1j.g5lip.sbco7.v4hf0.glob'
   --

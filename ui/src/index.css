@@ -20,10 +20,12 @@ button{
 body{
     background-color: #141915;
 }
+input{
+    padding:4px;
+}
 input, textarea{
     border:#141915 1px solid;
     border-radius: 0.375rem;
-    padding:4px;
 }
 .containerBody {
     display: grid;
@@ -34,7 +36,10 @@ input, textarea{
 .containerNav{
     grid-column-start: 4;
     grid-column-end: 6;
+    /* display:grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr)); */
     justify-items:stretch;
+    /* gap: 4px; */
     margin-top: 6px;
 }
 .headers{
@@ -101,7 +106,7 @@ input, textarea{
     border-bottom-right-radius: 0px;
     border-bottom-left-radius: 0px;
     border:.5px solid #ABE68D ;
-    background-color: #141915;
+    background-color: #ffffff;
     padding:1px;
     margin-bottom: 0;
 }
@@ -147,7 +152,7 @@ input, textarea{
 .git{
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content:space-around;
     min-height: 33px;
     height:auto;
     margin-top: auto;
@@ -179,7 +184,7 @@ input, textarea{
 .newGateway{
     z-index:100;
 }
-.formContainer{
+.formContainer, .deleteGateway{
     position: fixed;
     display: grid;
     grid-template-columns:  10% auto 10% [end];
@@ -192,48 +197,59 @@ input, textarea{
     right: 0; 
     margin-left: auto;
     margin-right: auto;
-    top:10%;
-    width:60%;
+    /* top:10%; */
     padding:3%;
 }
+.formContainer{
+    top:30%;
+    width:60%;
+}
 .paragraph{
+    margin:auto;
+    margin-bottom: 10px;
     grid-column-start: 2;
-    grid-column-end: 4;
+    grid-column-end: 3;
     grid-row-start: 2;
     grid-row-end: 3;
 }
 .formStyle{
     align-self: center;
-    grid-column-start: 2;
+    grid-column-start: 1;
     grid-column-end: 4;
     grid-row-start: 3;
     grid-row-end: end;
     display: grid;
-    grid-template-columns:  10% auto auto 10% [end];
+    /* grid-template-columns:  10% auto auto 10% [end]; */
+    grid-template-columns:  auto auto [end]; 
     grid-template-rows: auto auto auto ;
     gap: 5px 4%;
     place-content: center;
 }  
 .nameForm{
+    grid-column-start: 1;
+    /* grid-column-start: 2; */
+    /* grid-column-end: 3; */
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+.urlForm{
     grid-column-start: 2;
     grid-column-end: 3;
     grid-row-start: 1;
     grid-row-end: 2;
 }
-.urlForm{
-    grid-column-start: 3;
-    grid-column-end: 4;
-    grid-row-start: 1;
-    grid-row-end: 2;
-}
 .aboutForm{
-    grid-column-start: 2;
-    grid-column-end: 4;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    /* grid-column-start: 2;
+    grid-column-end: 4; */
     grid-row-start: 2;
     grid-row-end: 3;
     
 }
 .aboutForm textarea{
+    padding:1px;
     resize: none;
     width:100%;
     height: 70px;
@@ -246,7 +262,7 @@ input, textarea{
     
 }
 .btnStyle, .closeNewBtn{
-    margin:5px;
+    /* margin:5px; */
     color:#ABE68D;
     background-color: #141915;
     padding:5px;
@@ -255,8 +271,8 @@ input, textarea{
     font-family: urbitSans;
 }
 .btnStyle{
-    grid-column-start: 2;
-    grid-column-end: 4;
+    grid-column-start: 1;
+    grid-column-end: 3;
     grid-row-start: 3;
     grid-row-end: end;
 }
@@ -268,7 +284,7 @@ input, textarea{
     right: 90%;
     font-size: 18px;
     margin-left: auto;
-    grid-column-start: 5;
+    /* grid-column-start: 6; */
     grid-column-end: end;
     grid-row-start: 1;
     grid-row-end: 2;
@@ -277,3 +293,59 @@ input, textarea{
     color: #141915;
     background-color: #ABE68D;
 }
+.deleteGateway{
+    top: 45%;
+    width:50%;
+    text-align: center;
+}
+.delButtons{
+    align-self: center;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 3; 
+    grid-row-end: end;
+    display: flex;
+    justify-content: space-around;
+}  
+.deleteGateway button{
+    margin-top:15px;
+    padding-right: 20px;
+    padding-left: 20px;
+    color:#ABE68D;
+    background-color: #141915;
+    border:#ABE68D 1px solid;
+    border-radius: 0.375rem;
+    font-family: urbitSans;
+}
+.deleteGateway button:hover{
+    color: #141915;
+    background-color: #ABE68D;
+}
+@media only screen and (max-width: 390px) {
+    .flexBox{
+    place-content: center;
+    }
+    .nameForm, .urlForm{
+    grid-column-start: 1;
+    grid-column-end: 3;
+    }
+    .urlForm{
+    grid-row-start: 2;
+    grid-row-end: 3;
+    }
+    .aboutForm{
+    grid-row-start: 3;
+    grid-row-end: 4;
+    }
+    .nameForm input, .urlForm input{
+    width:100%;
+    font-size: 1.17em;
+    padding-left: 1px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    }
+    .btnStyle{
+    grid-row-start: 4;
+    grid-row-end: 5;
+    }
+  }

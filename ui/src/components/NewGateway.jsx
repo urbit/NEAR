@@ -29,7 +29,6 @@ function NewGateway(props) {
             <br/>
                 3. Publish gateway through form below.
             <br/>
-            ------
             </p>
             <form onSubmit={publishPoke} className='formStyle'>
                 <div className='nameForm'>

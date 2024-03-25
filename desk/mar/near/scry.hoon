@@ -1,5 +1,5 @@
-/-  *near-handler
-/+  *near-handler
+/-  *near-gateways
+/+  *near-gateways
 |_   =scry
 ++  grab
   |%

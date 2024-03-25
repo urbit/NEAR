@@ -1,12 +1,25 @@
 import React, { useState } from 'react'
 import NewGateway from './NewGateway.jsx'
+import DeleteGateway from './DeleteGateway.jsx'
 
 function PublishedGateways(props) {
     const [showNew, setShowNew] = useState(false)
+    const [showDelete, setShowDelete] = useState(false)
+    const [delGateway, setDelGateway] = useState({})
 
     const published = props.published
     const loading = props.loading 
     const api = props.api
+
+    async function deleteGateway(gateway) {
+        api.poke({
+            app: "near-gateways",
+            mark: "near-action",
+            json: {"delete": {"ship": gateway.ship, "id": gateway.id}},
+            onSuccess: () =>  {setDelGateway({}), window.location.reload(), setShowDelete(false)},
+            onError: () => setError('Failed to delete gateway')
+        }) 
+    }
 
     return(
         <div>
@@ -15,26 +28,27 @@ function PublishedGateways(props) {
         <div>
           <NewGateway api={api} setShowNew={setShowNew}/></div> : 
         <div></div>}
+        {showDelete ? <div><DeleteGateway gateway={delGateway} setShowDelete={setShowDelete} deleteGateway={deleteGateway}/></div> :<div></div>}
         </div>
         {(published !== null)  && !loading ?
         <div>
             <div className='flexBox'>{published.map((gateway, index) => {
                 let name = gateway.name
                 let url = './near/' + gateway.ship + '/' + gateway.id + '/gateway/'
-                //let url = 'http://localhost:80/apps/near/' + gateway.ship + '/' + gateway.id + '/gateway/'
                 return(
                 <div key={index} className='gatewayContainer'>
                     <iframe src={url} title={url} className='frame'></iframe>
                     <div className='info'>
                     <h2 className='name' href={url}>{name}</h2>
-                    <h3 className='ship'>{ship}</h3>
+                    <h3 className='ship'>{gateway.ship}</h3>
                     <h4 className='text'>{gateway.about}</h4>
                     </div>
                     <div className="git">
+                    <button onClick={() => {setShowNew(false), setShowDelete(true), setDelGateway(gateway)}}>Delete</button>
                     <a href={url}>Gateway</a>
                     </div></div>)})
                 }
-                <div className='addGateway' onClick={()=>{setShowNew(true)}}>
+                <div className='addGateway' onClick={()=>{setShowNew(true), setDelGateway({}), setShowDelete(false)}}>
                 <h1 className='addButton'>+</h1>
                 <div className='info'>
                     <h2 className='name'>Upload Your Gateway</h2>

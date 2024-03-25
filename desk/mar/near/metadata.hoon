@@ -1,4 +1,4 @@
-/-  *near-handler
+/-  *near-gateways
 |_  gateway=[identifier metadata]
 ++  grad  %noun
 ++  grow

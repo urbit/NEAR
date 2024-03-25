@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react'
 
-function HeardGateways(arg) {
-    const api= arg.api
-    const heard = arg.heard
-    const installed = arg.installed
-    const loading = arg.loading
+function HeardGateways(props) {
+    const api= props.api
+    const heard = props.heard
+    const installed = props.installed
+    const loading = props.loading
 
     const [installedGateways, setInstalledGateways] = useState([])
     const [newGateways, setNewGateways] = useState([])
 
     async function pokeInstall(gateway) {
+        console.log(gateway)
         console.log({'install': {
             'identifier' : {'ship' : gateway.ship, 
                             'id' : gateway.id}, 
@@ -37,6 +38,7 @@ function HeardGateways(arg) {
             for (let i = 0; i < heard.length; i++){
                 let gateway = heard[i]
                 let isInstalled = installed.find(instGateway => instGateway.id === gateway.id)
+                console.log(installed.find(instGateway => instGateway.id === gateway.id))
                 if (isInstalled !== undefined){
                     console.log('gateway installed', gateway)
                     setInstalledGateways(current => [...current, gateway])
@@ -65,7 +67,6 @@ function HeardGateways(arg) {
         <div className='flexBox'>
             {installedGateways.map((gateway, index) => {
                 let name = gateway.name
-                //let url = 'http://localhost:80/apps/near/' + gateway.ship + '/' + gateway.id + '/gateway/'
                 let url = './near/' + gateway.ship + '/' + gateway.id + '/gateway/'
                 return(
                 <div className='gatewayContainer' id={index} key={index}>
