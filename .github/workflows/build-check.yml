@@ -28,11 +28,9 @@ jobs:
       - name: Build
         run: yarn build
         working-directory: ./near
-        working-directory: ./near
 
       - name: Check dist/index.js
         run: cmp dist/index.js target/index.js
-        working-directory: ./near
         working-directory: ./near
 
       - name: Failure message
