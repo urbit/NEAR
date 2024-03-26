@@ -5,7 +5,6 @@
 |=  arg=vase
 =/  m  (strand ,vase)
 ^-  form:m
-::=+  !<([~ url=@t] arg)
 =+  !<([~ url=@t about=@t] arg)
 ;<  =glob  bind:m
   %+  (retry:strandio ,glob)  `5
