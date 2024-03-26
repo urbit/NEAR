@@ -1,5 +1,5 @@
-const path = require("path");
-const { HotModuleReplacementPlugin } = require("webpack");
+const path = require('path')
+const { HotModuleReplacementPlugin } = require('webpack')
 
 module.exports = () => ({
   devtool: false,
@@ -10,39 +10,39 @@ module.exports = () => ({
         use: [
           {
             // inject CSS to page
-            loader: "style-loader",
+            loader: 'style-loader'
           },
           {
             // translates CSS into CommonJS modules
-            loader: "css-loader",
+            loader: 'css-loader'
           },
           {
             // Run postcss actions
-            loader: "postcss-loader",
+            loader: 'postcss-loader',
             options: {
               // `postcssOptions` is needed for postcss 8.x;
               // if you use postcss 7.x skip the key
               postcssOptions: {
                 // postcss plugins, can be exported to postcss.config.js
                 plugins: function () {
-                  return [require("autoprefixer")];
-                },
-              },
-            },
+                  return [require('autoprefixer')]
+                }
+              }
+            }
           },
           {
             // compiles Sass to CSS
-            loader: "sass-loader",
-          },
-        ],
-      },
-    ],
+            loader: 'sass-loader'
+          }
+        ]
+      }
+    ]
   },
   devServer: {
     open: true,
-    static: path.resolve(__dirname, "../dist"),
-    port: 3000,
-    compress: true,
+    static: path.resolve(__dirname, '../dist'),
+    port: 80,
+    compress: true
   },
-  plugins: [new HotModuleReplacementPlugin()],
-});
+  plugins: [new HotModuleReplacementPlugin()]
+})
