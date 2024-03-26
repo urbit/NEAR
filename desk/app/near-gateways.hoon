@@ -142,8 +142,12 @@
     ::
       %delete
     ?~  (~(get by published) identifier.act)
-      ~&  >>>  'couldnt find in published gateways'
-      that
+          ?~  (~(get by installed) identifier.act)
+            ~&  >>>  'couldnt find in published or installed gateways'
+            that
+          ~&  >  'Deleted gateway'
+          =.  installed  (~(del by installed) identifier.act)
+          that
     ~&  >  'Deleted gateway'
     =.  published  (~(del by published) identifier.act)
     =.  installed  (~(del by installed) identifier.act)
@@ -396,5 +400,5 @@
 -:(rear gateway)
   ::
   ::http{s}://{host}/~/scry/{app}{path}.{mark}
-++  url  'https://s3.lonhep-tamfeb.startram.io/bucket/lonhep-tamfeb/2024.3.11..21.56.12-glob-0v7.l3ulb.vme1j.g5lip.sbco7.v4hf0.glob'
+++  url  'glob of %near UI'
   --

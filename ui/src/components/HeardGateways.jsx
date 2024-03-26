@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react'
 
 function HeardGateways(props) {
+    const [installedGateways, setInstalledGateways] = useState([])
+    const [newGateways, setNewGateways] = useState([]) 
+
     const api= props.api
     const heard = props.heard
     const installed = props.installed
     const loading = props.loading
+    const setShowDelete = props.setShowDelete
+    const setDelGateway = props.setDelGateway
 
-    const [installedGateways, setInstalledGateways] = useState([])
-    const [newGateways, setNewGateways] = useState([])
+
 
     async function pokeInstall(gateway) {
         console.log(gateway)
@@ -78,6 +82,8 @@ function HeardGateways(props) {
                     </div>
                     <div className="git">
                     <a href={url}>Gateway</a>
+                    <button onClick={() => { setShowDelete(true), setDelGateway(gateway)}}
+            >Delete</button>
                     </div></div>
                     )})}
             {newGateways !== null ?

@@ -4,22 +4,13 @@ import DeleteGateway from './DeleteGateway.jsx'
 
 function PublishedGateways(props) {
     const [showNew, setShowNew] = useState(false)
-    const [showDelete, setShowDelete] = useState(false)
-    const [delGateway, setDelGateway] = useState({})
 
     const published = props.published
     const loading = props.loading 
     const api = props.api
+    const setShowDelete = props.setShowDelete
+    const setDelGateway = props.setDelGateway
 
-    async function deleteGateway(gateway) {
-        api.poke({
-            app: "near-gateways",
-            mark: "near-action",
-            json: {"delete": {"ship": gateway.ship, "id": gateway.id}},
-            onSuccess: () =>  {setDelGateway({}), window.location.reload(), setShowDelete(false)},
-            onError: () => setError('Failed to delete gateway')
-        }) 
-    }
 
     return(
         <div>
@@ -28,7 +19,6 @@ function PublishedGateways(props) {
         <div>
           <NewGateway api={api} setShowNew={setShowNew}/></div> : 
         <div></div>}
-        {showDelete ? <div><DeleteGateway gateway={delGateway} setShowDelete={setShowDelete} deleteGateway={deleteGateway}/></div> :<div></div>}
         </div>
         {(published !== null)  && !loading ?
         <div>

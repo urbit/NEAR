@@ -2,11 +2,16 @@ import React, { useEffect, useState } from 'react';
 import Urbit from '@urbit/http-api';
 import HeardGateways from './components/HeardGateways.jsx'
 import PublishedGateways from './components/PublishedGateways.jsx'
+import DeleteGateway from './components/DeleteGateway.jsx'
 
 
 export function App() {
+  const [showDelete, setShowDelete] = useState(false)
+  const [delGateway, setDelGateway] = useState({})
   const api = new Urbit('', '', 'near-handler');
   api.ship = window.ship;
+
+
 
   const [heard, setHeard] = useState([])
   const [published, setPublished] = useState([])
@@ -38,19 +43,32 @@ export function App() {
   }
 }, [loading])
 
+async function deleteGateway(gateway) {
+  api.poke({
+      app: "near-gateways",
+      mark: "near-action",
+      json: {"delete": {"ship": gateway.ship, "id": gateway.id}},
+      onSuccess: () =>  {setDelGateway({}), window.location.reload(), setShowDelete(false)},
+      onError: () => setError('Failed to delete gateway')
+  }) 
+}
+
 
 
   return (
     <div className='containerBody'>
       <div className='containerMain'> 
       {loading ? <div>loading</div> :
-      <div>
+        <div>
+          {showDelete ? 
+            <div><DeleteGateway gateway={delGateway} setShowDelete={setShowDelete} deleteGateway={deleteGateway}/></div> 
+          :<div></div>}
         <h2 className='headers'>Published</h2>
         <div className='containerComponent'>
-          <PublishedGateways published={published} loading={loading} api={api}/></div>
+          <PublishedGateways published={published} loading={loading} api={api} showDelete={showDelete} setShowDelete={setShowDelete} delGateway={delGateway} setDelGateway={setDelGateway} deleteGateway={deleteGateway}/></div>
           <h2 className='headers'>Heard</h2>
           <div className='containerComponent'> 
-        <HeardGateways api={api} heard={heard} installed={installed} loading={loading}/></div>
+        <HeardGateways api={api} heard={heard} installed={installed} loading={loading} setShowDelete={setShowDelete} setDelGateway={setDelGateway}/></div>
       </div>
   }</div>
     </div>
