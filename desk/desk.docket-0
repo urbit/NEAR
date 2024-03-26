@@ -1,0 +1,9 @@
+:~
+  title+'Near'
+  info+'near gateway browser'
+  color+0x1f.ec98
+  version+[0 0 1]
+  website+'https://github.com/Urbit'
+  license+'MIT'
+  site+/apps/near
+==

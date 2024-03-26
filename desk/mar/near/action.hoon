@@ -1,14 +1,15 @@
-/-  *near-handler
-/+  *near-handler
-|_  =gateway-action 
+/-  *near-gateways
+/+  *near-gateways
+|_  act=gateway-action 
 ++  grab
   |%
   ++  noun  gateway-action
-  ::++  json  act:dejs
+  ++  json  
+  gateway-act:dejs
   --
 ++  grow
   |%
-  ++  noun  gateway-action 
+  ++  noun  act
   --
 ++  grad  %noun
 --
