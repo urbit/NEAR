@@ -1,4 +1,4 @@
-/-  spider, *near-gateway
+/-  spider, *near-gateways
 /+  strandio
 =,  strand=strand:spider
 ^-  thread:spider
