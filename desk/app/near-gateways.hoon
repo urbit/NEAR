@@ -124,7 +124,7 @@
       =/  id=identifier  [our.bowl (sham eny.bowl)] 
       ~&  ['publish id' id]
       ?:  =(metadata.act ['ui-main' url ''])
-          =.  ui-glob  [id *glob]
+          =.  ui-glob  [[our.bowl 0v0] *glob]
           %+  get-gateway-glob
             metadata.act
           id
