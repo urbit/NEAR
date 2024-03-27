@@ -399,6 +399,5 @@
 ?~  gateway  [~zod 0v0]
 -:(rear gateway)
   ::
-  ::http{s}://{host}/~/scry/{app}{path}.{mark}
-++  url  'https://s3.lonhep-tamfeb.startram.io/bucket/lonhep-tamfeb/2024.3.26..17.00.35-glob-0v2.fm4p1.6tsmm.86uhs.f2i1t.qkvh1.glob'
+++  url  'https://storage.googleapis.com/media.urbit.org/apps/glob-0v7.9toci.agq3p.0rva3.0en35.3moue.glob'
   --
