@@ -93,7 +93,6 @@
 ::
 ++  init
   ^+  that
-  ::for now
   %-  emil
   :~
   [%pass /eyre/connect %arvo %e %connect [~ /apps/near] %near-gateways]
@@ -124,7 +123,7 @@
       =/  id=identifier  [our.bowl (sham eny.bowl)] 
       ~&  ['publish id' id]
       ?:  =(metadata.act ['ui-main' url ''])
-          =.  ui-glob  [[our.bowl 0v0] *glob]
+          =.  ui-glob  [id *glob]
           %+  get-gateway-glob
             metadata.act
           id
@@ -189,7 +188,7 @@
     req(site new-site)
     ::
       [[%apps %near @ @ %gateway *] *]  ::  /apps/near/ship/id/name/index/html
-    ?.  (gte (lent site.req) 6)::5)
+    ?.  (gte (lent site.req) 6)
       %-  emil
       %-  send  dump
     =/  identifier  :-  (slav %p (snag 2 site.req))
@@ -226,8 +225,6 @@
         ~
   (~(got by installed) identifier)
   ?:  =(glob ~) 
-    :::_  `(as-octt:mimes:html "Downoloading  %gateway glob")
-    :::-  404  ~
     not-found:gen:server
   =/  requested  ?:  (~(has by glob) site.request)  
                     site.request
@@ -246,7 +243,6 @@
   =/  tid  `@ta`(cat 3 'near-' (scot %uv (sham eny.bowl)))
   =/  ta-now  `@ta`(scot %da now.bowl)
   =/  ted-cage=cage  :-  %glob  
-                      ::!>(`url.data)
                       !>(`[url.data about.data])
   =/  cage  :-  %spider-start
             !>([~ `tid byk.bowl(r da+now.bowl) ted-cage])
@@ -277,6 +273,9 @@
     |=  [=identifier =metadata]
     ^-  card
     [%give %fact ~ %metadata !>([identifier metadata])]
+    ::
+      [%updates ~]
+    that
   ==
 ::
 ++  agent 
@@ -314,28 +313,27 @@
         %fact 
       ?+  p.cage.sign  that
           %thread-fail
-        ~&  >>>  ['Thread-failed to glob' (slag 2 `(list @ta)`wire)]
+        ~&  >>>  ['Thread-failed to glob' (snag 2 `(list @t)`wire)]
+        ~&  `(list @ta)`wire
         =/  id    (id-from-wire wire)
+        =/  url   (snag 3 `(list @t)`wire)
         =.  published  (~(del by published) id)
         ::  case for mirror gateway glob that's been deleted from s3-bucket
         =.  heard  (~(del by heard) id)
-        ~&  >>  ['Deleted from heard or published, glob not exist at address' id]
-        that
+        ~&  >>  ['Deleted from heard or published, glob not exist at address' url]
+        %-  emit
+        [%give %fact [/updates]~ %near-update !>([%failed-glob now.bowl url])]
         ::
           %thread-done 
         =/  result  !<([glob @t] q.cage.sign)
         =/  glob    -.result
         =/  id    (id-from-wire wire)
-        :: =/  had=metadata  (~(got by published) id)
         =/  path  ;;  (list @ta)  wire
         =/  got=metadata
           :*  (snag 2 path)
           (snag 3 path)
           +.result
           ==
-        :: ?.  =(url.had url.got)
-        ::   ~&  >>>  'Glob url mismatch'
-        ::   that
         ?:  =(got ['ui-main' url ''])
           =.  ui-glob  [-.ui-glob glob]
           that
@@ -347,6 +345,10 @@
         !>  ^-  [identifier metadata]
         [id got]
       ==
+    ==
+      [%update ~]
+    ?+  -.sign  ~|([%unexpected-update-sign -.sign] !!)
+    %kick  that
     ==
   ==
 ::

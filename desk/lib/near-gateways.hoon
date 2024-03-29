@@ -19,6 +19,14 @@
   (id +.scry)
   ==
   ::
+  ++  update-json 
+  |=  =update
+  ^-  json
+  ?-  -.update
+    %failed-glob
+  (err-update +.update)
+  ==
+  ::
   ++  id-data
   |=  data=(map identifier metadata)
   ^-  json 
@@ -47,6 +55,14 @@
   !>  ^-  [ship=@p id=@t]
   :-  ship.identifier
   (scot %uv id.identifier)
+  ::
+  ++  err-update
+  |=  data=[date=@da url=@t]
+  ^-  json
+  %-  en-vase:etch
+  !>  ^-  [date=@da url=@t]
+  data
+::
 --
 ::
 ++  dejs
