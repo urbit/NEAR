@@ -4,55 +4,28 @@ function HeardGateways(props) {
     const [installedGateways, setInstalledGateways] = useState([])
     const [newGateways, setNewGateways] = useState([]) 
 
-    const api= props.api
     const heard = props.heard
     const installed = props.installed
     const loading = props.loading
     const setShowDelete = props.setShowDelete
     const setDelGateway = props.setDelGateway
+    const setInstallWindow = props.setInstallWindow
+    const setInstGateway = props.setInstGateway
 
-
-
-    async function pokeInstall(gateway) {
-        console.log(gateway)
-        console.log({'install': {
-            'identifier' : {'ship' : gateway.ship, 
-                            'id' : gateway.id}, 
-            'metadata' : {'name' : gateway.name,
-                            'url' : gateway.url,
-                            'about' :gateway.about} 
-        }})
-        api.poke({
-            app:"near-gateways",
-            mark:"near-action",
-            json:{'install': {
-                'identifier' : {'ship' : gateway.ship, 
-                                'id' : gateway.id}, 
-                'metadata' : {'name' : gateway.name,
-                                'url' : gateway.url,
-                                'about' :gateway.about} 
-            }}, 
-            onSuccess: () => window.location.reload(), 
-            onError: () => console.log("install of " + gateway.name + " failed")
-        })
-    }
-    
-    const sortHeard = () =>{
+    const sortHeard = () =>{ 
         if (heard  !==  null &&  installed !== null){
             for (let i = 0; i < heard.length; i++){
                 let gateway = heard[i]
                 let isInstalled = installed.find(instGateway => instGateway.id === gateway.id)
-                console.log(installed.find(instGateway => instGateway.id === gateway.id))
                 if (isInstalled !== undefined){
-                    console.log('gateway installed', gateway)
+                    //add case for if in Mirror del from array
                     setInstalledGateways(current => [...current, gateway])
                 }else{
-                    console.log('gatewa not installed', gateway)
-                    setNewGateways(current => [...current, gateway])
+                    // case for mirroring to remove from heard new
+                        setNewGateways(current => [...current, gateway])
                 }
             }
         }else if (heard  !==  null &&  installed === null){
-            console.log('no installed but heard')
             setNewGateways(heard)
         }else{
             setNewGateways([])
@@ -64,6 +37,7 @@ function HeardGateways(props) {
         sortHeard()
         }
       }, [])
+
 
     return(
          <div>
@@ -82,12 +56,14 @@ function HeardGateways(props) {
                     </div>
                     <div className="git">
                     <a href={url}>Gateway</a>
-                    <button onClick={() => { setShowDelete(true), setDelGateway(gateway)}}
-            >Delete</button>
-                    </div></div>
-                    )})}
+                    <button onClick={() => {setShowDelete(true), setDelGateway(gateway)}}>
+                        Delete
+                    </button>
+                    </div>
+                </div>
+                )})}
             {newGateways !== null ?
-            (newGateways.map((gateway, index) =>{
+            (newGateways.map((gateway, index) => {
                 return(
             <div className='gatewayContainer' id='new' key={index}> 
             <h1 className='addButton'>+</h1>
@@ -97,12 +73,12 @@ function HeardGateways(props) {
             <h4 className='text'>{gateway.about}</h4>
             </div>
             <div className='install'>
-            <button onClick={() => pokeInstall(gateway)}
+            <button onClick={() => {setInstallWindow(true), setInstGateway(gateway)}}
             >Mirror</button>
             </div>
             </div>)})):<div></div>}
         </div>
-        : <div><h2 className="headers">Yet to be dicovered.  Get some %pals</h2></div>
+        : <div><h2 className="headers">Yet to be discovered.  Get some %pals</h2></div>
         }
     </div>
     )

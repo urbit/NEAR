@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import NewGateway from './NewGateway.jsx'
-import DeleteGateway from './DeleteGateway.jsx'
 
 function PublishedGateways(props) {
     const [showNew, setShowNew] = useState(false)
