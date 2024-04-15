@@ -18,14 +18,11 @@ function InstallGateway(props) {
                                 'url' : gateway.url,
                                 'about' :gateway.about} 
             }}, 
-            onSuccess: () => onInstall(gateway), 
+            onSuccess: () => window.location.reload(), 
             onError: () => console.log("install of " + gateway.name + " failed")
         })
       }
-    
-    const onInstall = (gateway) => {
-        window.location.reload()
-    }
+
 
     return(
         <div className="deleteGateway"><h2 className='paragraph'>BOS gateways can access all data on your ship, in the same way that any Urbit app can. Only install gateways from developers you trust!</h2>

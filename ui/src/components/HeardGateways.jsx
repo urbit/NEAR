@@ -18,10 +18,8 @@ function HeardGateways(props) {
                 let gateway = heard[i]
                 let isInstalled = installed.find(instGateway => instGateway.id === gateway.id)
                 if (isInstalled !== undefined){
-                    //add case for if in Mirror del from array
                     setInstalledGateways(current => [...current, gateway])
                 }else{
-                    // case for mirroring to remove from heard new
                         setNewGateways(current => [...current, gateway])
                 }
             }
@@ -45,7 +43,8 @@ function HeardGateways(props) {
         <div className='flexBox'>
             {installedGateways.map((gateway, index) => {
                 let name = gateway.name
-                let url = './near/' + gateway.ship + '/' + gateway.id + '/gateway/'
+                let url = 'http://localhost:8080/apps/near/' + gateway.ship + '/' + gateway.id + '/gateway/'
+                //let url = './near/' + gateway.ship + '/' + gateway.id + '/gateway/'
                 return(
                 <div className='gatewayContainer' id={index} key={index}>
                     <iframe src={url} title={url} className='frame'></iframe>
@@ -74,7 +73,7 @@ function HeardGateways(props) {
             </div>
             <div className='install'>
             <button onClick={() => {setInstallWindow(true), setInstGateway(gateway)}}
-            >Mirror</button>
+            >Install</button>
             </div>
             </div>)})):<div></div>}
         </div>

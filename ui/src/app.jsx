@@ -18,10 +18,23 @@ export function App() {
   const [installed, setInstalled] = useState([])
 
 
-  
-  const api = new Urbit('', '', 'near-handler');
-  api.ship = window.ship;npm 
 
+  // const api = new Urbit('', '', 'near-handler');
+  // api.ship = window.ship;npm 
+
+   const api = new Urbit(
+    'http://localhost:8080',
+    'lidlut-tabwed-pillex-ridrup',
+    'near'
+  )
+  api.ship='zod'
+  //~bus
+  // const api = new Urbit(
+  //   'http://localhost:80',
+  //   'riddec-bicrym-ridlev-pocsef',
+  //   'near'
+  // )
+  // api.ship = 'bus'
 
   async function scryToGateways() {
     console.log('scrying to gateways')

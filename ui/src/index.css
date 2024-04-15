@@ -1,7 +1,12 @@
 @font-face {
+    /* font-family: "urbitSans";
+    src: url("./fonts/UrbitSansWeb-Regular.woff2") format('woff2');
+    10:09 */
     font-family: "urbitSans";
     src: url('https://media.urbit.org/fonts/UrbitSans/UrbitSansVFWeb-Regular.woff2')
        format('woff2');
+    /* font-family: "urbitSansMono";
+    src: url("./fonts/UrbitSansMonoWeb-Thin.woff2") format('woff2'); */
   }
 h1,h2,h3,h4,p,a,input{
     font-family: urbitSans;
@@ -38,7 +43,10 @@ iframe{
 .containerNav{
     grid-column-start: 4;
     grid-column-end: 6;
+    /* display:grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr)); */
     justify-items:stretch;
+    /* gap: 4px; */
     margin-top: 6px;
 }
 .headers{
@@ -224,6 +232,7 @@ iframe{
     grid-row-start: 3;
     grid-row-end: end;
     display: grid;
+    /* grid-template-columns:  10% auto auto 10% [end]; */
     grid-template-columns:  auto auto [end]; 
     grid-template-rows: auto auto auto ;
     gap: 5px 4%;
@@ -231,6 +240,8 @@ iframe{
 }  
 .nameForm{
     grid-column-start: 1;
+    /* grid-column-start: 2; */
+    /* grid-column-end: 3; */
     grid-column-end: 2;
     grid-row-start: 1;
     grid-row-end: 2;
@@ -244,6 +255,8 @@ iframe{
 .aboutForm{
     grid-column-start: 1;
     grid-column-end: 3;
+    /* grid-column-start: 2;
+    grid-column-end: 4; */
     grid-row-start: 2;
     grid-row-end: 3;
     
@@ -262,6 +275,7 @@ iframe{
     
 }
 .btnStyle, .closeNewBtn{
+    /* margin:5px; */
     color:#ABE68D;
     background-color: #141915;
     padding:5px;

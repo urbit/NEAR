@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import NewGateway from './NewGateway.jsx'
+import DeleteGateway from './DeleteGateway.jsx'
 
 function PublishedGateways(props) {
     const [showNew, setShowNew] = useState(false)
@@ -23,7 +24,8 @@ function PublishedGateways(props) {
         <div>
             <div className='flexBox'>{published.map((gateway, index) => {
                 let name = gateway.name
-                let url = './near/' + gateway.ship + '/' + gateway.id + '/gateway/'
+                //let url = './near/' + gateway.ship + '/' + gateway.id + '/gateway/'
+                let url = 'http://localhost:8080/apps/near/' + gateway.ship + '/' + gateway.id + '/gateway/'
                 return(
                 <div key={index} className='gatewayContainer'>
                     <iframe src={url} title={url} className='frame'></iframe>
