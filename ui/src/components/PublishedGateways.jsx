@@ -6,7 +6,7 @@ function PublishedGateways(props) {
     const [showNew, setShowNew] = useState(false)
 
     const published = props.published
-    const loading = props.loading 
+    const loading = props.loading
     const api = props.api
     const setShowDelete = props.setShowDelete
     const setDelGateway = props.setDelGateway
@@ -17,7 +17,7 @@ function PublishedGateways(props) {
         <div className="newGateway">
         {showNew ?
         <div>
-          <NewGateway api={api} setShowNew={setShowNew}/></div> : 
+          <NewGateway api={api} setShowNew={setShowNew}/></div> :
         <div></div>}
         </div>
         {(published !== null)  && !loading ?
@@ -42,16 +42,16 @@ function PublishedGateways(props) {
                 <div className='addGateway' onClick={()=>{setShowNew(true), setDelGateway({}), setShowDelete(false)}}>
                 <h1 className='addButton'>+</h1>
                 <div className='info'>
-                    <h2 className='name'>Upload Your Gateway</h2>
-                    <h4 className='text'>Once uploaded, NEAR gateways can be mirrored by any other urbit server for better availability.</h4>
+                    <h2 className='name'>Upload your gateway</h2>
+                    <h4 className='text'>Once uploaded, people can install your BOS gateway on their ship to run locally.</h4>
                 </div>
                 </div>
                 </div>
             </div> : <div className='flexBox'><div className='addGateway' onClick={()=>{setShowNew(true)}}>
                     <h1 className='addButton'>+</h1>
                 <div className='info'>
-                    <h2>Upload Your Gateway</h2>
-                    <h4 className='text'>Once uploaded, NEAR gateways can be mirrored by any other urbit server for better availability.</h4>
+                    <h2>Upload your gateway</h2>
+                    <h4 className='text'>Once uploaded, people can install your BOS gateway on their ship to run locally.</h4>
                 </div>
                 </div>
                 </div>}
