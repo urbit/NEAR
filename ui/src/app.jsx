@@ -65,7 +65,7 @@ export function App() {
     api.poke({
         app: "near-gateways",
         mark: "near-action",
-        json: {"delete": {"ship": gateway.ship, "id": gateway.id}},
+        json: {delete: {ship: gateway.ship, id: gateway.id}},
         onSuccess: () =>  {
           setDelGateway({})
           window.location.reload()
