@@ -1,10 +1,10 @@
 :~
-  title+'Near'
-  info+'near gateway browser'
+  title+'NEAR Gateways'
+  info+'Browse NEAR BOS gateways and publish your own.'
   color+0x1f.ec98
   image+'https://pbs.twimg.com/profile_images/1631021064171196431/_ahCp9jR_400x400.jpg'
-  version+[0 0 1]
-  website+'https://github.com/Urbit'
+  version+[0 0 2]
+  website+'https://github.com/Urbit/NEAR'
   license+'MIT'
   site+/apps/near
 ==
