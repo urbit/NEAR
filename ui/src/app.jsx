@@ -17,24 +17,8 @@ export function App() {
   const [published, setPublished] = useState([])
   const [installed, setInstalled] = useState([])
 
-
-
-  // const api = new Urbit('', '', 'near-handler');
-  // api.ship = window.ship;npm 
-
-   const api = new Urbit(
-    'http://localhost:8080',
-    'lidlut-tabwed-pillex-ridrup',
-    'near'
-  )
-  api.ship='zod'
-  //~bus
-  // const api = new Urbit(
-  //   'http://localhost:80',
-  //   'riddec-bicrym-ridlev-pocsef',
-  //   'near'
-  // )
-  // api.ship = 'bus'
+  const api = new Urbit('', '', 'near');
+  api.ship = window.ship
 
   async function scryToGateways() {
     console.log('scrying to gateways')
@@ -57,13 +41,13 @@ export function App() {
 
 function getUpdates(){
   api.subscribe({
-    app:'near-gateways', 
-    path:'/updates', 
-    event: setSubEvent, 
-    err: ()=>(conosle.log('Subscription rejected')), 
+    app:'near-gateways',
+    path:'/updates',
+    event: setSubEvent,
+    err: ()=>(conosle.log('Subscription rejected')),
     quit: () =>(console.log("got %kick"))})
   }
- 
+
 useEffect(() => {
   if (loading === true){
     scryToGateways()
@@ -81,34 +65,33 @@ async function deleteGateway(gateway) {
       json: {"delete": {"ship": gateway.ship, "id": gateway.id}},
       onSuccess: () =>  {setDelGateway({}), window.location.reload(), setShowDelete(false)},
       onError: () => setError('Failed to delete gateway')
-  }) 
+  })
 }
-
 
   return (
     <div className='containerBody'>
-      <div className='containerMain'> 
+      <div className='containerMain'>
       {loading ? <div>loading</div> :
         <div>
-          {subEvent.url != undefined ? 
+          {subEvent.url != undefined ?
             <div className='errWindow'>
               <h2>Couldn't find glob for gateway at {subEvent.url}</h2>
               <button onClick={()=>{window.location.reload()}}>close</button>
-            </div> 
+            </div>
           : <div></div>}
-          {showDelete ? 
+          {showDelete ?
             <div>
-              <DeleteGateway 
-                gateway={delGateway} 
-                setShowDelete={setShowDelete} 
+              <DeleteGateway
+                gateway={delGateway}
+                setShowDelete={setShowDelete}
                 deleteGateway={deleteGateway}/>
-            </div> 
+            </div>
           : <div></div>}
-          {installWindow ? 
+          {installWindow ?
             <div>
-              <InstallGateway 
-                gateway={instGateway} 
-                setInstallWindow={setInstallWindow} 
+              <InstallGateway
+                gateway={instGateway}
+                setInstallWindow={setInstallWindow}
                 api={api}
                 setInstGateway={setInstGateway}
                 />
@@ -116,28 +99,28 @@ async function deleteGateway(gateway) {
           : <div></div>}
         <h2 className='headers'>Published</h2>
         <div className='containerComponent'>
-          <PublishedGateways 
-              published={published} 
-              loading={loading} 
-              api={api} 
-              showDelete={showDelete} 
-              setShowDelete={setShowDelete} 
-              delGateway={delGateway} 
-              setDelGateway={setDelGateway} 
+          <PublishedGateways
+              published={published}
+              loading={loading}
+              api={api}
+              showDelete={showDelete}
+              setShowDelete={setShowDelete}
+              delGateway={delGateway}
+              setDelGateway={setDelGateway}
               deleteGateway={deleteGateway}/>
         </div>
         <h2 className='headers'>Heard</h2>
-        <div className='containerComponent'> 
-          <HeardGateways 
-            heard={heard} 
-            installed={installed} 
-            loading={loading} 
-            setShowDelete={setShowDelete} 
-            setDelGateway={setDelGateway} 
-            setInstallWindow={setInstallWindow} 
+        <div className='containerComponent'>
+          <HeardGateways
+            heard={heard}
+            installed={installed}
+            loading={loading}
+            setShowDelete={setShowDelete}
+            setDelGateway={setDelGateway}
+            setInstallWindow={setInstallWindow}
             setInstGateway={setInstGateway}
             />
-          </div> 
+          </div>
       </div>
   }</div>
   </div>
