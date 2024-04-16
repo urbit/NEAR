@@ -33,15 +33,15 @@ function NewGateway(props) {
             <form onSubmit={publishPoke} className='formStyle'>
                 <div className='nameForm'>
                 <h3 className='labelStyle'>Title</h3>
-                <input name="name" value={newGateway.name} onChange={(e) => handleChange(e)} className='inputStyle' required="true" />
+                <input name="name" value={newGateway.name} onChange={(e) => handleChange(e)} className='inputStyle' required={true} maxLength="30" />
                 </div>
                 <div className='urlForm'>
                 <h3 className='labelStyle'>Glob URL</h3>
-                <input name="url" value={newGateway.url} onChange={(e) => handleChange(e)} className='inputStyle' required="true" />
+                <input name="url" value={newGateway.url} onChange={(e) => handleChange(e)} className='inputStyle' required={true} />
                 </div>
                 <div className='aboutForm'>
                 <h3 className='labelStyle'>Description</h3>
-                <textarea name="about" value={newGateway.url} onChange={(e) => handleChange(e)} className='inputStyle' maxlength="250" ></textarea>
+                <textarea name="about" value={newGateway.url} onChange={(e) => handleChange(e)} className='inputStyle' maxLength="256" ></textarea>
                 </div>
                 <button type="submit" className='btnStyle'>Publish Gateway</button>
             </form>
