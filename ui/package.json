@@ -15,11 +15,11 @@
     "vite-plugin-rewrite-all": "^1.0.1"
   },
   "devDependencies": {
-    "@urbit/vite-plugin-urbit": "^1.0.0",
-    "@vitejs/plugin-react": "^4.0.4",
+    "@urbit/vite-plugin-urbit": "1.0.0",
+    "@vitejs/plugin-react": "4.0.4",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.23",
     "tailwindcss": "^3.3.2",
-    "vite": "^4.4.9"
+    "vite": "4.4.9"
   }
 }
