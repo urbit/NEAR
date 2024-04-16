@@ -47,8 +47,8 @@ export function App() {
       app:'near-gateways',
       path:'/updates',
       event: setSubEvent,
-      err: ()=>(conosle.log('Failed to subscribe to near-gateways/updates')),
-      quit: () =>(console.log("Kicked from near-gateways/updates"))})
+      err: () => (console.log('Failed to subscribe to near-gateways/updates')),
+      quit: () => (console.log("Kicked from near-gateways/updates"))})
     }
 
   useEffect(() => {
