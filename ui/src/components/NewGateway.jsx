@@ -18,32 +18,32 @@ function NewGateway(props) {
           });
     }
 
-    
+
     return(
         <div className='formContainer'>
             <button className='closeNewBtn' onClick={()=>{setShowNew(false)}}>x</button>
             <p className='paragraph'>
-                1. Glob gateway using -landscape!make-glob.
+                1. Glob your gateway using -landscape!make-glob.
             <br/>
-                2. Upload it to your s3 bucket.
+                2. Upload the glob to your S3 bucket.
             <br/>
-                3. Publish gateway through form below.
+                3. Publish your BOS gateway here.
             <br/>
             </p>
             <form onSubmit={publishPoke} className='formStyle'>
                 <div className='nameForm'>
-                <h3 className='labelStyle'>name</h3>
+                <h3 className='labelStyle'>Title</h3>
                 <input name="name" value={newGateway.name} onChange={(e) => handleChange(e)} className='inputStyle' required="true" />
                 </div>
                 <div className='urlForm'>
-                <h3 className='labelStyle'>glob url</h3>
+                <h3 className='labelStyle'>Glob URL</h3>
                 <input name="url" value={newGateway.url} onChange={(e) => handleChange(e)} className='inputStyle' required="true" />
                 </div>
                 <div className='aboutForm'>
-                <h3 className='labelStyle'>about</h3>
+                <h3 className='labelStyle'>Description</h3>
                 <textarea name="about" value={newGateway.url} onChange={(e) => handleChange(e)} className='inputStyle' maxlength="250" ></textarea>
                 </div>
-                <button type="submit" className='btnStyle'>publish gateway</button>
+                <button type="submit" className='btnStyle'>Publish Gateway</button>
             </form>
         </div>
     )
