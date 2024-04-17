@@ -1,26 +1,11 @@
 import React, {useState} from 'react'
+import { publishGateway } from '../api/pokes'
 
-function NewGateway({ api, setShowNew }) {
+function NewGateway({ setShowNew, setError }) {
   const [newGateway, setNewGateway] = useState({})
 
   function handleTextContentChange(e) {
       newGateway[e.target.name] = e.target.value
-  }
-
-  async function publishPoke() {
-    api.poke({
-      app: "near-gateways",
-      mark: "near-action",
-      json: {
-        publish: {
-          name: newGateway.name,
-          url: newGateway.url,
-          about: newGateway.about
-        }
-      },
-      onSuccess: () => setNewGateway({}),
-      onError: () => setError(`Failed to fetch glob from ${newGateway.url}`)
-    })
   }
 
   return (
@@ -36,7 +21,7 @@ function NewGateway({ api, setShowNew }) {
         3. Publish your BOS gateway here.
         <br/>
       </p>
-      <form onSubmit={publishPoke} className='formStyle'>
+      <form onSubmit={async () => {publishGateway(newGateway, setNewGateway, setError)}} className='formStyle'>
         <div className='nameForm'>
           <h3 className='labelStyle'>Title</h3>
           <input

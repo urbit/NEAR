@@ -1,6 +1,10 @@
 import Urbit from '@urbit/http-api'
 
-function pokeUrbit(app, mark, json, onSuccess) {
+function defaultOnError(app, mark, json) {
+  console.error(`Failed to poke ${app} with mark ${mark} and json ${json}`)
+}
+
+function pokeUrbit(app, mark, json, onSuccess, onError) {
   const api = new Urbit('', '', app)
   api.ship = window.ship
   return api.poke({
@@ -8,14 +12,15 @@ function pokeUrbit(app, mark, json, onSuccess) {
     mark: mark,
     json: json,
     onSuccess: onSuccess || {},
-    onError: () => {
-      console.error(`Failed to poke ${app} with mark ${mark} and json ${json}`)
-    }
+    onError: onError || defaultOnError
   })
 }
 
 export function installGateway(gateway) {
-  return pokeUrbit('near-gateways', 'near-action', {
+  return pokeUrbit(
+    'near-gateways',
+    'near-action',
+    {
     install: {
       identifier: {
         id: gateway.id,
@@ -27,7 +32,22 @@ export function installGateway(gateway) {
         about: gateway.about
       }
     }
+    },
+    () => window.location.reload()
+  )
+}
+
+export function publishGateway(gateway, setNewGateway) {
+  return pokeUrbit(
+  'near-gateways',
+  'near-action',
+  {
+    publish: {
+      name: gateway.name,
+      url: gateway.url,
+      about: gateway.about
+    }
   },
-  // onSuccess
-  () => window.location.reload())
+  setNewGateway({}),
+  () => console.error(`Failed to fetch glob from ${gateway.url}`))
 }
