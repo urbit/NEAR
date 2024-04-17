@@ -5,7 +5,7 @@ function defaultOnError(app, mark, json) {
 }
 
 function pokeUrbit(app, mark, json, onSuccess, onError) {
-  const api = new Urbit('', '', app)
+  const api = new Urbit('', '', 'near')
   api.ship = window.ship
   return api.poke({
     app: app,
