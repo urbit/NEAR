@@ -1,12 +1,7 @@
 @font-face {
-    /* font-family: "urbitSans";
-    src: url("./fonts/UrbitSansWeb-Regular.woff2") format('woff2');
-    10:09 */
     font-family: "urbitSans";
     src: url('https://media.urbit.org/fonts/UrbitSans/UrbitSansVFWeb-Regular.woff2')
        format('woff2');
-    /* font-family: "urbitSansMono";
-    src: url("./fonts/UrbitSansMonoWeb-Thin.woff2") format('woff2'); */
   }
 h1,h2,h3,h4,p,a,input{
     font-family: urbitSans;
