@@ -8,12 +8,12 @@
   $%  state-0
   ==
 ::
-+$  state-0 
-  $:  %0  
++$  state-0
+  $:  %0
   ::  (map identifier=[ship id] metadata=[name url])
       ui-glob=[identifier glob]
-      heard=(map identifier metadata)  
-      published=(map identifier metadata)  
+      heard=(map identifier metadata)
+      published=(map identifier metadata)
       installed=(map identifier glob)
   ==
 ::
@@ -27,7 +27,7 @@
 %+  verb  |
 %-  agent:dbug
 %-  %+  agent:gossip
-      [2 %anybody %anybody |]
+      [2 %targets %anybody |]
     %+  ~(put by *(map mark $-(* vase)))
       %metadata
     |=(n=* !>((grab-metadata n)))
@@ -67,13 +67,13 @@
     =^  cards  state  abet:(watch:hc path)
     [cards this]
   ::
-  ++  on-agent  
+  ++  on-agent
     |=  [=wire =sign:agent:gall]
     ^-  (quip card _this)
     =^  cards  state  abet:(agent:hc wire sign)
     [cards this]
   ::
-  ++  on-arvo   
+  ++  on-arvo
     |=  [=wire =sign-arvo]
     ^-  (quip card _this)
     =^  cards  state  abet:(arvo:hc wire sign-arvo)
@@ -105,7 +105,7 @@
   ?>  ?=([%0 *] q.vaz)
   that(state !<(state-0 vaz))
 ::
-++  poke 
+++  poke
   |=  [=mark =vase]
   ^+  that
   ?+  mark  that
@@ -118,9 +118,9 @@
   =+  !<(act=gateway-action vase)
   ?-  -.act
     ::
-      %publish 
+      %publish
     ?~  (find ~[metadata.act] ~(val by published))
-      =/  id=identifier  [our.bowl (sham eny.bowl)] 
+      =/  id=identifier  [our.bowl (sham eny.bowl)]
       ~&  ['publish id' id]
       ?:  =(metadata.act ['ui-main' url ''])
           =.  ui-glob  [id *glob]
@@ -134,7 +134,7 @@
     ~&  'Alredy globbed and installed'
     that
     ::
-      %install  
+      %install
     %+  get-gateway-glob
       metadata.act
     identifier.act
@@ -156,23 +156,23 @@
 ++  dump  [404 ~ [%plain "404 - Not Found"]]
 ++  handle-http-request
   |=  [id=@ta inbound-request:eyre]
-  ^+  that 
+  ^+  that
   =/  req=request-line:server  (parse-request-line:server url.request)
   =+  send=(cury response:schooner id)
   ?.  authenticated
     %-  emil
     %-  send
     [302 ~ [%login-redirect './apps/near']]
-  ?+  method.request  
-      %-  emil 
+  ?+  method.request
+      %-  emil
       %-  send  [405 ~ [%stock ~]]
     %'GET'
-  ?+  [site ext]:req  
-    %-  emil  
+  ?+  [site ext]:req
+    %-  emil
     %-  send  [302 ~ [%redirect '../']]
     [[%apps %near ~] *]
     %-  emil
-    %+  give-simple-payload:app:server 
+    %+  give-simple-payload:app:server
       id
     %+  from-glob
       *identifier
@@ -181,9 +181,9 @@
     [[%apps %near %assets *] *]
     =/  new-site  (weld (slag 2 site.req) (drop ext.req))
     %-  emil
-    %+  give-simple-payload:app:server 
+    %+  give-simple-payload:app:server
       id
-    %+  from-glob 
+    %+  from-glob
       *identifier
     req(site new-site)
     ::
@@ -193,24 +193,24 @@
       %-  send  dump
     =/  identifier  :-  (slav %p (snag 2 site.req))
                     (slav %uv (snag 3 site.req))
-    ?.  (~(has by installed) identifier) 
+    ?.  (~(has by installed) identifier)
       %-  emil
       %-  send  [404 ~ [%plain "Downoloading glob"]]
-    =/  new-site  
-      %+  weld 
+    =/  new-site
+      %+  weld
         %+  slag  5
         ;;  (list @ta)  site.req
-      %-  drop 
+      %-  drop
       ext.req
     %-  emil
-    %+  give-simple-payload:app:server 
+    %+  give-simple-payload:app:server
       id
-    %+  from-glob 
+    %+  from-glob
       identifier
     req(site new-site)
     ==
   ::
-    %'POST'  
+    %'POST'
   %-  emil
   %-  send  dump
   ==
@@ -219,38 +219,38 @@
   |=  [identifier=[=ship id=@uvH] request=request-line:server]
   ^-  simple-payload:http
   =/  =glob
-    ?:  =(identifier [ship=~zod id=0v0])  
+    ?:  =(identifier [ship=~zod id=0v0])
     +.ui-glob
-      ?.  (~(has by installed) identifier)  
+      ?.  (~(has by installed) identifier)
         ~
   (~(got by installed) identifier)
-  ?:  =(glob ~) 
+  ?:  =(glob ~)
     not-found:gen:server
-  =/  requested  ?:  (~(has by glob) site.request)  
+  =/  requested  ?:  (~(has by glob) site.request)
                     site.request
                   /index/html
   =/  =mime  (~(got by glob) requested)
-  =/  mime-type=@t  (rsh 3 (crip <p.mime>)) 
+  =/  mime-type=@t  (rsh 3 (crip <p.mime>))
     =;  headers
       [[200 headers] `q.mime]
       :-  content-type+mime-type
       ?:  =(/index/html requested)  ~
       ~[max-1-wk:gen:server]
-::  
+::
 ++  get-gateway-glob
-  |=  [data=metadata =identifier] 
-  ^+  that 
+  |=  [data=metadata =identifier]
+  ^+  that
   =/  tid  `@ta`(cat 3 'near-' (scot %uv (sham eny.bowl)))
   =/  ta-now  `@ta`(scot %da now.bowl)
-  =/  ted-cage=cage  :-  %glob  
+  =/  ted-cage=cage  :-  %glob
                       !>(`[url.data about.data])
   =/  cage  :-  %spider-start
             !>([~ `tid byk.bowl(r da+now.bowl) ted-cage])
-  =/  id-path  
+  =/  id-path
   ;;  (list @ta)
-    :~  name.data 
-        url.data 
-        (scot %p -.identifier) 
+    :~  name.data
+        url.data
+        (scot %p -.identifier)
         (scot %uv +.identifier)
     ==
   =/  path  `(list @ta)`(weld /glob/[ta-now] id-path)
@@ -259,14 +259,14 @@
     [%pass path %agent [our.bowl %spider] %watch /thread-result/[tid]]
     ==
 ::
-++  watch 
-  |=  =path 
+++  watch
+  |=  =path
   ^+  that
   ?+   path    ~|(bad-watch-path+path !!)
       [%http-response *]
     that
     ::
-      [%~.~ %gossip %source ~] 
+      [%~.~ %gossip %source ~]
     %-  emil
     %+  turn
       ~(tap by published)
@@ -278,18 +278,18 @@
     that
   ==
 ::
-++  agent 
+++  agent
   |=  [=wire =sign:agent:gall]
   ^+  that
   ?+    wire  ~|(bad-agent-wire+wire !!)
       [%publish-ui ~]
     ?+  -.sign  ~|([%unexpected-self-poke-sign -.sign] !!)
         %poke-ack
-      ?~  p.sign  
+      ?~  p.sign
         that
       ~&  >>>  'Poke ui failed'
       that
-    == 
+    ==
       ::
       [%~.~ %gossip %gossip ~]
     ?+  -.sign  ~|([%unexpected-gossip-sign -.sign] !!)
@@ -302,15 +302,15 @@
         that
     ==
       [%glob @ @ @ *]
-    ?-  -.sign 
+    ?-  -.sign
         %kick  that
         ?(%poke-ack %watch-ack)
-      ?~  p.sign  
+      ?~  p.sign
           that
       ~&  >>>  'Thread failed to start'
       that
       ::
-        %fact 
+        %fact
       ?+  p.cage.sign  that
           %thread-fail
         ~&  >>>  ['Thread-failed to glob' (snag 2 `(list @t)`wire)]
@@ -324,7 +324,7 @@
         %-  emit
         [%give %fact [/updates]~ %near-update !>([%failed-glob now.bowl url])]
         ::
-          %thread-done 
+          %thread-done
         =/  result  !<([glob @t] q.cage.sign)
         =/  glob    -.result
         =/  id    (id-from-wire wire)
@@ -341,7 +341,7 @@
         =.  installed  (~(put by installed) id glob)
         %-  emit
         %+  invent:gossip
-          %metadata 
+          %metadata
         !>  ^-  [identifier metadata]
         [id got]
       ==
@@ -353,32 +353,32 @@
   ==
 ::
 ++  id-from-wire
-|=  =wire 
-^-  identifier 
+|=  =wire
+^-  identifier
 :-  (slav %p (snag 4 wire))
 (slav %uv (snag 5 wire))
 ::
-++  arvo 
+++  arvo
   |=  [=wire =sign-arvo]
-  ^+  that 
+  ^+  that
   ?+  wire   that
       [%eyre %connect ~]
     ?.  ?=([%eyre %bound *] sign-arvo)  that
-    ?:  accepted.sign-arvo  
+    ?:  accepted.sign-arvo
     that
-    ~&  ['Failed to bind' path.binding.sign-arvo] 
+    ~&  ['Failed to bind' path.binding.sign-arvo]
     that
   ==
 ++  peek
   |=  =path
   ^-  (unit (unit cage))
   ?+  path  [~ ~]
-  ::  
+  ::
   [%x %heard ~]      ``near-scry+!>([%heard heard])
   [%x %published ~]  ``near-scry+!>([%published published])
   [%x %installed ~]  ``near-scry+!>([%installed ~(tap in ~(key by installed))])
   [%x %installed @ ~]  ``near-scry+!>([%find-id (find-id -.+.+.path)])
-  [%x %dbug %state ~]  
+  [%x %dbug %state ~]
   =-  ``noun+!>(-)
   %_  state
       installed
@@ -386,18 +386,18 @@
     |=  =glob
       %-  ~(run by glob)
       |=(=mime mime(q.q 1.337))
-      +.ui-glob 
+      +.ui-glob
       %-  ~(run by +.ui-glob)
       |=(=mime mime(q.q 1.337))
   ==
 ==
-++  find-id 
+++  find-id
 |=  name=@t
 ^-  identifier
 =/  gateway=(list [identifier metadata])
-  %+  skim  ~(tap by published) 
+  %+  skim  ~(tap by published)
     |=  [p=identifier q=metadata]
-    =(name name.q)  
+    =(name name.q)
 ?~  gateway  [~zod 0v0]
 -:(rear gateway)
   ::
