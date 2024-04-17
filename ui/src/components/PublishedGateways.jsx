@@ -70,14 +70,14 @@ function PublishedGateways({ api, published, loading, setShowDelete, setDelGatew
             setDelGateway({})
             setShowDelete(false)
           }}>
-          <h1 className='addButton'>+</h1>
-          <div className='info'>
-            <h2 className='name'>Upload your gateway</h2>
-            <h4 className='text'>
-              Once uploaded, people can install your BOS gateway on their ship to run locally.
-            </h4>
+            <h1 className='addButton'>+</h1>
+            <div className='info'>
+              <h2 className='name'>Upload your gateway</h2>
+              <h4 className='text'>
+                Once uploaded, people can install your BOS gateway on their ship to run locally.
+              </h4>
+            </div>
           </div>
-        </div>
       </div>
     </div>
     </div>

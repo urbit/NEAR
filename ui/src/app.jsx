@@ -3,7 +3,7 @@ import Urbit from '@urbit/http-api';
 import HeardGateways from './components/HeardGateways.jsx'
 import PublishedGateways from './components/PublishedGateways.jsx'
 import DeleteGateway from './components/DeleteGateway.jsx'
-import InstallGateway from './components/InstallGateway.jsx'
+import InstallGatewayModal from './components/InstallGatewayModal.jsx'
 
 export function App() {
   const [loading, setLoading] = useState(true)
@@ -97,7 +97,7 @@ export function App() {
             }
             {installWindow &&
               <div>
-                <InstallGateway
+                <InstallGatewayModal
                   gateway={instGateway}
                   setInstallWindow={setInstallWindow}
                   api={api}
