@@ -305,6 +305,10 @@ iframe{
     grid-row-start: 1;
     grid-row-end: 2;
 }
+.closeNewBtn span {
+  position: relative;
+  top: -2px;
+}
 .btnStyle:hover, .closeNewBtn:hover{
     color: #141915;
     background-color: #ABE68D;

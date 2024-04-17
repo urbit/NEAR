@@ -26,7 +26,7 @@ function NewGateway({ api, setShowNew }) {
   return (
     <div className='formContainer'>
       <button className='closeNewBtn' onClick={() => {setShowNew(false)}}>
-        x
+        <span>x</span>
       </button>
       <p className='paragraph'>
         1. Glob your gateway using -landscape!make-glob.
