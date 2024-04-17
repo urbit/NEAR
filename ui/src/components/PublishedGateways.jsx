@@ -10,7 +10,7 @@ function PublishedGateways({ api, published, loading, setShowDelete, setDelGatew
         <div className="newGateway">
           {showNew &&
             <div>
-              <NewGateway api={api} setShowNew={setShowNew}/>
+              <NewGateway setShowNew={setShowNew}/>
             </div>
           }
         </div>
@@ -34,7 +34,7 @@ function PublishedGateways({ api, published, loading, setShowDelete, setDelGatew
       <div className="newGateway">
         {showNew &&
           <div>
-            <NewGateway api={api} setShowNew={setShowNew}/>
+            <NewGateway setShowNew={setShowNew}/>
           </div>
         }
       </div>

@@ -100,7 +100,6 @@ export function App() {
                 <InstallGatewayModal
                   gateway={instGateway}
                   setInstallWindow={setInstallWindow}
-                  api={api}
                   setInstGateway={setInstGateway}
                 />
               </div>
@@ -110,7 +109,6 @@ export function App() {
               <PublishedGateways
                   published={published}
                   loading={loading}
-                  api={api}
                   showDelete={showDelete}
                   setShowDelete={setShowDelete}
                   delGateway={delGateway}
