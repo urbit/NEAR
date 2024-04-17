@@ -209,7 +209,7 @@ iframe{
 }
 .formContainer{
     top:30%;
-    width:60%;
+    width:40%;
 }
 .paragraph{
     margin:auto;
@@ -315,7 +315,7 @@ iframe{
 }
 .deleteGateway, .errWindow{
     top: 40%;
-    width:50%;
+    width: 40%;
     text-align: center;
 }
 .delButtons, .instButtons{
