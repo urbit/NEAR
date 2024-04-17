@@ -71,17 +71,17 @@ export function App() {
           window.location.reload()
           setShowDelete(false)
         },
-        onError: () => setError('Failed to delete gateway')
+        onError: () => console.error('Failed to delete gateway')
     })
   }
 
   return (
-    <div className='containerBody'>
-      <div className='containerMain'>
+    <div className='container-body'>
+      <div className='container-main'>
         {!loading &&
           <div>
             {subEvent.url != undefined &&
-              <div className='errWindow'>
+              <div className='err-window'>
                 <h2>Couldn't find glob for gateway at {subEvent.url}</h2>
                 <button onClick={()=>{window.location.reload()}}>Reload</button>
               </div>

@@ -1,22 +1,22 @@
 import React, { useState } from 'react'
 import NewGateway from './NewGateway.jsx'
 
-function PublishedGateways({ api, published, loading, setShowDelete, setDelGateway }) {
+function PublishedGateways({ published, loading, setShowDelete, setDelGateway }) {
   const [showNew, setShowNew] = useState(false)
 
   if (published === null && !loading) {
     return (
       <div>
-        <div className="newGateway">
+        <div className="new-gateway">
           {showNew &&
             <div>
               <NewGateway setShowNew={setShowNew}/>
             </div>
           }
         </div>
-        <div className='flexBox'>
-          <div className='addGateway' onClick={()=>{setShowNew(true)}}>
-            <h1 className='addButton'>+</h1>
+        <div className='flex-box'>
+          <div className='add-gateway' onClick={()=>{setShowNew(true)}}>
+            <h1 className='add-button'>+</h1>
             <div className='info'>
               <h2>Upload your gateway</h2>
               <h4 className='text'>
@@ -31,7 +31,7 @@ function PublishedGateways({ api, published, loading, setShowDelete, setDelGatew
 
   return (
     <div>
-      <div className="newGateway">
+      <div className="new-gateway">
         {showNew &&
           <div>
             <NewGateway setShowNew={setShowNew}/>
@@ -39,13 +39,13 @@ function PublishedGateways({ api, published, loading, setShowDelete, setDelGatew
         }
       </div>
       <div>
-        <div className='flexBox'>
+        <div className='flex-box'>
           {published.map((gateway, index) => {
             let name = gateway.name
             let url = `${window.location.origin}/apps/near/${gateway.ship}/${gateway.id}/gateway/`
 
             return (
-              <div key={index} className='gatewayContainer'>
+              <div key={index} className='gateway-container'>
                 <iframe src={url} title={url} className='frame'></iframe>
                 <div className='info'>
                   <h2 className='name' href={url}>{name}</h2>
@@ -65,12 +65,12 @@ function PublishedGateways({ api, published, loading, setShowDelete, setDelGatew
               </div>
             )})
           }
-          <div className='addGateway' onClick={() => {
+          <div className='add-gateway' onClick={() => {
             setShowNew(true)
             setDelGateway({})
             setShowDelete(false)
           }}>
-            <h1 className='addButton'>+</h1>
+            <h1 className='add-button'>+</h1>
             <div className='info'>
               <h2 className='name'>Upload your gateway</h2>
               <h4 className='text'>

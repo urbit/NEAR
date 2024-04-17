@@ -1,12 +1,10 @@
 {
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:css-modules/recommended"
+    "plugin:react/recommended"
   ],
   "plugins": [
-    "html",
-    "css-modules"
+    "html"
   ],
   "settings": {
     "react": {
@@ -24,5 +22,9 @@
     },
     "ecmaVersion": 12,
     "sourceType": "module"
+  },
+  "rules": {
+    "react/no-unescaped-entities": "off",
+    "react/prop-types": "off"
   }
 }

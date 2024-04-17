@@ -9,8 +9,8 @@ function NewGateway({ setShowNew, setError }) {
   }
 
   return (
-    <div className='formContainer'>
-      <button className='closeNewBtn' onClick={() => {setShowNew(false)}}>
+    <div className='form-container'>
+      <button className='close-new-btn' onClick={() => {setShowNew(false)}}>
         <span>x</span>
       </button>
       <p className='paragraph'>
@@ -21,39 +21,39 @@ function NewGateway({ setShowNew, setError }) {
         3. Publish your BOS gateway here.
         <br/>
       </p>
-      <form onSubmit={async () => {publishGateway(newGateway, setNewGateway, setError)}} className='formStyle'>
-        <div className='nameForm'>
+      <form onSubmit={async () => {publishGateway(newGateway, setNewGateway, setError)}} className='form-style'>
+        <div className='name-form'>
           <h3 className='labelStyle'>Title</h3>
           <input
             name="name"
             value={newGateway.name}
             onChange={(e) => handleTextContentChange(e)}
-            className='inputStyle'
+            className='input-style'
             required={true}
             maxLength="30"
           />
         </div>
-        <div className='urlForm'>
+        <div className='url-form'>
           <h3 className='labelStyle'>Glob URL</h3>
           <input
             name="url"
             value={newGateway.url}
             onChange={(e) => handleTextContentChange(e)}
-            className='inputStyle'
+            className='input-style'
             required={true}
           />
         </div>
-        <div className='aboutForm'>
+        <div className='about-form'>
           <h3 className='labelStyle'>Description</h3>
           <textarea
             name="about"
             value={newGateway.url}
             onChange={(e) => handleTextContentChange(e)}
-            className='inputStyle'
+            className='input-style'
             maxLength="256"
           />
         </div>
-        <button type="submit" className='btnStyle'>
+        <button type="submit" className='btn-style'>
           Publish Gateway
         </button>
       </form>

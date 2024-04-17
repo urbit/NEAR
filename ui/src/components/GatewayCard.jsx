@@ -5,7 +5,8 @@ function getImage(url) {
   return url
 }
 
-function GatewayCard({ id, imageUrl, title, author, description, link, isPublished, isInstalled }) {
+// TODO use id prop
+function GatewayCard({ imageUrl, title, author, description, link, isPublished, isInstalled }) {
   function handleInstallClick() {
     // return (
     //   <InstallGatewayModal

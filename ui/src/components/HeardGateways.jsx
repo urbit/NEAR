@@ -44,12 +44,12 @@ function HeardGateways({ heard, installed, loading, setShowDelete, setDelGateway
 
   return (
     <div>
-      <div className='flexBox'>
+      <div className='flex-box'>
         {installedGateways.map((gateway, index) => {
           let name = gateway.name
           let url = `${window.location.origin}/apps/near/${gateway.ship}/${gateway.id}/gateway/`
           return (
-            <div className='gatewayContainer' id={index} key={index}>
+            <div className='gateway-container' id={index} key={index}>
               <iframe src={url} title={url} className='frame'></iframe>
               <div className='info'>
                 <h2 className='name' href={url}>{name}</h2>
@@ -71,8 +71,8 @@ function HeardGateways({ heard, installed, loading, setShowDelete, setDelGateway
         {newGateways !== null &&
           (newGateways.map((gateway, index) => {
             return (
-              <div className='gatewayContainer' id='new' key={index}>
-                <h1 className='addButton'>+</h1>
+              <div className='gateway-container' id='new' key={index}>
+                <h1 className='add-button'>+</h1>
                 <div className='info'>
                   <h2 className="name">{gateway.name}</h2>
                   <h3 className="ship">{gateway.ship}</h3>
