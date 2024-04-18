@@ -7,8 +7,6 @@ import GatewayCard from './GatewayCard'
 function HeardGateways() {
   const {
     loading,
-    setShowDelete,
-    setInstallWindow
   } = useUiState()
   const {
     heard,
@@ -16,8 +14,6 @@ function HeardGateways() {
     newGateways,
     installedGateways,
     setHeard,
-    setDelGateway,
-    setInstGateway,
     setNewGateways,
     setInstalledGateways
   } = useGatewaysState()

@@ -8,7 +8,7 @@ function getImage(url) {
 }
 
 function GatewayCard({ key, gateway, isPublished, isInstalled }) {
-  const { setInstGateway } = useGatewaysState()
+  const { setDelGateway, setInstGateway } = useGatewaysState()
   const { setShowDelete, setInstallWindow } = useUiState()
 
   function handleInstallClick() {
