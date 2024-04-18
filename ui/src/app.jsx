@@ -7,6 +7,7 @@ import InstallGatewayModal from './components/InstallGatewayModal.jsx'
 import useUiState from '../state/useUiState.js';
 import useGatewaysState from '../state/useGatewayState.js';
 import { scryHeard, scryInstalled, scryPublished } from './api/scries.js';
+import { subscribeToUpdates } from './api/subscriptions.js';
 
 export function App() {
   const {
@@ -35,15 +36,6 @@ export function App() {
     setLoading(false)
   }
 
-  function getUpdates(){
-    api.subscribe({
-      app:'near-gateways',
-      path:'/updates',
-      event: setSubEvent,
-      err: () => (console.log('Failed to subscribe to near-gateways/updates')),
-      quit: () => (console.log("Kicked from near-gateways/updates"))})
-    }
-
   useEffect(() => {
     if (loading === true){
       scryToGateways()
@@ -51,7 +43,7 @@ export function App() {
   }, [loading])
 
   useEffect(() => {
-    getUpdates()
+    subscribeToUpdates(setSubEvent)
   }, [subEvent])
 
   return (
