@@ -12,8 +12,6 @@ export function App() {
   const {
     subEvent,
     setSubEvent,
-    loading,
-    setLoading,
     showDelete,
     installWindow,
   } = useUiState()
@@ -23,20 +21,16 @@ export function App() {
     setInstalled,
   } = useGatewaysState()
 
-  async function scryToGateways() {
-    console.log('Scrying to gateways')
-
-    setHeard(scryHeard())
-    setPublished(scryPublished())
-    setInstalled(scryInstalled())
-    setLoading(false)
-  }
-
   useEffect(() => {
-    if (loading === true){
-      scryToGateways()
+    async function init() {
+      console.log('Scrying to gateways')
+      setHeard(await scryHeard())
+      setPublished(await scryPublished())
+      setInstalled(await scryInstalled())
     }
-  }, [loading])
+
+    init()
+  }, [])
 
   useEffect(() => {
     subscribeToUpdates(setSubEvent)
@@ -45,7 +39,6 @@ export function App() {
   return (
     <div className='container-body'>
       <div className='container-main'>
-        {!loading &&
           <div>
             {subEvent.url != undefined &&
               <div className='err-window'>
@@ -72,7 +65,6 @@ export function App() {
               <HeardGateways />
             </div>
           </div>
-        }
       </div>
     </div>
   )
