@@ -6,6 +6,7 @@ import DeleteGateway from './components/DeleteGateway.jsx'
 import InstallGatewayModal from './components/InstallGatewayModal.jsx'
 import useUiState from '../state/useUiState.js';
 import useGatewaysState from '../state/useGatewayState.js';
+import { scryHeard, scryInstalled, scryPublished } from './api/scries.js';
 
 export function App() {
   const {
@@ -28,25 +29,11 @@ export function App() {
   api.ship = window.ship
 
   async function scryToGateways() {
-    console.log('scrying to gateways')
-    let scryPublish = await api.scry({
-      app: 'near-gateways',
-      path: '/published'
-    })
+    console.log('Scrying to gateways')
 
-    let scryInstalled = await api.scry({
-      app: 'near-gateways',
-      path: '/installed'
-    })
-
-    let scryHeard = await api.scry({
-      app: 'near-gateways',
-      path: '/heard'
-    })
-
-    setHeard(scryHeard)
-    setPublished(scryPublish)
-    setInstalled(scryInstalled)
+    setHeard(scryHeard())
+    setPublished(scryPublished())
+    setInstalled(scryInstalled())
     setLoading(false)
   }
 
