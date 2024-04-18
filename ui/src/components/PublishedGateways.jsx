@@ -52,8 +52,6 @@ function PublishedGateways() {
       <div>
         <div className='flex-box'>
           {published.map((gateway, index) => {
-            // let url = `${window.location.origin}/apps/near/${gateway.ship}/${gateway.id}/gateway/`
-
             return (
               <GatewayCard
                 key={index}
@@ -64,29 +62,7 @@ function PublishedGateways() {
                 })}
               />
             )
-
-            // return (
-            //   <div key={index} className='gateway-container'>
-            //     <iframe src={url} title={url} className='frame'></iframe>
-            //     <div className='info'>
-            //       <h2 className='name' href={url}>{name}</h2>
-            //       <h3 className='ship'>{gateway.ship}</h3>
-            //       <h4 className='text'>{gateway.about}</h4>
-            //     </div>
-            //     <div className="git">
-            //       <button onClick={() => {
-            //         setShowNew(false)
-            //         setShowDelete(true)
-            //         setDelGateway(gateway)
-            //       }}>
-            //         Delete
-            //       </button>
-            //       <a href={url}>Gateway</a>
-            //     </div>
-            //   </div>
-            // )
-          })
-          }
+          })}
           <div className='add-gateway' onClick={() => {
             setShowNew(true)
             setDelGateway({})

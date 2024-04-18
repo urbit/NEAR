@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import useGatewaysState from '../../state/useGatewayState'
 import useUiState from '../../state/useUiState'
 import { scryHeard } from '../api/scries'
+import GatewayCard from './GatewayCard'
 
 function HeardGateways() {
   const {
@@ -64,47 +65,26 @@ function HeardGateways() {
     <div>
       <div className='flex-box'>
         {installedGateways.map((gateway, index) => {
-          let name = gateway.name
-          let url = `${window.location.origin}/apps/near/${gateway.ship}/${gateway.id}/gateway/`
           return (
-            <div className='gateway-container' id={index} key={index}>
-              <iframe src={url} title={url} className='frame'></iframe>
-              <div className='info'>
-                <h2 className='name' href={url}>{name}</h2>
-                <h3 className='ship'>{gateway.ship}</h3>
-                <h4 className='text'>{gateway.about}</h4>
-              </div>
-              <div className="git">
-                <a href={url}>Gateway</a>
-                <button onClick={() => {
-                  setShowDelete(true)
-                  setDelGateway(gateway)
-                }}>
-                  Delete
-                </button>
-              </div>
-            </div>
+            <GatewayCard
+              key={index}
+              gateway={gateway}
+              isPublished={false}
+              isInstalled={true}
+            />
           )
         })}
-        {newGateways !== null &&
+        {newGateways &&
           (newGateways.map((gateway, index) => {
             return (
-              <div className='gateway-container' id='new' key={index}>
-                <h1 className='add-button'>+</h1>
-                <div className='info'>
-                  <h2 className="name">{gateway.name}</h2>
-                  <h3 className="ship">{gateway.ship}</h3>
-                  <h4 className='text'>{gateway.about}</h4>
-                </div>
-                <div className='install'>
-                  <button onClick={() => {
-                    setInstallWindow(true)
-                    setInstGateway(gateway)
-                  }}>
-                    Install
-                  </button>
-                </div>
-              </div>
+              <GatewayCard
+                key={index}
+                gateway={gateway}
+                isPublished={false}
+                isInstalled={installed.some(installedGateway => {
+                  gateway.id === installedGateway.id
+                })}
+              />
             )
           }))
         }
