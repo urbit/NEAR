@@ -19,15 +19,11 @@ export function App() {
     setInstalled,
   } = useGatewaysState()
 
-  // TODO move these scries to local components
   useEffect(() => {
-    async function init() {
-      console.log('Scrying to gateways')
-      setInstalled(await scryInstalled())
-    }
-
-    init()
-  }, [])
+    (async () => {
+      setInstalled(await scryInstalled());
+    })();
+  }, []);
 
   useEffect(() => {
     subscribeToUpdates(setSubEvent)
