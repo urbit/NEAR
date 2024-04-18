@@ -41,10 +41,15 @@ function GatewayCard({ imageUrl, title, author, description, link, isPublished, 
         <h3 className='ship'>{author}</h3>
         <h4 className='text'>{description}</h4>
       </div>
-      <button onClick={() => isPublished ? handleUnpublishClick : handleDeleteClick}>
+      {isInstalled &&
+      <button onClick={() => {
+        isPublished ? handleUnpublishClick : handleDeleteClick
+        }}>
         {isPublished ? 'Unpublish' : 'Delete'}
-      </button>
-      <button onClick={() => isInstalled ? handleOpenClick : handleInstallClick}>
+      </button>}
+      <button onClick={() => {
+        isInstalled ? handleOpenClick : handleInstallClick
+        }}>
         {isInstalled ? 'Open' : 'Install'}
       </button>
     </div>

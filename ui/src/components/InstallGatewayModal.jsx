@@ -1,22 +1,28 @@
 import React from 'react'
 import { installGateway } from '../api/pokes'
+import useUiState from '../../state/useUiState'
+import useGatewaysState from '../../state/useGatewayState'
 
-function InstallGatewayModal({ gateway }) {
+function InstallGatewayModal() {
+  const { setInstallWindow } = useUiState()
+  const { instGateway, setInstGateway } = useGatewaysState()
+
   return (
     <div className="delete-gateway">
       <h2 className='paragraph'>
         BOS gateways can access all data on your ship, just like any other Urbit app. Only install gateways from developers you trust!
       </h2>
       <h2 className='paragraph-2'>
-        Would you like to install {gateway.name}?
+        Would you like to install {instGateway.name}?
       </h2>
       <div className="inst-buttons">
-        <button onClick={async () => {installGateway(gateway)}}>
+        <button onClick={async () => {installGateway(instGateway)}}>
           Install
         </button>
-        {/* setInstGateway({}) */}
-        {/* setInstallWindow(false) */}
-        <button>
+        <button onClick={() => {
+          setInstGateway({})
+          setInstallWindow(false)
+        }}>
           Cancel
         </button>
       </div>

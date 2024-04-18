@@ -1,20 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Urbit from '@urbit/http-api';
 import HeardGateways from './components/HeardGateways.jsx'
 import PublishedGateways from './components/PublishedGateways.jsx'
 import DeleteGateway from './components/DeleteGateway.jsx'
 import InstallGatewayModal from './components/InstallGatewayModal.jsx'
+import useUiState from '../state/useUiState.js';
+import useGatewaysState from '../state/useGatewayState.js';
 
 export function App() {
-  const [loading, setLoading] = useState(true)
-  const [showDelete, setShowDelete] = useState(false)
-  const [delGateway, setDelGateway] = useState({})
-  const [installWindow, setInstallWindow] = useState(false)
-  const [instGateway, setInstGateway] = useState({})
-  const [subEvent, setSubEvent] = useState({});
-  const [heard, setHeard] = useState([])
-  const [published, setPublished] = useState([])
-  const [installed, setInstalled] = useState([])
+  const {
+    subEvent,
+    setSubEvent,
+    loading,
+    setLoading,
+    showDelete,
+    setShowDelete,
+    installWindow,
+  } = useUiState()
+  const {
+    setHeard,
+    setPublished,
+    setInstalled,
+    setDelGateway,
+  } = useGatewaysState()
 
   const api = new Urbit('', '', 'near');
   api.ship = window.ship
@@ -89,44 +97,22 @@ export function App() {
             {showDelete &&
               <div>
                 <DeleteGateway
-                  gateway={delGateway}
-                  setShowDelete={setShowDelete}
                   deleteGateway={deleteGateway}
                 />
               </div>
             }
             {installWindow &&
               <div>
-                <InstallGatewayModal
-                  gateway={instGateway}
-                  setInstallWindow={setInstallWindow}
-                  setInstGateway={setInstGateway}
-                />
+                <InstallGatewayModal />
               </div>
             }
             <h2 className='headers'>Published</h2>
             <div className='containerComponent'>
-              <PublishedGateways
-                  published={published}
-                  loading={loading}
-                  showDelete={showDelete}
-                  setShowDelete={setShowDelete}
-                  delGateway={delGateway}
-                  setDelGateway={setDelGateway}
-                  deleteGateway={deleteGateway}
-              />
+              <PublishedGateways />
             </div>
             <h2 className='headers'>Heard</h2>
             <div className='containerComponent'>
-              <HeardGateways
-                heard={heard}
-                installed={installed}
-                loading={loading}
-                setShowDelete={setShowDelete}
-                setDelGateway={setDelGateway}
-                setInstallWindow={setInstallWindow}
-                setInstGateway={setInstGateway}
-              />
+              <HeardGateways />
             </div>
           </div>
         }

@@ -1,8 +1,23 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
+import useGatewaysState from '../../state/useGatewayState'
+import useUiState from '../../state/useUiState'
 
-function HeardGateways({ heard, installed, loading, setShowDelete, setDelGateway, setInstallWindow, setInstGateway }) {
-  const [installedGateways, setInstalledGateways] = useState([])
-  const [newGateways, setNewGateways] = useState([])
+function HeardGateways() {
+  const {
+    loading,
+    setShowDelete,
+    setInstallWindow
+  } = useUiState()
+  const {
+    heard,
+    installed,
+    newGateways,
+    installedGateways,
+    setDelGateway,
+    setInstGateway,
+    setNewGateways,
+    setInstalledGateways
+  } = useGatewaysState()
 
   const sortHeard = () =>{
     if (heard !==  null && installed !== null) {

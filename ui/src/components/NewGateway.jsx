@@ -1,8 +1,11 @@
-import React, {useState} from 'react'
+import React from 'react'
 import { publishGateway } from '../api/pokes'
+import useUiState from '../../state/useUiState'
+import useGatewaysState from '../../state/useGatewayState'
 
-function NewGateway({ setShowNew, setError }) {
-  const [newGateway, setNewGateway] = useState({})
+function NewGateway() {
+  const { setShowNew } = useUiState()
+  const { newGateway, setNewGateway } = useGatewaysState()
 
   function handleTextContentChange(e) {
       newGateway[e.target.name] = e.target.value
@@ -21,7 +24,9 @@ function NewGateway({ setShowNew, setError }) {
         3. Publish your BOS gateway here.
         <br/>
       </p>
-      <form onSubmit={async () => {publishGateway(newGateway, setNewGateway, setError)}} className='form-style'>
+      <form className='form-style' onSubmit={async () => {
+        publishGateway(newGateway, setNewGateway)
+        }}>
         <div className='name-form'>
           <h3 className='labelStyle'>Title</h3>
           <input

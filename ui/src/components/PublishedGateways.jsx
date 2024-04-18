@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import NewGateway from './NewGateway.jsx'
+import useUiState from '../../state/useUiState.js'
+import useGatewaysState from '../../state/useGatewayState.js'
 
-function PublishedGateways({ published, loading, setShowDelete, setDelGateway }) {
-  const [showNew, setShowNew] = useState(false)
+function PublishedGateways() {
+  const { published, setDelGateway } = useGatewaysState()
+  const { loading, showNew, setShowNew, setShowDelete } = useUiState()
 
   if (published === null && !loading) {
     return (
@@ -10,7 +13,7 @@ function PublishedGateways({ published, loading, setShowDelete, setDelGateway })
         <div className="new-gateway">
           {showNew &&
             <div>
-              <NewGateway setShowNew={setShowNew}/>
+              <NewGateway />
             </div>
           }
         </div>
@@ -34,7 +37,7 @@ function PublishedGateways({ published, loading, setShowDelete, setDelGateway })
       <div className="new-gateway">
         {showNew &&
           <div>
-            <NewGateway setShowNew={setShowNew}/>
+            <NewGateway />
           </div>
         }
       </div>
