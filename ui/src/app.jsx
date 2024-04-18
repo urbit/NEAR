@@ -15,14 +15,12 @@ export function App() {
     loading,
     setLoading,
     showDelete,
-    setShowDelete,
     installWindow,
   } = useUiState()
   const {
     setHeard,
     setPublished,
     setInstalled,
-    setDelGateway,
   } = useGatewaysState()
 
   const api = new Urbit('', '', 'near');
@@ -56,20 +54,6 @@ export function App() {
     getUpdates()
   }, [subEvent])
 
-  async function deleteGateway(gateway) {
-    api.poke({
-        app: "near-gateways",
-        mark: "near-action",
-        json: {delete: {ship: gateway.ship, id: gateway.id}},
-        onSuccess: () =>  {
-          setDelGateway({})
-          window.location.reload()
-          setShowDelete(false)
-        },
-        onError: () => console.error('Failed to delete gateway')
-    })
-  }
-
   return (
     <div className='container-body'>
       <div className='container-main'>
@@ -83,9 +67,7 @@ export function App() {
             }
             {showDelete &&
               <div>
-                <DeleteGateway
-                  deleteGateway={deleteGateway}
-                />
+                <DeleteGateway />
               </div>
             }
             {installWindow &&

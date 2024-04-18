@@ -2,7 +2,7 @@ import React from 'react'
 import useGatewaysState from '../../state/useGatewayState'
 
 function DeleteGateway({ deleteGateway }) {
-  const { delGateway, setShowDelete } = useGatewaysState()
+  const { delGateway, setDelGateway, setShowDelete } = useGatewaysState()
 
   return(
       <div className="delete-gateway">
@@ -10,7 +10,14 @@ function DeleteGateway({ deleteGateway }) {
           Are you sure you want to delete {delGateway.name}?
         </h2>
         <div className="del-buttons">
-        <button onClick ={()=>{deleteGateway(delGateway)}}>
+        <button onClick ={() => {
+          deleteGateway(
+            delGateway,
+            () => {
+            setDelGateway(),
+            window.location.reload(),
+            setShowDelete()
+          })}}>
           Delete
         </button>
         <button onClick={()=>{setShowDelete(false)}}>

@@ -16,6 +16,21 @@ function pokeUrbit(app, mark, json, onSuccess, onError) {
   })
 }
 
+export function deleteGateway(gateway, onSuccess) {
+  return pokeUrbit(
+    'near-gateways',
+    'near-action',
+    {
+      delete: {
+        id: gateway.id,
+        ship: gateway.ship,
+      }
+    },
+    onSuccess,
+    console.error(`Failed to delete gateway ${gateway.id}`)
+  )
+}
+
 export function installGateway(gateway) {
   return pokeUrbit(
     'near-gateways',
