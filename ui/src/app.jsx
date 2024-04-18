@@ -24,7 +24,6 @@ export function App() {
   useEffect(() => {
     async function init() {
       console.log('Scrying to gateways')
-      setHeard(await scryHeard())
       setInstalled(await scryInstalled())
     }
 

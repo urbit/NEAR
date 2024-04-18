@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import useGatewaysState from '../../state/useGatewayState'
 import useUiState from '../../state/useUiState'
+import { scryHeard } from '../api/scries'
 
 function HeardGateways() {
   const {
@@ -13,41 +14,43 @@ function HeardGateways() {
     installed,
     newGateways,
     installedGateways,
+    setHeard,
     setDelGateway,
     setInstGateway,
     setNewGateways,
     setInstalledGateways
   } = useGatewaysState()
 
-  const sortHeard = () =>{
-    if (heard !==  null && installed !== null) {
-      for (let i = 0; i < heard.length; i++) {
-        let gateway = heard[i]
-        let isInstalled = installed.find(installedGateway => {
-          return installedGateway.id === gateway.id
-        })
-        if (isInstalled !== undefined) {
-          setInstalledGateways(prevInstalledGateways => {
-            return [...prevInstalledGateways, gateway]
-          })
-        } else {
-          setNewGateways(prevInstalledGateways => {
-            return [...prevInstalledGateways, gateway]
-          })
-        }
-      }
-    } else if (heard !==  null && installed === null) {
-      setNewGateways(heard)
-    } else {
-      setNewGateways([])
-    }
-  }
-
   useEffect(() => {
-    if (heard !== null){
-    sortHeard()
-    }
-  }, [])
+    (async () => {
+      const heardResult = await scryHeard();
+      setHeard(heardResult);
+
+      if (heardResult !== null) {
+        if (installed !== null) {
+          for (let i = 0; i < heardResult.length; i++) {
+            let gateway = heardResult[i];
+            let isInstalled = installed.find(installedGateway => {
+              return installedGateway.id === gateway.id;
+            });
+            if (isInstalled !== undefined) {
+              setInstalledGateways(prevInstalledGateways => {
+                return [...prevInstalledGateways, gateway];
+              });
+            } else {
+              setNewGateways(prevNewGateways => {
+                return [...prevNewGateways, gateway];
+              });
+            }
+          }
+        } else {
+          setNewGateways(heardResult);
+        }
+      } else {
+        setNewGateways([]);
+      }
+    })();
+  }, []);
 
   if (heard === null && !loading) {
     return (
