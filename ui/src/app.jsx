@@ -5,7 +5,7 @@ import DeleteGateway from './components/DeleteGateway.jsx'
 import InstallGatewayModal from './components/InstallGatewayModal.jsx'
 import useUiState from '../state/useUiState.js';
 import useGatewaysState from '../state/useGatewayState.js';
-import { scryHeard, scryInstalled, scryPublished } from './api/scries.js';
+import { scryInstalled } from './api/scries.js';
 import { subscribeToUpdates } from './api/subscriptions.js';
 
 export function App() {
@@ -16,7 +16,6 @@ export function App() {
     installWindow,
   } = useUiState()
   const {
-    setHeard,
     setInstalled,
   } = useGatewaysState()
 
