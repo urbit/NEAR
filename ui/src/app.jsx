@@ -17,15 +17,14 @@ export function App() {
   } = useUiState()
   const {
     setHeard,
-    setPublished,
     setInstalled,
   } = useGatewaysState()
 
+  // TODO move these scries to local components
   useEffect(() => {
     async function init() {
       console.log('Scrying to gateways')
       setHeard(await scryHeard())
-      setPublished(await scryPublished())
       setInstalled(await scryInstalled())
     }
 

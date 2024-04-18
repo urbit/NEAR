@@ -1,11 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import NewGateway from './NewGateway.jsx'
 import useUiState from '../../state/useUiState.js'
 import useGatewaysState from '../../state/useGatewayState.js'
+import { scryPublished } from '../api/scries.js'
 
 function PublishedGateways() {
-  const { published, setDelGateway } = useGatewaysState()
+  const { published, setPublished, setDelGateway } = useGatewaysState()
   const { loading, showNew, setShowNew, setShowDelete } = useUiState()
+
+  useEffect(() => {
+    (async () => {
+      setPublished(await scryPublished())
+    })()
+  }, [])
 
   if (published === null && !loading) {
     return (
