@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import Urbit from '@urbit/http-api';
 import HeardGateways from './components/HeardGateways.jsx'
 import PublishedGateways from './components/PublishedGateways.jsx'
 import DeleteGateway from './components/DeleteGateway.jsx'
@@ -23,9 +22,6 @@ export function App() {
     setPublished,
     setInstalled,
   } = useGatewaysState()
-
-  const api = new Urbit('', '', 'near');
-  api.ship = window.ship
 
   async function scryToGateways() {
     console.log('Scrying to gateways')
