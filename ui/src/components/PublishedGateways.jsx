@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react'
 import NewGateway from './NewGateway.jsx'
-import useUiState from '../../state/useUiState.js'
-import useGatewaysState from '../../state/useGatewayState.js'
+import useUiStore from '../../state/uiStore.js'
+import useGatewaysStore from '../../state/gatewaysStore.js'
 import { scryPublished } from '../api/scries.js'
 import GatewayCard from './GatewayCard.jsx'
 
 function PublishedGateways() {
-  const { installed, published, setPublished, setDelGateway } = useGatewaysState()
-  const { loading, showNew, setShowNew, setShowDelete } = useUiState()
+  const { installed, published, setPublished, setDelGateway } = useGatewaysStore()
+  const { loading, showNew, setShowNew, setShowDelete } = useUiStore()
 
   useEffect(() => {
     (async () => {
@@ -51,10 +51,10 @@ function PublishedGateways() {
       </div>
       <div>
         <div className='flex-box'>
-          {published.map((gateway, index) => {
+          {published.map((gateway) => {
             return (
               <GatewayCard
-                key={index}
+                key={gateway.id}
                 gateway={gateway}
                 isPublished={true}
                 isInstalled={installed.some(installedGateway => {

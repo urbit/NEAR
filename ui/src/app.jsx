@@ -4,7 +4,7 @@ import PublishedGateways from './components/PublishedGateways.jsx'
 import DeleteGateway from './components/DeleteGateway.jsx'
 import InstallGatewayModal from './components/InstallGatewayModal.jsx'
 import useUiStore from '../state/uiStore'
-import useGatewaysState from '../state/useGatewayState.js';
+import useGatewaysStore from '../state/gatewaysStore.js';
 import { scryInstalled } from './api/scries.js';
 import { subscribeToUpdates } from './api/subscriptions.js';
 
@@ -17,7 +17,7 @@ export function App() {
   } = useUiStore()
   const {
     setInstalled
-  } = useGatewaysState()
+  } = useGatewaysStore()
 
   useEffect(() => {
     console.log('app.jsx installWindow:', installWindow);

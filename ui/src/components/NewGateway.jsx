@@ -1,11 +1,11 @@
 import React from 'react'
 import { publishGateway } from '../api/pokes'
-import useUiState from '../../state/useUiState'
-import useGatewaysState from '../../state/useGatewayState'
+import useUiStore from '../../state/uiStore'
+import useGatewaysStore from '../../state/gatewaysStore'
 
 function NewGateway() {
-  const { setShowNew } = useUiState()
-  const { newGateway, setNewGateway } = useGatewaysState()
+  const { setShowNew } = useUiStore()
+  const { newGateway, setNewGateway } = useGatewaysStore()
 
   function handleTextContentChange(e) {
       newGateway[e.target.name] = e.target.value

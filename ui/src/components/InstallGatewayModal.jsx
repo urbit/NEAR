@@ -1,11 +1,11 @@
 import React from 'react'
 import { installGateway } from '../api/pokes'
-import useUiState from '../../state/useUiState'
-import useGatewaysState from '../../state/useGatewayState'
+import useUiStore from '../../state/uiStore'
+import useGatewaysStore from '../../state/gatewaysStore'
 
 function InstallGatewayModal() {
-  const { setInstallWindow } = useUiState()
-  const { instGateway, setInstGateway } = useGatewaysState()
+  const { setInstallWindow } = useUiStore()
+  const { instGateway, setInstGateway } = useGatewaysStore()
 
   return (
     <div className="delete-gateway">

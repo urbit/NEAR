@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import useGatewaysState from '../../state/useGatewayState'
+import useGatewaysStore from '../../state/gatewaysStore'
 import useUiStore from '../../state/uiStore'
 
 function getImage(url) {
@@ -8,7 +8,7 @@ function getImage(url) {
 }
 
 function GatewayCard({ gateway, isPublished, isInstalled }) {
-  const { setDelGateway, instGateway, setInstGateway } = useGatewaysState()
+  const { setDelGateway, instGateway, setInstGateway } = useGatewaysStore()
   const { installWindow, setShowDelete, setInstallWindow } = useUiStore()
 
   useEffect(() => {
