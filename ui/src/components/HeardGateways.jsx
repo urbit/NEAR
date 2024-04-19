@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import useGatewaysStore from '../../state/gatewaysStore'
-import useUiStore from '../../state/uiStore'
+import useGatewaysStore from '../state/gatewaysStore'
+import useUiStore from '../state/uiStore'
 import { scryHeard } from '../api/scries'
 import GatewayCard from './GatewayCard'
 

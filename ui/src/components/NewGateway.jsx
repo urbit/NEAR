@@ -1,7 +1,7 @@
 import React from 'react'
 import { publishGateway } from '../api/pokes'
-import useUiStore from '../../state/uiStore'
-import useGatewaysStore from '../../state/gatewaysStore'
+import useUiStore from '../state/uiStore'
+import useGatewaysStore from '../state/gatewaysStore'
 
 function NewGateway() {
   const { setShowNew } = useUiStore()

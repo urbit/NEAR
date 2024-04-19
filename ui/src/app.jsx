@@ -3,8 +3,8 @@ import HeardGateways from './components/HeardGateways.jsx'
 import PublishedGateways from './components/PublishedGateways.jsx'
 import DeleteGateway from './components/DeleteGateway.jsx'
 import InstallGatewayModal from './components/InstallGatewayModal.jsx'
-import useUiStore from '../state/uiStore'
-import useGatewaysStore from '../state/gatewaysStore.js';
+import useUiStore from './state/uiStore'
+import useGatewaysStore from './state/gatewaysStore.js';
 import { scryInstalled } from './api/scries.js';
 import { subscribeToUpdates } from './api/subscriptions.js';
 

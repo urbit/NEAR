@@ -1,7 +1,7 @@
 import React from 'react'
 import { installGateway } from '../api/pokes'
-import useUiStore from '../../state/uiStore'
-import useGatewaysStore from '../../state/gatewaysStore'
+import useUiStore from '../state/uiStore'
+import useGatewaysStore from '../state/gatewaysStore'
 
 function InstallGatewayModal() {
   const { setInstallWindow } = useUiStore()

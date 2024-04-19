@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import NewGateway from './NewGateway.jsx'
-import useUiStore from '../../state/uiStore.js'
-import useGatewaysStore from '../../state/gatewaysStore.js'
+import useUiStore from '../state/uiStore.js'
+import useGatewaysStore from '../state/gatewaysStore.js'
 import { scryPublished } from '../api/scries.js'
 import GatewayCard from './GatewayCard.jsx'
 

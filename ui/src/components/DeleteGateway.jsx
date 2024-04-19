@@ -1,5 +1,5 @@
 import React from 'react'
-import useGatewaysStore from '../../state/gatewaysStore'
+import useGatewaysStore from '../state/gatewaysStore'
 
 function DeleteGateway({ deleteGateway }) {
   const { delGateway, setDelGateway, setShowDelete } = useGatewaysStore()

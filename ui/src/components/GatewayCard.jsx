@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import useGatewaysStore from '../../state/gatewaysStore'
-import useUiStore from '../../state/uiStore'
+import useGatewaysStore from '../state/gatewaysStore'
+import useUiStore from '../state/uiStore'
 
 function getImage(url) {
   // TODO get image and fallback if bad response
