@@ -3,7 +3,7 @@ import HeardGateways from './components/HeardGateways.jsx'
 import PublishedGateways from './components/PublishedGateways.jsx'
 import DeleteGateway from './components/DeleteGateway.jsx'
 import InstallGatewayModal from './components/InstallGatewayModal.jsx'
-import useUiState from '../state/useUiState.js';
+import useUiStore from '../state/uiStore'
 import useGatewaysState from '../state/useGatewayState.js';
 import { scryInstalled } from './api/scries.js';
 import { subscribeToUpdates } from './api/subscriptions.js';
@@ -13,11 +13,15 @@ export function App() {
     subEvent,
     setSubEvent,
     showDelete,
-    installWindow,
-  } = useUiState()
+    installWindow
+  } = useUiStore()
   const {
-    setInstalled,
+    setInstalled
   } = useGatewaysState()
+
+  useEffect(() => {
+    console.log('app.jsx installWindow:', installWindow);
+  }, [installWindow])
 
   useEffect(() => {
     (async () => {

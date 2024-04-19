@@ -1,17 +1,23 @@
-import React from 'react'
-import useUiState from '../../state/useUiState'
+import React, { useEffect } from 'react'
 import useGatewaysState from '../../state/useGatewayState'
+import useUiStore from '../../state/uiStore'
 
 function getImage(url) {
   // TODO get image and fallback if bad response
   return url
 }
 
-function GatewayCard({ key, gateway, isPublished, isInstalled }) {
-  const { setDelGateway, setInstGateway } = useGatewaysState()
-  const { setShowDelete, setInstallWindow } = useUiState()
+function GatewayCard({ gateway, isPublished, isInstalled }) {
+  const { setDelGateway, instGateway, setInstGateway } = useGatewaysState()
+  const { installWindow, setShowDelete, setInstallWindow } = useUiStore()
+
+  useEffect(() => {
+    console.log('instGateway:', instGateway)
+    console.log('installWindow:', installWindow)
+  }, [instGateway, installWindow])
 
   function handleInstallClick() {
+    console.log('Attempting to install')
     setInstGateway(gateway)
     setInstallWindow(true)
   }
@@ -36,7 +42,7 @@ function GatewayCard({ key, gateway, isPublished, isInstalled }) {
   }
 
   return (
-    <div key={key} className='gateway-container'>
+    <div className='gateway-container'>
       <img
         src={getImage('https://pbs.twimg.com/profile_images/1631021064171196431/_ahCp9jR_400x400.jpg')}
         alt={`${gateway.name} preview image`}
@@ -47,15 +53,18 @@ function GatewayCard({ key, gateway, isPublished, isInstalled }) {
         <h4 className='text'>{gateway.about}</h4>
       </div>
       <div className="git">
-        {isInstalled &&
-        <button onClick={() => {
-          isPublished ? handleUnpublishClick : handleDeleteClick
-          }}>
-          {isPublished ? 'Unpublish' : 'Delete'}
+        {isPublished &&
+        <button onClick={handleUnpublishClick}>
+          Unpublish
         </button>}
+        {isInstalled &&
+        <button onClick={handleDeleteClick}>
+          Delete
+        </button>}
+        {/* XX "Hide" button to remove gateway from state if not installed */}
         <button onClick={() => {
-          isInstalled ? handleOpenClick : handleInstallClick
-          }}>
+          isInstalled ? handleOpenClick() : handleInstallClick()
+        }}>
           {isInstalled ? 'Open' : 'Install'}
         </button>
       </div>

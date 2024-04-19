@@ -7,6 +7,8 @@ function useUiState() {
   const [showDelete, setShowDelete] = useState(false)
   const [installWindow, setInstallWindow] = useState(false)
 
+  console.log('useUiState\'s installWindow:', installWindow)
+
   return {
     showNew,
     setShowNew,
