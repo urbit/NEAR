@@ -5,50 +5,52 @@
 =,  enjs:format
   |%
   ::
-  ++  scry-json 
+  ++  scry-json
   |=  =scry
   ^-  json
   ?-  -.scry
-    %heard  
+    %heard
   (id-data +.scry)
-    %published 
+    %published
   (id-data +.scry)
-    %installed 
+    %installed
   (id-glob +.scry)
-    %find-id 
+    %find-id
   (id +.scry)
   ==
   ::
-  ++  update-json 
+  ++  update-json
   |=  =update
   ^-  json
   ?-  -.update
+    %glob
+  (id +.update)
     %failed-glob
   (err-update +.update)
   ==
   ::
   ++  id-data
   |=  data=(map identifier metadata)
-  ^-  json 
-  %-  en-vase:etch 
+  ^-  json
+  %-  en-vase:etch
     !>  ^-  (list [identifier=[ship=@p id=@t] metadata=[name=@t url=@t about=@t]])
     %+  turn  ~(tap by data)
     |=  arg=[=identifier =metadata]
-    :-  :-  ship=ship.identifier.arg 
+    :-  :-  ship=ship.identifier.arg
         id=(scot %uv id.identifier.arg)
       [metadata.arg]
   ::
   ++  id-glob
   |=  data=(list identifier)
-  ^-  json 
-  %-  en-vase:etch 
+  ^-  json
+  %-  en-vase:etch
     !>  ^-  (list identifier=[ship=@p id=@t])
     %+  turn  data
     |=  =identifier
     :-  ship.identifier
     (scot %uv id.identifier)
   ::
-  ++  id 
+  ++  id
   |=  =identifier
   ^-  json
   %-  en-vase:etch
@@ -72,12 +74,12 @@
   ::
   ++  gateway-act
   |=  =json
-  ^-  gateway-action 
+  ^-  gateway-action
   %.  json
-  %-  of 
-  :~  
-  [%publish to-metadata]  
-  [%install id-data] 
+  %-  of
+  :~
+  [%publish to-metadata]
+  [%install id-data]
   [%delete to-identifier]
   ==
   ++  id-data
@@ -93,7 +95,7 @@
   ==
   ::
   ++  to-metadata
-  %-  ot 
+  %-  ot
   :~  [%name so]
       [%url so]
       [%about so]

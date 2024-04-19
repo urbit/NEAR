@@ -55,16 +55,12 @@ function HeardGateways() {
           <GatewayCard
             key={gateway.id}
             gateway={gateway}
-            isPublished={false}
-            isInstalled={true}
           />
         ))}
         {newGateways.map((gateway) => (
           <GatewayCard
             key={gateway.id}
             gateway={gateway}
-            isPublished={false}
-            isInstalled={false}
           />
         ))}
       </div>

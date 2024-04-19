@@ -12,7 +12,7 @@ function pokeUrbit(app, mark, json, onSuccess, onError) {
     mark: mark,
     json: json,
     onSuccess: onSuccess || {},
-    onError: onError || defaultOnError
+    onError: onError || defaultOnError(app, mark, json)
   })
 }
 
@@ -47,8 +47,7 @@ export function installGateway(gateway) {
         about: gateway.about
       }
     }
-    },
-    () => window.location.reload()
+    }
   )
 }
 

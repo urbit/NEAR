@@ -56,10 +56,6 @@ function PublishedGateways() {
               <GatewayCard
                 key={gateway.id}
                 gateway={gateway}
-                isPublished={true}
-                isInstalled={installed.some(installedGateway => {
-                  gateway.id === installedGateway.id
-                })}
               />
             )
           })}

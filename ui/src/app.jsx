@@ -12,10 +12,13 @@ export function App() {
   const {
     subEvent,
     setSubEvent,
+    showFailedGlob,
+    setShowFailedGlob,
     showDelete,
     installWindow
   } = useUiStore()
   const {
+    addInstalled,
     setInstalled
   } = useGatewaysStore()
 
@@ -30,14 +33,23 @@ export function App() {
   }, []);
 
   useEffect(() => {
-    subscribeToUpdates(setSubEvent)
+    subscribeToUpdates(update => receiveUpdate(update))
   }, [subEvent])
+
+  function receiveUpdate(update) {
+    if (update?.url) {
+      setSubEvent(update)
+      setShowFailedGlob(true)
+    } else if (update?.id) {
+      addInstalled(update)
+    }
+  }
 
   return (
     <div className='container-body'>
       <div className='container-main'>
           <div>
-            {subEvent.url != undefined &&
+            {showFailedGlob &&
               <div className='err-window'>
                 <h2>Couldn't find glob for gateway at {subEvent.url}</h2>
                 <button onClick={()=>{window.location.reload()}}>Reload</button>

@@ -1,8 +1,8 @@
 |%
 +$  glob  (map path mime)
-+$  metadata  [name=@t url=@t about=@t]  
++$  metadata  [name=@t url=@t about=@t]
 +$  identifier  [=ship id=@uvH]
-+$  gateway-action 
++$  gateway-action
   $%  [%publish =metadata]
       [%install =identifier =metadata]
       [%delete =identifier]
@@ -15,7 +15,8 @@
       [%find-id =identifier]
   ==
 ::
-+$  update 
-  $%  [%failed-glob date=@da url=@t]
++$  update
+  $%  [%glob =identifier]
+      [%failed-glob date=@da url=@t]
   ==
 --

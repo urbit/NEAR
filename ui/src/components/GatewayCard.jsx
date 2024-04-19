@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import useGatewaysStore from '../state/gatewaysStore'
 import useUiStore from '../state/uiStore'
 
@@ -7,14 +7,17 @@ function getImage(url) {
   return url
 }
 
-function GatewayCard({ gateway, isPublished, isInstalled }) {
-  const { setDelGateway, instGateway, setInstGateway } = useGatewaysStore()
-  const { installWindow, setShowDelete, setInstallWindow } = useUiStore()
+function GatewayCard({ gateway }) {
+  const { installed, published, setDelGateway, setInstGateway } = useGatewaysStore()
+  const { setShowDelete, setInstallWindow } = useUiStore()
 
-  useEffect(() => {
-    console.log('instGateway:', instGateway)
-    console.log('installWindow:', installWindow)
-  }, [instGateway, installWindow])
+  const isInstalled = installed.some(installedGateway => {
+    return gateway.id === installedGateway.id
+  })
+
+  const isPublished = published.some(publishedGateway => {
+    return gateway.id === publishedGateway.id
+  })
 
   function handleInstallClick() {
     console.log('Attempting to install')
@@ -57,16 +60,19 @@ function GatewayCard({ gateway, isPublished, isInstalled }) {
         <button onClick={handleUnpublishClick}>
           Unpublish
         </button>}
-        {isInstalled &&
+        {isInstalled && !isPublished &&
         <button onClick={handleDeleteClick}>
           Delete
         </button>}
         {/* XX "Hide" button to remove gateway from state if not installed */}
-        <button onClick={() => {
-          isInstalled ? handleOpenClick() : handleInstallClick()
-        }}>
-          {isInstalled ? 'Open' : 'Install'}
-        </button>
+        {isInstalled &&
+        <button onClick={handleOpenClick}>
+          Open
+        </button>}
+        {!isInstalled && !isPublished &&
+        <button onClick={handleInstallClick}>
+          Install
+        </button>}
       </div>
     </div>
   )
