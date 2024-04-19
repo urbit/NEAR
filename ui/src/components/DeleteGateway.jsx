@@ -1,8 +1,11 @@
 import React from 'react'
+import useUiStore from '../state/uiStore'
 import useGatewaysStore from '../state/gatewaysStore'
+import { deleteGateway } from '../api/pokes'
 
-function DeleteGateway({ deleteGateway }) {
-  const { delGateway, setDelGateway, setShowDelete } = useGatewaysStore()
+function DeleteGateway() {
+  const { setShowDelete } = useUiStore()
+  const { delGateway, setDelGateway } = useGatewaysStore()
 
   return(
       <div className="delete-gateway">
