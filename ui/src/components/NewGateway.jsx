@@ -1,14 +1,37 @@
-import React from 'react'
-import { publishGateway } from '../api/pokes'
-import useUiStore from '../state/uiStore'
-import useGatewaysStore from '../state/gatewaysStore'
+import React, { useRef } from 'react';
+import { publishGateway } from '../api/pokes';
+import useUiStore from '../state/uiStore';
+import useGatewaysStore from '../state/gatewaysStore';
+import html2canvas from 'html2canvas';
 
 function NewGateway() {
+  const iframeRef = useRef(null)
   const { setShowNew } = useUiStore()
   const { newGateway, setNewGateway } = useGatewaysStore()
 
   function handleTextContentChange(e) {
-      newGateway[e.target.name] = e.target.value
+    newGateway[e.target.name] = e.target.value
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const url = `${window.location.origin}/apps/near/${newGateway.ship}/${newGateway.id}/gateway/`
+    iframeRef.current.src = url
+
+    iframeRef.current.onload = () => {
+      html2canvas(iframeRef.current.contentWindow.document.body, {
+        imageTimeout: 10000,
+        width: 1000,
+        height: 1000,
+        windowWidth: 1000,
+        windowHeight: 1000
+      }).then(canvas => {
+        publishGateway(newGateway, setNewGateway)
+        canvas.toBlob(blob => {
+          console.log('blob:', blob)
+        }, 'image/jpeg')
+      })
+    }
   }
 
   return (
@@ -16,23 +39,13 @@ function NewGateway() {
       <button className='close-new-btn' onClick={() => {setShowNew(false)}}>
         <span>x</span>
       </button>
-      <p className='paragraph'>
-        1. Glob your gateway using -landscape!make-glob.
-        <br/>
-        2. Upload the glob to your S3 bucket.
-        <br/>
-        3. Publish your BOS gateway here.
-        <br/>
-      </p>
-      <form className='form-style' onSubmit={async () => {
-        publishGateway(newGateway, setNewGateway)
-        }}>
+      <form className='form-style' onSubmit={handleSubmit}>
         <div className='name-form'>
           <h3 className='labelStyle'>Title</h3>
           <input
             name="name"
             value={newGateway.name}
-            onChange={(e) => handleTextContentChange(e)}
+            onChange={handleTextContentChange}
             className='input-style'
             required={true}
             maxLength="30"
@@ -43,7 +56,7 @@ function NewGateway() {
           <input
             name="url"
             value={newGateway.url}
-            onChange={(e) => handleTextContentChange(e)}
+            onChange={handleTextContentChange}
             className='input-style'
             required={true}
           />
@@ -52,8 +65,8 @@ function NewGateway() {
           <h3 className='labelStyle'>Description</h3>
           <textarea
             name="about"
-            value={newGateway.url}
-            onChange={(e) => handleTextContentChange(e)}
+            value={newGateway.about}
+            onChange={handleTextContentChange}
             className='input-style'
             maxLength="256"
           />
@@ -61,9 +74,10 @@ function NewGateway() {
         <button type="submit" className='btn-style'>
           Publish Gateway
         </button>
+        <iframe ref={iframeRef} style={{ display: 'none' }}></iframe>
       </form>
     </div>
-  )
+  );
 }
 
-export default NewGateway
+export default NewGateway;
