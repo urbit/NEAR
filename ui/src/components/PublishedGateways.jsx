@@ -51,7 +51,7 @@ function PublishedGateways() {
       </div>
       <div>
         <div className='flex-box'>
-          {published.map((gateway) => {
+          {Array.isArray(published) && published.map((gateway) => {
             return (
               <GatewayCard
                 key={gateway.id}
