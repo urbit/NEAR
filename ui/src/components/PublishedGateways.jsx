@@ -6,7 +6,7 @@ import { scryPublished } from '../api/scries.js'
 import GatewayCard from './GatewayCard.jsx'
 
 function PublishedGateways() {
-  const { installed, published, setPublished, setDelGateway } = useGatewaysStore()
+  const { published, setPublished, setDelGateway } = useGatewaysStore()
   const { loading, showNew, setShowNew, setShowDelete } = useUiStore()
 
   useEffect(() => {
