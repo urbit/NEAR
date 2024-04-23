@@ -1,9 +1,9 @@
 |%
 +$  glob  (map path mime)
-+$  metadata  [name=@t url=@t about=@t]
++$  metadata  [name=@t url=@t about=@t thumbnail=@t]
 +$  identifier  [=ship id=@uvH]
 +$  gateway-action
-  $%  [%publish =metadata]
+  $%  [%publish =metadata blob=@t]
       [%install =identifier =metadata]
       [%delete =identifier]
   ==

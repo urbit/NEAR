@@ -51,17 +51,30 @@ export function installGateway(gateway) {
   )
 }
 
-export function publishGateway(gateway, setNewGateway) {
-  return pokeUrbit(
-  'near-gateways',
-  'near-action',
-  {
-    publish: {
-      name: gateway.name,
-      url: gateway.url,
-      about: gateway.about
-    }
-  },
-  setNewGateway({}),
-  () => console.error(`Failed to fetch glob from ${gateway.url}`))
+export function publishGateway(gateway, blob) {
+  function blobToBase64(blob) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onloadend = () => resolve(reader.result)
+      reader.onerror = reject
+      reader.readAsDataURL(blob)
+    })
+  }
+
+  blobToBase64(blob).then(base64 => {
+    return pokeUrbit(
+      'near-gateways',
+      'near-action',
+      {
+        metadata: {
+          name: gateway.name,
+          url: gateway.url,
+          about: gateway.about,
+          thumbnail: `${window.location.origin}/apps/near/thumbnails/${crypto.randomUUID()}.jpg`
+        },
+        blob: base64.split(',')[1]
+      },
+      {},
+      () => console.error(`Failed to fetch glob from ${gateway.url}`))
+  })
 }

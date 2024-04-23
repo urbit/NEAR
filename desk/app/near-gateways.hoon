@@ -96,7 +96,7 @@
   %-  emil
   :~
   [%pass /eyre/connect %arvo %e %connect [~ /apps/near] %near-gateways]
-  [%pass /publish-ui %agent [our.bowl %near-gateways] %poke %near-action !>([%publish 'ui-main' url ''])]
+  [%pass /publish-ui %agent [our.bowl %near-gateways] %poke %near-action !>([%publish 'ui-main' url '' ''])]
   ==
 ::
 ++  load
@@ -122,12 +122,25 @@
     ?~  (find ~[metadata.act] ~(val by published))
       =/  id=identifier  [our.bowl (sham eny.bowl)]
       ~&  ['publish id' id]
-      ?:  =(metadata.act ['ui-main' url ''])
+      ?:  =(metadata.act ['ui-main' url '' ''])
           =.  ui-glob  [id *glob]
           %+  get-gateway-glob
             metadata.act
           id
       =.  published  (~(put by published) id metadata.act)
+      =.  that  %-  emit
+                :*  %pass
+                    ~
+                    %arvo
+                    %e
+                    %set-response
+                    thumbnail.metadata.act
+                    ~
+                    %.n
+                    %payload
+                    [200 ['Content-Type' 'image/jpeg']~]
+                    `(as-octs:mimes:html blob.act)
+                ==
       %+  get-gateway-glob
         metadata.act
       id
@@ -252,6 +265,7 @@
         url.data
         (scot %p -.identifier)
         (scot %uv +.identifier)
+        thumbnail.data
     ==
   =/  path  `(list @ta)`(weld /glob/[ta-now] id-path)
   %-  emil
@@ -301,7 +315,7 @@
         =.  heard  (~(put by heard) id metadata)
         that
     ==
-      [%glob @ @ @ *]
+      [%glob @ @ @ @ *]
     ?-  -.sign
         %kick  that
         ?(%poke-ack %watch-ack)
@@ -323,7 +337,7 @@
         ~&  >>  ['Deleted from heard or published, glob not exist at address' url]
         %-  emit
         [%give %fact [/updates]~ %near-update !>([%failed-glob now.bowl url])]
-        ::
+      ::
           %thread-done
         =/  result  !<([glob @t] q.cage.sign)
         =/  glob    -.result
@@ -331,10 +345,11 @@
         =/  path  ;;  (list @ta)  wire
         =/  got=metadata
           :*  (snag 2 path)
-          (snag 3 path)
-          +.result
+              (snag 3 path)
+              +.result
+              (snag 4 path)
           ==
-        ?:  =(got ['ui-main' url ''])
+        ?:  =(got ['ui-main' url '' ''])
           =.  ui-glob  [-.ui-glob glob]
           that
         ~&  >  'Gateway globbed successfully'

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { publishGateway } from '../api/pokes';
+import { publishGateway, publishThumbnail } from '../api/pokes';
 import useUiStore from '../state/uiStore';
 import useGatewaysStore from '../state/gatewaysStore';
 import html2canvas from 'html2canvas';
@@ -26,9 +26,10 @@ function NewGateway() {
         windowWidth: 1000,
         windowHeight: 1000
       }).then(canvas => {
-        publishGateway(newGateway, setNewGateway)
         canvas.toBlob(blob => {
-          console.log('blob:', blob)
+          publishGateway(newGateway, blob)
+          setShowNew(false)
+          setNewGateway({})
         }, 'image/jpeg')
       })
     }

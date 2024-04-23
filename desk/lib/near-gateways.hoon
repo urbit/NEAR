@@ -2,7 +2,7 @@
 /+  etch
 |%
 ++  enjs
-=,  enjs:format
+  =,  enjs:format
   |%
   ::
   ++  scry-json
@@ -29,43 +29,42 @@
   (err-update +.update)
   ==
   ::
-  ++  id-data
-  |=  data=(map identifier metadata)
-  ^-  json
-  %-  en-vase:etch
-    !>  ^-  (list [identifier=[ship=@p id=@t] metadata=[name=@t url=@t about=@t]])
-    %+  turn  ~(tap by data)
-    |=  arg=[=identifier =metadata]
-    :-  :-  ship=ship.identifier.arg
-        id=(scot %uv id.identifier.arg)
-      [metadata.arg]
+    ++  id-data
+    |=  data=(map identifier metadata)
+    ^-  json
+    %-  en-vase:etch
+      !>  ^-  (list [identifier=[ship=@p id=@t] metadata=[name=@t url=@t about=@t thumbnail=@t]])
+      %+  turn  ~(tap by data)
+      |=  arg=[=identifier =metadata]
+      :-  :-  ship=ship.identifier.arg
+          id=(scot %uv id.identifier.arg)
+        [metadata.arg]
   ::
-  ++  id-glob
-  |=  data=(list identifier)
-  ^-  json
-  %-  en-vase:etch
-    !>  ^-  (list identifier=[ship=@p id=@t])
-    %+  turn  data
+    ++  id-glob
+    |=  data=(list identifier)
+    ^-  json
+    %-  en-vase:etch
+      !>  ^-  (list identifier=[ship=@p id=@t])
+      %+  turn  data
+      |=  =identifier
+      :-  ship.identifier
+      (scot %uv id.identifier)
+  ::
+    ++  id
     |=  =identifier
+    ^-  json
+    %-  en-vase:etch
+    !>  ^-  [ship=@p id=@t]
     :-  ship.identifier
     (scot %uv id.identifier)
   ::
-  ++  id
-  |=  =identifier
-  ^-  json
-  %-  en-vase:etch
-  !>  ^-  [ship=@p id=@t]
-  :-  ship.identifier
-  (scot %uv id.identifier)
-  ::
-  ++  err-update
-  |=  data=[date=@da url=@t]
-  ^-  json
-  %-  en-vase:etch
-  !>  ^-  [date=@da url=@t]
-  data
-::
---
+    ++  err-update
+    |=  data=[date=@da url=@t]
+    ^-  json
+    %-  en-vase:etch
+    !>  ^-  [date=@da url=@t]
+    data
+  --
 ::
 ++  dejs
 !:
@@ -78,27 +77,37 @@
   %.  json
   %-  of
   :~
-  [%publish to-metadata]
+  [%publish to-publish]
   [%install id-data]
   [%delete to-identifier]
   ==
-  ++  id-data
-  %-  ot
-  :~  [%identifier to-identifier]
-      [%metadata to-metadata]
-  ==
   ::
-  ++  to-identifier
-  %-  ot
-  :~  [%ship (se %p)]
-      [%id (se %uv)]
-  ==
+    ++  id-data
+    %-  ot
+    :~  [%identifier to-identifier]
+        [%metadata to-metadata]
+    ==
   ::
-  ++  to-metadata
-  %-  ot
-  :~  [%name so]
-      [%url so]
-      [%about so]
-  ==
+    ++  to-identifier
+    %-  ot
+    :~  [%ship (se %p)]
+        [%id (se %uv)]
+    ==
+  ::
+    ++  to-metadata
+    %-  ot
+    :~  [%name so]
+        [%url so]
+        [%about so]
+        [%thumbnail so]
+    ==
+  ::
+    ++  to-publish
+    :~  [%name so]
+        [%url so]
+        [%about so]
+        [%thumbnail so]
+        [%blob so]
+    ==
   --
 --
