@@ -128,6 +128,7 @@
             metadata.act
           id
       =.  published  (~(put by published) id metadata.act)
+      ~&  >>  "thumbnail url: {<thumbnail.metadata.act>}"
       =.  that  %-  emit
                 :*  %pass
                     ~

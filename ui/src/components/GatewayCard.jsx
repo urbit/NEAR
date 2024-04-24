@@ -47,7 +47,7 @@ function GatewayCard({ gateway }) {
   return (
     <div className='gateway-container'>
       <img
-        src={getImage('https://pbs.twimg.com/profile_images/1631021064171196431/_ahCp9jR_400x400.jpg')}
+        src={getImage(gateway.thumbnail)}
         alt={`${gateway.name} preview image`}
       />
       <div className='info'>
