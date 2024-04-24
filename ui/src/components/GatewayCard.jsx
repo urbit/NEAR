@@ -11,11 +11,11 @@ function GatewayCard({ gateway }) {
   const { installed, published, setDelGateway, setInstGateway } = useGatewaysStore()
   const { setShowDelete, setInstallWindow } = useUiStore()
 
-  const isInstalled = installed.some(installedGateway => {
+  const isInstalled = Array.isArray(installed) && installed.some(installedGateway => {
     return gateway.id === installedGateway.id
   })
 
-  const isPublished = published.some(publishedGateway => {
+  const isPublished = Array.isArray(published) && published.some(publishedGateway => {
     return gateway.id === publishedGateway.id
   })
 
