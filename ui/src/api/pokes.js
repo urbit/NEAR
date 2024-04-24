@@ -75,6 +75,6 @@ export function publishGateway(gateway, blob) {
         blob: base64.split(',')[1]
       },
       {},
-      () => console.error(`Failed to fetch glob from ${gateway.url}`))
+      () => console.error(`Failed to publish ${gateway.name}`))
   })
 }

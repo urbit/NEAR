@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { publishGateway, publishThumbnail } from '../api/pokes';
+import { publishGateway } from '../api/pokes';
 import useUiStore from '../state/uiStore';
 import useGatewaysStore from '../state/gatewaysStore';
 import html2canvas from 'html2canvas';

@@ -94,6 +94,12 @@
         [%id (se %uv)]
     ==
   ::
+    ++  to-publish
+    %-  ot
+    :~  [%metadata to-metadata]
+        [%blob to-blob]
+    ==
+  ::
     ++  to-metadata
     %-  ot
     :~  [%name so]
@@ -102,12 +108,9 @@
         [%thumbnail so]
     ==
   ::
-    ++  to-publish
-    :~  [%name so]
-        [%url so]
-        [%about so]
-        [%thumbnail so]
-        [%blob so]
-    ==
+    ++  to-blob
+      %-  ot
+      :~  [%blob so]
+      ==
   --
 --
