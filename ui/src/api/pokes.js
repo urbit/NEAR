@@ -44,7 +44,8 @@ export function installGateway(gateway) {
       metadata: {
         url: gateway.url,
         name: gateway.name,
-        about: gateway.about
+        about: gateway.about,
+        thumbnail: gateway.thumbnail
       }
     }
     }
@@ -66,13 +67,15 @@ export function publishGateway(gateway, blob) {
       'near-gateways',
       'near-action',
       {
-        metadata: {
-          name: gateway.name,
-          url: gateway.url,
-          about: gateway.about,
-          thumbnail: `${window.location.origin}/apps/near/thumbnails/${crypto.randomUUID()}.jpg`
-        },
-        blob: base64.split(',')[1]
+        publish: {
+          metadata: {
+            name: gateway.name,
+            url: gateway.url,
+            about: gateway.about,
+            thumbnail: `${window.location.origin}/apps/near/thumbnails/${crypto.randomUUID()}.jpg`
+          },
+          blob: base64.split(',')[1]
+        }
       },
       {},
       () => console.error(`Failed to publish ${gateway.name}`))

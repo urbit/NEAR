@@ -77,7 +77,7 @@
   %.  json
   %-  of
   :~
-  [%publish to-publish]
+  [%publish data-blob]
   [%install id-data]
   [%delete to-identifier]
   ==
@@ -94,7 +94,7 @@
         [%id (se %uv)]
     ==
   ::
-    ++  to-publish
+    ++  data-blob
     %-  ot
     :~  [%metadata to-metadata]
         [%blob to-blob]
