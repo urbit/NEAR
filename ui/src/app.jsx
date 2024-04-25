@@ -33,17 +33,15 @@ export function App() {
   }, []);
 
   useEffect(() => {
-    subscribeToUpdates(update => receiveUpdate(update))
+    subscribeToUpdates(update => {
+      if (update?.url) {
+        setSubEvent(update)
+        setShowFailedGlob(true)
+      } else if (update?.id) {
+        addInstalled(update)
+      }
+    })
   }, [subEvent])
-
-  function receiveUpdate(update) {
-    if (update?.url) {
-      setSubEvent(update)
-      setShowFailedGlob(true)
-    } else if (update?.id) {
-      addInstalled(update)
-    }
-  }
 
   return (
     <div className='container-body'>

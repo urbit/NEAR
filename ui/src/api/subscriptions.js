@@ -13,12 +13,12 @@ function subscribeToUrbit(app, path, err, event, quit) {
   })
 }
 
-export async function subscribeToUpdates(setSubEvent) {
+export async function subscribeToUpdates(onSuccess) {
   return await subscribeToUrbit(
     'near-gateways',
     '/updates',
     () => {console.error('Failed to subscribe to /updates')},
-    setSubEvent,
-    () => {console.log('Kicked from /charges')}
+    onSuccess,
+    () => {console.log('Kicked from /updates')}
   )
 }
