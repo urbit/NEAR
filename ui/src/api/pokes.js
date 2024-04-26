@@ -52,32 +52,21 @@ export function installGateway(gateway) {
   )
 }
 
-export function publishGateway(gateway, blob) {
-  function blobToBase64(blob) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader()
-      reader.onloadend = () => resolve(reader.result)
-      reader.onerror = reject
-      reader.readAsDataURL(blob)
-    })
-  }
-
-  blobToBase64(blob).then(base64 => {
-    return pokeUrbit(
-      'near-gateways',
-      'near-action',
-      {
-        publish: {
-          metadata: {
-            name: gateway.name,
-            url: gateway.url,
-            about: gateway.about,
-            thumbnail: `${window.location.origin}/apps/near/thumbnails/${crypto.randomUUID()}.jpg`
-          },
-          blob: base64.split(',')[1]
-        }
-      },
-      {},
-      () => console.error(`Failed to publish ${gateway.name}`))
-  })
+export function publishGateway(gateway) {
+  return pokeUrbit(
+    'near-gateways',
+    'near-action',
+    {
+      publish: {
+        metadata: {
+          name: gateway.name,
+          url: gateway.url,
+          about: gateway.about,
+          thumbnail: gateway.thumbnail
+        },
+        blob: ''
+      }
+    },
+    {},
+    () => console.error(`Failed to publish ${gateway.name}`))
 }

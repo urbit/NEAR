@@ -83,29 +83,24 @@
   ==
   ::
     ++  id-data
-    ~&  >>  "running id-data"
     %-  ot
     :~  [%identifier to-identifier]
         [%metadata to-metadata]
     ==
   ::
     ++  to-identifier
-    ~&  >>  "running to-identifier"
     %-  ot
     :~  [%ship (se %p)]
         [%id (se %uv)]
     ==
   ::
     ++  data-blob
-    ~&  >>  "running data-blob"
     %-  ot
     :~  [%metadata to-metadata]
         [%blob so]
     ==
   ::
     ++  to-metadata
-    ~&  >>  "running to-metadata"
-    ~&  >>   "running ot on %name: {<(ot ~[[%name so]])>}"
     %-  ot
     :~  [%name so]
         [%url so]

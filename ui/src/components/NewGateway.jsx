@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 import { publishGateway } from '../api/pokes';
 import useUiStore from '../state/uiStore';
 import useGatewaysStore from '../state/gatewaysStore';
-import html2canvas from 'html2canvas';
 
 function NewGateway() {
   const iframeRef = useRef(null)
@@ -15,24 +14,9 @@ function NewGateway() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const url = `${window.location.origin}/apps/near/${newGateway.ship}/${newGateway.id}/gateway/`
-    iframeRef.current.src = url
-
-    iframeRef.current.onload = () => {
-      html2canvas(iframeRef.current.contentWindow.document.body, {
-        imageTimeout: 10000,
-        width: 1000,
-        height: 1000,
-        windowWidth: 1000,
-        windowHeight: 1000
-      }).then(canvas => {
-        canvas.toBlob(blob => {
-          publishGateway(newGateway, blob)
-          setShowNew(false)
-          setNewGateway({})
-        }, 'image/jpeg')
-      })
-    }
+    publishGateway(newGateway)
+    setShowNew(false)
+    setNewGateway({})
   }
 
   return (
@@ -60,6 +44,16 @@ function NewGateway() {
             onChange={handleTextContentChange}
             className='input-style'
             required={true}
+          />
+        </div>
+        <div className='url-form'>
+          <h3 className='labelStyle'>Thumbnail URL</h3>
+          <input
+            name="thumbnail"
+            value={newGateway.thumbnail}
+            onChange={handleTextContentChange}
+            className='input-style'
+            required={false}
           />
         </div>
         <div className='about-form'>

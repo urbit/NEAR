@@ -131,20 +131,6 @@
             metadata.act
           id
       =.  published  (~(put by published) id metadata.act)
-      =.  that
-      %-  emit
-      :*  %pass
-          ~
-          %arvo
-          %e
-          %set-response
-          thumbnail.metadata.act
-          ~
-          %.n
-          %payload
-          [200 ['Content-Type' 'image/jpeg']~]
-          `(as-octs:mimes:html blob.act)
-      ==
       %+  get-gateway-glob
         metadata.act
       id
