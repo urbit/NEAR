@@ -209,7 +209,7 @@ iframe {
   z-index: 100;
 }
 
-.form-container, .delete-gateway, .err-window {
+.delete-gateway, .err-window {
   position: fixed;
   background-color: #141915;
   border: #ABE68D solid 1px;
@@ -222,7 +222,16 @@ iframe {
 }
 
 .form-container {
+  position: fixed;
+  background-color: #141915;
+  border: #ABE68D solid 1px;
+  border-radius: 0.375rem;
+  color: #ABE68D;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   width: 40%;
+  padding: 20px;
   box-sizing: border-box;
 }
 
