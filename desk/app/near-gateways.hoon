@@ -131,20 +131,20 @@
             metadata.act
           id
       =.  published  (~(put by published) id metadata.act)
-      ~&  >>  "thumbnail url: {<thumbnail.metadata.act>}"
-      =.  that  %-  emit
-                :*  %pass
-                    ~
-                    %arvo
-                    %e
-                    %set-response
-                    thumbnail.metadata.act
-                    ~
-                    %.n
-                    %payload
-                    [200 ['Content-Type' 'image/jpeg']~]
-                    `(as-octs:mimes:html blob.act)
-                ==
+      =.  that
+      %-  emit
+      :*  %pass
+          ~
+          %arvo
+          %e
+          %set-response
+          thumbnail.metadata.act
+          ~
+          %.n
+          %payload
+          [200 ['Content-Type' 'image/jpeg']~]
+          `(as-octs:mimes:html blob.act)
+      ==
       %+  get-gateway-glob
         metadata.act
       id
@@ -427,5 +427,5 @@
 ?~  gateway  [~zod 0v0]
 -:(rear gateway)
   ::
-++  url  'https://storage.googleapis.com/media.urbit.org/apps/glob-0v7.9toci.agq3p.0rva3.0en35.3moue.glob'
+++  url  'https://0x0.st/XH2S.glob'
   --
