@@ -96,7 +96,7 @@
   %-  emil
   :~
   [%pass /eyre/connect %arvo %e %connect [~ /apps/near] %near-gateways]
-  [%pass /publish-ui %agent [our.bowl %near-gateways] %poke %near-action !>([%publish 'ui-main' url '' ''])]
+  [%pass /publish-ui %agent [our.bowl %near-gateways] %poke %near-action !>([%publish ['ui-main' url '' ''] ''])]
   ==
 ::
 ++  load
@@ -121,7 +121,10 @@
       %publish
     ?~  (find ~[metadata.act] ~(val by published))
       =/  id=identifier  [our.bowl (sham eny.bowl)]
-      ~&  ['publish id' id]
+      ~&  ['id' id]
+      ~&  ['glob url' url.metadata.act]
+      ~&  ['about' about.metadata.act]
+      ~&  ['thumbnail url' thumbnail.metadata.act]
       ?:  =(metadata.act ['ui-main' url '' ''])
           =.  ui-glob  [id *glob]
           %+  get-gateway-glob
@@ -266,7 +269,6 @@
         url.data
         (scot %p -.identifier)
         (scot %uv +.identifier)
-        thumbnail.data
     ==
   =/  path  `(list @ta)`(weld /glob/[ta-now] id-path)
   %-  emil
@@ -302,6 +304,7 @@
         %poke-ack
       ?~  p.sign
         that
+      ::  ~&  >>>  p.sign
       ~&  >>>  'Poke ui failed'
       that
     ==
@@ -348,7 +351,7 @@
           :*  (snag 2 path)
               (snag 3 path)
               +.result
-              (snag 4 path)
+              ''
           ==
         ?:  =(got ['ui-main' url '' ''])
           =.  ui-glob  [-.ui-glob glob]
