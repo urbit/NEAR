@@ -109,6 +109,22 @@ iframe {
   order: 2;
 }
 
+.gateway-container .image-container {
+  width: 100%;
+  height: 253px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.gateway-container .gateway-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
 .add-gateway {
   cursor: pointer;
   background-color: #ABE68D;

@@ -40,16 +40,19 @@ function GatewayCard({ gateway }) {
 
   function handleUnpublishClick() {
     setDelGateway(gateway)
-    // TODO accomodate unpublishing in UI / copy
+    // TODO accommodate unpublishing in UI / copy
     setShowDelete(true)
   }
 
   return (
     <div className='gateway-container'>
-      <img
-        src={getImage(gateway.thumbnail)}
-        alt={`${gateway.name} preview image`}
-      />
+      <div className='image-container'>
+        <img
+          src={getImage(gateway.thumbnail)}
+          alt={`${gateway.name} preview image`}
+          className='gateway-image'
+        />
+      </div>
       <div className='info'>
         <h2 className='title'>{gateway.name}</h2>
         <h3 className='ship'>{gateway.ship}</h3>
@@ -64,7 +67,6 @@ function GatewayCard({ gateway }) {
         <button onClick={handleDeleteClick}>
           Delete
         </button>}
-        {/* XX "Hide" button to remove gateway from state if not installed */}
         {isInstalled &&
         <button onClick={handleOpenClick}>
           Open

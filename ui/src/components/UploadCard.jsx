@@ -16,10 +16,13 @@ function UploadCard() {
   return (
     <>
       <div className='gateway-container' onClick={handleClick}>
-        <img
-          src={lus}
-          alt='upload card image'
-        />
+        <div className="image-container">
+          <img
+            src={lus}
+            alt='upload card image'
+            className='gateway-image'
+          />
+        </div>
         <div className='info'>
           <h2 className='title'>Upload your gateway</h2>
           <h4 className='text'>Once uploaded, people can install your BOS gateway on their ship to run locally.</h4>
