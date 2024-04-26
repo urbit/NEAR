@@ -1,10 +1,9 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { publishGateway } from '../api/pokes';
 import useUiStore from '../state/uiStore';
 import useGatewaysStore from '../state/gatewaysStore';
 
 function NewGateway() {
-  const iframeRef = useRef(null)
   const { setShowNew } = useUiStore()
   const { newGateway, setNewGateway } = useGatewaysStore()
 
@@ -36,6 +35,7 @@ function NewGateway() {
             maxLength="30"
           />
         </div>
+        <br />
         <div className='url-form'>
           <h3 className='labelStyle'>Glob URL</h3>
           <input
@@ -46,6 +46,7 @@ function NewGateway() {
             required={true}
           />
         </div>
+        <br />
         <div className='url-form'>
           <h3 className='labelStyle'>Thumbnail URL</h3>
           <input
@@ -56,6 +57,7 @@ function NewGateway() {
             required={false}
           />
         </div>
+        <br />
         <div className='about-form'>
           <h3 className='labelStyle'>Description</h3>
           <textarea
@@ -66,10 +68,9 @@ function NewGateway() {
             maxLength="256"
           />
         </div>
-        <button type="submit" className='btn-style'>
+        <button type="submit" className='btn-style publish-gateway'>
           Publish Gateway
         </button>
-        <iframe ref={iframeRef} style={{ display: 'none' }}></iframe>
       </form>
     </div>
   );
