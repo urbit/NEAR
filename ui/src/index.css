@@ -125,6 +125,11 @@ iframe {
   object-position: center;
 }
 
+.image-container {
+  border-top-left-radius: 0.375rem;
+  border-top-right-radius: 0.375rem;
+}
+
 .add-gateway {
   cursor: pointer;
   background-color: #ABE68D;
