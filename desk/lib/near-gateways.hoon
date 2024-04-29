@@ -23,8 +23,8 @@
   |=  =update
   ^-  json
   ?-  -.update
-    %glob
-  (id +.update)
+    %globbed
+  (id-data (my +.update ~))
     %failed-glob
   (err-update +.update)
   ==

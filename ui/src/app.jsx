@@ -18,8 +18,10 @@ export function App() {
     installWindow
   } = useUiStore()
   const {
-    addInstalled,
-    setInstalled
+    installed,
+    published,
+    setInstalled,
+    setPublished
   } = useGatewaysStore()
 
   useEffect(() => {
@@ -34,11 +36,13 @@ export function App() {
 
   useEffect(() => {
     subscribeToUpdates(update => {
+      console.log('Update:', update)
       if (update?.url) {
         setSubEvent(update)
         setShowFailedGlob(true)
-      } else if (update?.id) {
-        addInstalled(update)
+      } else {
+        setInstalled([...installed, update[0]])
+        setPublished([...published, update[0]])
       }
     })
   }, [subEvent])

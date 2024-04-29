@@ -353,7 +353,7 @@
                 %fact
                 [/updates]~
                 %near-update
-                !>([%glob id])
+                !>([%globbed id got])
             ==
         ==
       ==

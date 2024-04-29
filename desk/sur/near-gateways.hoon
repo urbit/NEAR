@@ -16,7 +16,7 @@
   ==
 ::
 +$  update
-  $%  [%glob =identifier]
+  $%  [%globbed =identifier =metadata]
       [%failed-glob date=@da url=@t]
   ==
 --
