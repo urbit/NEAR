@@ -99,6 +99,11 @@ iframe {
   margin: 30px;
 }
 
+.image-container {
+  border-top-left-radius: 0.375rem;
+  border-top-right-radius: 0.375rem;
+}
+
 .gateway-container {
   display: flex;
   flex-direction: column;
@@ -123,11 +128,6 @@ iframe {
   height: 100%;
   object-fit: cover;
   object-position: center;
-}
-
-.image-container {
-  border-top-left-radius: 0.375rem;
-  border-top-right-radius: 0.375rem;
 }
 
 .add-gateway {
@@ -240,6 +240,9 @@ iframe {
   right: 0;
   margin: auto;
   padding: 20px;
+  top: 40%;
+  width: 40%;
+  text-align: center;
 }
 
 .form-container {
@@ -315,12 +318,6 @@ iframe {
 .btn-style:hover, .close-new-btn:hover {
   color: #141915;
   background-color: #ABE68D;
-}
-
-.delete-gateway, .err-window {
-  top: 40%;
-  width: 40%;
-  text-align: center;
 }
 
 .del-buttons, .inst-buttons {
