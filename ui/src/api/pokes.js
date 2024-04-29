@@ -59,10 +59,10 @@ export function publishGateway(gateway) {
     {
       publish: {
         metadata: {
-          name: gateway.name,
-          url: gateway.url,
-          about: gateway.about,
-          thumbnail: gateway.thumbnail
+          name: gateway.name || '',
+          url: gateway.url || '',
+          about: gateway.about || '',
+          thumbnail: gateway.thumbnail || ''
         },
         blob: ''
       }

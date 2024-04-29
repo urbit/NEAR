@@ -3,8 +3,7 @@ import useGatewaysStore from '../state/gatewaysStore'
 import useUiStore from '../state/uiStore'
 
 function getImage(url) {
-  // TODO get image and fallback if bad response
-  return url
+  return url || 'https://i.imgur.com/EQYg84O.png'
 }
 
 function GatewayCard({ gateway }) {
