@@ -1,11 +1,11 @@
 import React from 'react'
 import useUiStore from '../state/uiStore'
 import useGatewaysStore from '../state/gatewaysStore'
-import { deleteGateway } from '../api/pokes'
+import { deleteGateway, publishGateway } from '../api/pokes'
 
 function DeleteGateway() {
   const { setShowDelete } = useUiStore()
-  const { delGateway, setDelGateway } = useGatewaysStore()
+  const { delGateway, installed, published, setDelGateway, setInstalled, setPublished } = useGatewaysStore()
 
   return(
       <div className="delete-gateway">
@@ -17,9 +17,19 @@ function DeleteGateway() {
           deleteGateway(
             delGateway,
             () => {
-            setDelGateway(),
-            window.location.reload(),
-            setShowDelete()
+            if (published.some(publishedGateway => {
+              return publishedGateway.id === delGateway.id
+            })) {
+              setPublished(published.filter(publishedGateway => {
+                return publishedGateway.id !== delGateway.id
+              }))
+            } else {
+              setInstalled(installed.filter(installedGateway => {
+                return installedGateway.id !== delGateway.id
+              }))
+            }
+            setDelGateway({}),
+            setShowDelete(false)
           })}}>
           Delete
         </button>
