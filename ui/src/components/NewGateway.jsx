@@ -66,6 +66,7 @@ function NewGateway() {
             onChange={handleTextContentChange}
             className='input-style'
             maxLength="256"
+            required={true}
           />
         </div>
         <button type="submit" className='btn-style publish-gateway'>
