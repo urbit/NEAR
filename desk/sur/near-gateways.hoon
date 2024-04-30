@@ -6,6 +6,7 @@
   $%  [%publish =metadata blob=@t]
       [%install =identifier =metadata]
       [%delete =identifier]
+      [%hide =identifier]
   ==
 ::
 +$  scry

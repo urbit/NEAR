@@ -1,14 +1,23 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import useGatewaysStore from '../state/gatewaysStore'
 import useUiStore from '../state/uiStore'
+import { hideGateway } from '../api/pokes'
 
 function getImage(url) {
   return url || 'https://i.imgur.com/EQYg84O.png'
 }
 
 function GatewayCard({ gateway }) {
-  const { installed, published, setDelGateway, setInstGateway } = useGatewaysStore()
+  const [hidden, setHidden] = useState(false)
   const { setShowDelete, setInstallWindow } = useUiStore()
+  const {
+    heard,
+    installed,
+    published,
+    setHeard,
+    setDelGateway,
+    setInstGateway
+  } = useGatewaysStore()
 
   const isInstalled = Array.isArray(installed) && installed.some(installedGateway => {
     return gateway.id === installedGateway.id
@@ -39,12 +48,25 @@ function GatewayCard({ gateway }) {
 
   function handleUnpublishClick() {
     setDelGateway(gateway)
-    // TODO accommodate unpublishing in UI / copy
     setShowDelete(true)
   }
 
+  useEffect(() => {
+    console.log('new heard:', heard)
+  }, [heard])
+
+  function handleHideClick() {
+    setHidden(true)
+    hideGateway(gateway, () => setHeard(heard.filter(heardGateway => {
+      return heardGateway.id !== gateway.id
+    })))
+  }
+
   return (
-    <div className='gateway-container'>
+    <div
+      className='gateway-container'
+      style={{ display: hidden ? 'none' : 'auto' }}
+    >
       <div className='image-container'>
         <img
           src={getImage(gateway.thumbnail)}
@@ -58,18 +80,28 @@ function GatewayCard({ gateway }) {
         <h4 className='text'>{gateway.about}</h4>
       </div>
       <div className="git">
+        {/* 1st button */}
         {isPublished &&
         <button onClick={handleUnpublishClick}>
           Unpublish
         </button>}
+
         {isInstalled && !isPublished &&
         <button onClick={handleDeleteClick}>
           Delete
         </button>}
+
+        {!isInstalled && !isPublished &&
+        <button onClick={handleHideClick}>
+          Hide
+        </button>}
+
+        {/* 2nd button */}
         {isInstalled &&
         <button onClick={handleOpenClick}>
           Open
         </button>}
+
         {!isInstalled && !isPublished &&
         <button onClick={handleInstallClick}>
           Install

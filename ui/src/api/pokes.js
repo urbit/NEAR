@@ -1,5 +1,7 @@
 import Urbit from '@urbit/http-api'
 
+function defaultOnSuccess() {}
+
 function defaultOnError(app, mark, json) {
   console.error(`Failed to poke ${app} with mark ${mark} and json ${json}`)
 }
@@ -11,7 +13,7 @@ function pokeUrbit(app, mark, json, onSuccess, onError) {
     app: app,
     mark: mark,
     json: json,
-    onSuccess: onSuccess || {},
+    onSuccess: onSuccess || defaultOnSuccess(),
     onError: onError || defaultOnError(app, mark, json)
   })
 }
@@ -67,6 +69,21 @@ export function publishGateway(gateway) {
         blob: ''
       }
     },
-    {},
+    () => {},
     () => console.error(`Failed to publish ${gateway.name}`))
+}
+
+export function hideGateway(gateway, onSuccess) {
+  return pokeUrbit(
+    'near-gateways',
+    'near-action',
+    {
+      hide: {
+        id: gateway.id,
+        ship: gateway.ship
+      }
+    },
+    onSuccess,
+    () => console.error(`Failed to hide ${gateway.id}`)
+  )
 }

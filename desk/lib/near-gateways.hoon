@@ -80,6 +80,7 @@
   [%publish data-blob]
   [%install id-data]
   [%delete to-identifier]
+  [%hide to-identifier]
   ==
   ::
     ++  id-data

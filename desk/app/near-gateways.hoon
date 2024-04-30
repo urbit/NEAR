@@ -154,6 +154,13 @@
     =.  published  (~(del by published) identifier.act)
     =.  installed  (~(del by installed) identifier.act)
     that
+  ::
+      %hide
+    ?~  (~(get by heard) identifier.act)
+      ~&  >>>  "Haven't heard about {<identifier.act>}"
+      that
+    =.  heard  (~(del by heard) identifier.act)
+    that
   ==
 ==
 ++  dump  [404 ~ [%plain "404 - Not Found"]]
