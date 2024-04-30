@@ -64,6 +64,8 @@ iframe {
   background-color: #141915;
   color: #ABE68D;
   border: none;
+  position: relative;
+  left: -15px;
 }
 
 .btn-nav {
