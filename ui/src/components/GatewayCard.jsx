@@ -2,10 +2,7 @@ import React, { useEffect, useState } from 'react'
 import useGatewaysStore from '../state/gatewaysStore'
 import useUiStore from '../state/uiStore'
 import { hideGateway } from '../api/pokes'
-
-function getImage(url) {
-  return url || 'https://i.imgur.com/EQYg84O.png'
-}
+import fallbackImage from '../assets/fallback.svg'
 
 function GatewayCard({ gateway }) {
   const [hidden, setHidden] = useState(false)
@@ -69,7 +66,7 @@ function GatewayCard({ gateway }) {
     >
       <div className='image-container'>
         <img
-          src={getImage(gateway.thumbnail)}
+          src={gateway.thumbnail ? gateway.thumbnail : fallbackImage }
           alt={`${gateway.name} preview image`}
           className='gateway-image'
         />
