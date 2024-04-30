@@ -33,7 +33,7 @@ function PublishedGateways() {
 
   return (
     <div>
-      <div>
+      <div className='published-gateways'>
         <div className='flex-box'>
           <UploadCard />
           {Array.isArray(published) && published.map((gateway) => {

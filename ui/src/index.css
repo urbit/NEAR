@@ -56,16 +56,41 @@ iframe {
   margin-top: 6px;
 }
 
+.app-header {
+  width: 100%;
+  border-bottom: 0.5px solid #ABE68D;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px;
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-bottom: 18px;
+}
+
+.app-header span {
+  font-size: 24px;
+  font-family: var(--urbit-sans);
+  font-weight: 700;
+  color: #ABE68D;
+}
+
+.app-header img {
+  height: 24px;
+  width: 24px;
+  cursor: pointer;
+  position: relative;
+  top: 2px;
+}
+
 .headers {
   font-size: 24px;
-  margin: 3%;
   text-align: start;
-  padding-top: 3px;
   background-color: #141915;
   color: #ABE68D;
   border: none;
   position: relative;
-  left: -15px;
+  padding-bottom: 18px;
 }
 
 .btn-nav {
@@ -90,7 +115,8 @@ iframe {
 
 .container-main {
   grid-column: 1 / 9;
-  margin: 10px;
+  margin-left: 5vw;
+  margin-right: 5vw;
 }
 
 .flex-box {
@@ -98,7 +124,6 @@ iframe {
   flex-flow: row wrap;
   place-content: flex-start;
   gap: 35px 4%;
-  margin: 30px;
 }
 
 .image-container {
@@ -175,8 +200,8 @@ iframe {
 .info {
   height: auto;
   padding: 5px;
-  margin-top: 0;
-  margin-left: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .name {
@@ -295,6 +320,10 @@ iframe {
   flex-direction: row;
   align-items: flex-end;
   justify-content: flex-end;
+}
+
+.published-gateways {
+  padding-bottom: 18px;
 }
 
 

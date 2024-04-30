@@ -8,6 +8,7 @@ import useGatewaysStore from './state/gatewaysStore.js';
 import { scryInstalled } from './api/scries.js';
 import { subscribeToUpdates } from './api/subscriptions.js';
 import NewGateway from './components/NewGateway.jsx';
+import helpIcon from './assets/help.svg'
 
 export function App() {
   const {
@@ -70,6 +71,10 @@ export function App() {
               <div>
                 <NewGateway />
               </div>}
+            <div className="app-header">
+              <span>NEAR Gateways</span>
+              <img src={helpIcon} alt="help icon" />
+            </div>
             {published.length > 0 &&
             <>
               <h2 className='headers'>Published</h2>
