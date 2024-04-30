@@ -287,8 +287,18 @@ iframe {
   grid-column: 3 / 4;
 }
 
+.button-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+
 .publish-gateway {
   margin-top: 10px;
+  position: relative;
+  left: 11px;
 }
 
 .btn-style, .close-new-btn {

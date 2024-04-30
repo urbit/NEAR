@@ -69,9 +69,11 @@ function NewGateway() {
             required={true}
           />
         </div>
-        <button type="submit" className='btn-style publish-gateway'>
-          Publish Gateway
-        </button>
+        <div className="button-container">
+          <button type="submit" className='btn-style publish-gateway'>
+            Publish Gateway
+          </button>
+        </div>
       </form>
     </div>
   );
