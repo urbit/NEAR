@@ -15,7 +15,15 @@ function UploadCard() {
 
   return (
     <>
-      <div className='gateway-container' onClick={handleClick}>
+      <div
+        className='gateway-container'
+        onClick={handleClick}
+        style={{
+          backgroundColor: '#141915',
+          border: '0.5px solid #ABE68D',
+          cursor: 'pointer'
+        }}
+      >
         <div className="image-container">
           <img
             src={lus}
@@ -24,8 +32,8 @@ function UploadCard() {
           />
         </div>
         <div className='info'>
-          <h2 className='title'>Upload your gateway</h2>
-          <h4 className='text'>Once uploaded, people can install your BOS gateway on their ship to run locally.</h4>
+          <h2 className='title' style={{ color: '#ABE68D'}}>Upload your gateway</h2>
+          <h4 className='text' style={{ color: '#ABE68D'}}>Once uploaded, people can install your BOS gateway on their ship to run locally.</h4>
         </div>
       </div>
     </>
