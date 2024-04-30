@@ -1,5 +1,5 @@
 import React from 'react'
-import lus from '../assets/lus.png'
+import lus from '../assets/lus.svg'
 import useUiStore from '../state/uiStore';
 import useGatewaysStore from '../state/gatewaysStore';
 
