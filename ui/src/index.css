@@ -63,8 +63,8 @@ iframe {
   flex-direction: row;
   justify-content: space-between;
   padding: 10px;
-  padding-left: 0px;
-  padding-right: 0px;
+  padding-left: 0;
+  padding-right: 0;
   margin-bottom: 18px;
 }
 
