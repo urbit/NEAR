@@ -554,7 +554,6 @@
             ~&  [gossip+dap.bowl %ignoring-unexpected-fact mark=mark]
             [~ this]
           ::TODO  de-dupe with +on-poke
-          ~&  >>  "gossip: sign {<sign>}"
           =+  !<(=rumor vase)
           =/  =hash  (en-hash:up rumor)
           ?:  (~(has in memory) hash)
