@@ -112,6 +112,7 @@ iframe {
   display: flex;
   flex-direction: column;
   background-color: #ABE68D;
+  box-sizing: border-box;
   border-radius: 0.375rem;
   width: 253px;
   height: 452px;
