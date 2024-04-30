@@ -24,7 +24,13 @@ function UploadCard() {
           cursor: 'pointer'
         }}
       >
-        <div className="image-container">
+        <div
+        className="image-container"
+        style={{
+          border: 'none',
+          borderBottom: '0.5px solid #ABE68D'
+        }}
+        >
           <img
             src={lus}
             alt='upload card image'
