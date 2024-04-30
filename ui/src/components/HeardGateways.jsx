@@ -3,6 +3,7 @@ import useGatewaysStore from '../state/gatewaysStore'
 import useUiStore from '../state/uiStore'
 import { scryHeard } from '../api/scries'
 import GatewayCard from './GatewayCard'
+import UploadCard from './UploadCard'
 
 function HeardGateways() {
   const {
@@ -11,6 +12,7 @@ function HeardGateways() {
   const {
     heard,
     installed,
+    published,
     newGateways,
     installedGateways,
     setHeard,
@@ -51,6 +53,7 @@ function HeardGateways() {
   return (
     <div>
       <div className='flex-box'>
+        {published.length === 0 && <UploadCard />}
         {installedGateways.map((gateway) => (
           <GatewayCard
             key={gateway.id}

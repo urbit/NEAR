@@ -33,13 +33,6 @@ function PublishedGateways() {
 
   return (
     <div>
-      <div className="new-gateway">
-        {showNew &&
-          <div>
-            <NewGateway />
-          </div>
-        }
-      </div>
       <div>
         <div className='flex-box'>
           <UploadCard />

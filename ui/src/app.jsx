@@ -7,11 +7,13 @@ import useUiStore from './state/uiStore'
 import useGatewaysStore from './state/gatewaysStore.js';
 import { scryInstalled } from './api/scries.js';
 import { subscribeToUpdates } from './api/subscriptions.js';
+import NewGateway from './components/NewGateway.jsx';
 
 export function App() {
   const {
     subEvent,
     setSubEvent,
+    showNew,
     showFailedGlob,
     setShowFailedGlob,
     showDelete,
@@ -55,23 +57,27 @@ export function App() {
               <div className='err-window'>
                 <h2>Couldn't find glob for gateway at {subEvent.url}</h2>
                 <button onClick={()=>{window.location.reload()}}>Reload</button>
-              </div>
-            }
+              </div>}
             {showDelete &&
               <div>
                 <DeleteGateway />
-              </div>
-            }
+              </div>}
             {installWindow &&
               <div>
                 <InstallGatewayModal />
+              </div>}
+            {showNew &&
+              <div>
+                <NewGateway />
+              </div>}
+            {published.length > 0 &&
+            <>
+              <h2 className='headers'>Published</h2>
+              <div className='containerComponent'>
+                <PublishedGateways />
               </div>
-            }
-            <h2 className='headers'>Published</h2>
-            <div className='containerComponent'>
-              <PublishedGateways />
-            </div>
-            <h2 className='headers'>Heard</h2>
+            </>}
+            {published.length > 0 && <h2 className='headers'>Heard</h2>}
             <div className='containerComponent'>
               <HeardGateways />
             </div>
