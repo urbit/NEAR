@@ -262,6 +262,7 @@
         url.data
         (scot %p -.identifier)
         (scot %uv +.identifier)
+        thumbnail.data
     ==
   =/  path  `(list @ta)`(weld /glob/[ta-now] id-path)
   %-  emil
@@ -344,7 +345,7 @@
           :*  (snag 2 path)
               (snag 3 path)
               +.result
-              ''
+              (snag 6 path)
           ==
         ?:  =(got ['ui-main' url '' ''])
           =.  ui-glob  [-.ui-glob glob]
