@@ -12,10 +12,10 @@ import helpIcon from './assets/help.svg'
 
 export function App() {
   const {
-    installed,
     published,
     setInstalled,
     setPublished,
+    appendToInstalled,
     appendToPublished
   } = useGatewaysStore()
   const {
@@ -51,7 +51,7 @@ export function App() {
           setShowFailedGlob(true)
           break
         default:
-          console.error('Unrecognized update', update)
+          console.error('Unrecognized update:', update)
           break
       }
     })
