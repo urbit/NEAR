@@ -43,6 +43,7 @@ iframe {
   grid-template-columns: repeat(8, minmax(0, 1fr));
   grid-auto-flow: row dense;
   justify-items: stretch;
+  padding-bottom: 18px;
 }
 
 .container-nav {
