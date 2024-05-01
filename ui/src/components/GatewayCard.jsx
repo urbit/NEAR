@@ -94,7 +94,7 @@ function GatewayCard({ gateway }) {
         </button>}
 
         {/* 2nd button */}
-        {isInstalled &&
+        {(isInstalled || isPublished) &&
         <button onClick={handleOpenClick}>
           Open
         </button>}
