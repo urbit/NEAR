@@ -1,16 +1,11 @@
 import React, { useEffect } from 'react'
 import useGatewaysStore from '../state/gatewaysStore'
-import useUiStore from '../state/uiStore'
 import { scryHeard } from '../api/scries'
 import GatewayCard from './GatewayCard'
 import UploadCard from './UploadCard'
 
 function HeardGateways() {
   const {
-    loading
-  } = useUiStore()
-  const {
-    heard,
     installed,
     published,
     newGateways,
@@ -46,8 +41,14 @@ function HeardGateways() {
     })()
   }, [])
 
-  if (heard === null && !loading) {
-    return <div><h2 className="headers">Yet to be discovered. Get some %pals</h2></div>
+  if (newGateways.length === 0) {
+    return (
+      <>
+      {published.length === 0 && <UploadCard />}
+      <br />
+      <h2 className="headers" style={{ opacity: 0.5 }}>No heard gateways</h2>
+      </>
+    )
   }
 
   return (
