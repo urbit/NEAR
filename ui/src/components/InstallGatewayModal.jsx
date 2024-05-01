@@ -13,7 +13,10 @@ function InstallGatewayModal() {
         BOS gateways can access all data on your ship, just like any other Urbit app. Only install gateways from developers you trust!
       </h2>
       <div className="inst-buttons">
-        <button onClick={async () => {installGateway(instGateway)}}>
+        <button onClick={() => {
+          setInstallWindow(false)
+          installGateway(instGateway)
+          }}>
           Install
         </button>
         <button onClick={() => {

@@ -10,7 +10,6 @@ function GatewayCard({ gateway }) {
   const {
     heard,
     installed,
-    published,
     setHeard,
     setDelGateway,
     setInstGateway
@@ -20,9 +19,7 @@ function GatewayCard({ gateway }) {
     return gateway.id === installedGateway.id
   })
 
-  const isPublished = Array.isArray(published) && published.some(publishedGateway => {
-    return gateway.id === publishedGateway.id
-  })
+  const isPublished = gateway.ship === window.ship
 
   function handleInstallClick() {
     console.log('Attempting to install')
