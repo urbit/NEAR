@@ -5,6 +5,7 @@ const useGatewaysStore = create(set => ({
   setHeard: heard => set({ heard }),
   published: [],
   setPublished: published => set({ published }),
+  appendToPublished: gateway => set(state => ({ published: [...state.published, gateway] })),
   installed: [],
   setInstalled: installed => set({ installed }),
   addInstalled: (gateway) => set(state => {

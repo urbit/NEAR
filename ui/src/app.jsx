@@ -15,7 +15,8 @@ export function App() {
     installed,
     published,
     setInstalled,
-    setPublished
+    setPublished,
+    appendToPublished
   } = useGatewaysStore()
   const {
     subEvent,
@@ -37,14 +38,13 @@ export function App() {
 
   useEffect(() => {
     subscribeToUpdates(update => {
-      console.log('Update:', update)
-
+      // console.log('Update:', update)
       switch (update.updateTag) {
         case 'installed':
           setInstalled([...installed, update.gateways[0]])
           break
         case 'published':
-          setPublished([...published, update.gateways[0]])
+          appendToPublished(update.gateways[0])
           break
         case 'failed-glob':
           setSubEvent(update)
