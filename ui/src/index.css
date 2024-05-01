@@ -86,11 +86,11 @@ iframe {
 .headers {
   font-size: 24px;
   text-align: start;
-  background-color: #141915;
   color: #ABE68D;
   border: none;
   position: relative;
   padding-bottom: 18px;
+  pointer-events: none;
 }
 
 .btn-nav {
