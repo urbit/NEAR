@@ -41,7 +41,7 @@ export function App() {
       // console.log('Update:', update)
       switch (update.updateTag) {
         case 'installed':
-          setInstalled([...installed, update.gateways[0]])
+          appendToInstalled(update.gateways[0])
           break
         case 'published':
           appendToPublished(update.gateways[0])
