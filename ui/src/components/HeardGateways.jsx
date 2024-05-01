@@ -44,7 +44,7 @@ function HeardGateways() {
   if (newGateways.length === 0) {
     return (
       <>
-      {published.length === 0 && <><UploadCard /><br /></>}
+      {(!published || published.length === 0) && <><UploadCard /><br /></>}
       <h2 className="headers" style={{ opacity: 0.5 }}>No heard gateways</h2>
       </>
     )
@@ -53,7 +53,7 @@ function HeardGateways() {
   return (
     <div>
       <div className='flex-box'>
-        {published.length === 0 && <UploadCard />}
+      {(!published || published.length === 0) && <UploadCard />}
         {installedGateways.map((gateway) => (
           <GatewayCard
             key={gateway.id}
