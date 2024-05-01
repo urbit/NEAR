@@ -1,17 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import useGatewaysStore from '../state/gatewaysStore.js'
-import { scryPublished } from '../api/scries.js'
 import GatewayCard from './GatewayCard.jsx'
 import UploadCard from './UploadCard.jsx'
 
 function PublishedGateways() {
-  const { published, setPublished } = useGatewaysStore()
-
-  useEffect(() => {
-    (async () => {
-      setPublished(await scryPublished())
-    })()
-  }, [])
+  const { published } = useGatewaysStore()
 
   return (
     <div>

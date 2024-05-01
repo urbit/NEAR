@@ -5,12 +5,18 @@ import DeleteGateway from './components/DeleteGateway.jsx'
 import InstallGatewayModal from './components/InstallGatewayModal.jsx'
 import useUiStore from './state/uiStore'
 import useGatewaysStore from './state/gatewaysStore.js';
-import { scryInstalled } from './api/scries.js';
+import { scryInstalled, scryPublished } from './api/scries.js';
 import { subscribeToUpdates } from './api/subscriptions.js';
 import NewGateway from './components/NewGateway.jsx';
 import helpIcon from './assets/help.svg'
 
 export function App() {
+  const {
+    installed,
+    published,
+    setInstalled,
+    setPublished
+  } = useGatewaysStore()
   const {
     subEvent,
     setSubEvent,
@@ -20,22 +26,14 @@ export function App() {
     showDelete,
     installWindow
   } = useUiStore()
-  const {
-    installed,
-    published,
-    setInstalled,
-    setPublished
-  } = useGatewaysStore()
 
   useEffect(() => {
-    console.log('app.jsx installWindow:', installWindow);
-  }, [installWindow])
-
-  useEffect(() => {
-    (async () => {
-      setInstalled(await scryInstalled());
-    })();
-  }, []);
+    async function init() {
+      setInstalled(await scryInstalled())
+      setPublished(await scryPublished())
+    }
+    init()
+  }, [])
 
   useEffect(() => {
     subscribeToUpdates(update => {
@@ -75,7 +73,7 @@ export function App() {
               <span>NEAR Gateways</span>
               <img src={helpIcon} alt="help icon" />
             </div>
-            {published.length > 0 &&
+            {Array.isArray(published) && published.length > 0 &&
             <>
               <h2 className='headers'>Published</h2>
               <div className='containerComponent'>
