@@ -352,6 +352,19 @@
           that
         ~&  >  'Gateway globbed successfully'
         =.  installed  (~(put by installed) id glob)
+        ?:  (~(has by published) id)
+          %-  emil
+          :~  %+  invent:gossip
+                %metadata
+              !>  ^-  [identifier metadata]
+              [id got]
+              :*  %give
+                  %fact
+                  [/updates]~
+                  %near-update
+                  !>([%published id got])
+              ==
+          ==
         %-  emil
         :~  %+  invent:gossip
               %metadata
@@ -361,7 +374,7 @@
                 %fact
                 [/updates]~
                 %near-update
-                !>([%globbed id got])
+                !>([%installed id got])
             ==
         ==
       ==

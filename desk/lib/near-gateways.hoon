@@ -23,7 +23,9 @@
   |=  =update
   ^-  json
   ?-  -.update
-    %globbed
+    %installed
+  (id-data (my +.update ~))
+    %published
   (id-data (my +.update ~))
     %failed-glob
   (err-update +.update)

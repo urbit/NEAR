@@ -38,12 +38,21 @@ export function App() {
   useEffect(() => {
     subscribeToUpdates(update => {
       console.log('Update:', update)
-      if (update?.url) {
-        setSubEvent(update)
-        setShowFailedGlob(true)
-      } else {
-        setInstalled([...installed, update[0]])
-        setPublished([...published, update[0]])
+
+      switch (update.updateTag) {
+        case 'installed':
+          setInstalled([...installed, update.gateways[0]])
+          break
+        case 'published':
+          setPublished([...published, update.gateways[0]])
+          break
+        case 'failed-glob':
+          setSubEvent(update)
+          setShowFailedGlob(true)
+          break
+        default:
+          console.error('Unrecognized update', update)
+          break
       }
     })
   }, [subEvent])
