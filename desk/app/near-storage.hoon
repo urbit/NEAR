@@ -1,16 +1,22 @@
 /+  dbug, default-agent, verb
 |%
-+$  app   cord
-+$  key   cord
-+$  card  card:agent:gall
++$  key  cord
++$  val  cord
+::
++$  near-storage-action
+  $%  [%remove-item =key]
+      [%set-item =key =val]
+  ==
 ::
 +$  versioned-state
   $%  state-0
   ==
 +$  state-0
   $:  %0
-      store=(map app (map key json))
+      store=(map key val)
   ==
+::
++$  card  card:agent:gall
 --
 %+  verb  %.y
 %-  agent:dbug
@@ -40,10 +46,22 @@
   |=  [=mark =vase]
   ^-  (quip card _this)
   ?>  =(mark %noun)
-  =/  act  !<([%set-state json] vase)
-  :-  ~
-  %=  this
-    store  (~(put by (~(get by (~(get by store) app.act)) key.act)) val.act)
+  =/  act
+    !<(near-storage-action vase)
+  ?+  -.act
+    (on-poke:default mark vase)
+  ::
+      %set-item
+    :-  ~
+    %=  this
+      store  (~(put by store) [key.act val.act])
+    ==
+  ::
+      %remove-item
+    :-  ~
+    %=  this
+      store (~(del by store) key.act)
+    ==
   ==
 ::
 ++  on-peek
@@ -53,10 +71,10 @@
   ?+  pole
     (on-peek:default pole)
   ::
-      [%x =app =key ~]
+      [%x =key ~]
     ::
-    ::  .^(json %gx /=near-storage=/chess/ratings/json)
-    [~ ~ [%json !>((~(get by (~(get by store) app.pole)) key.pole))]]
+    ::  .^(json %gx /=near-storage=/chess-ratings/json)
+    [~ ~ [%json !>((~(get by store) key.pole))]]
   ==
 ::
 ++  on-watch  on-watch:default
