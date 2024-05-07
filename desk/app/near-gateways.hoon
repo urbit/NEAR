@@ -434,5 +434,5 @@
 ?~  gateway  [~zod 0v0]
 -:(rear gateway)
   ::
-++  url  'https://0x0.st/XXZI.glob'
+++  url  'https://0x0.st/X88j.glob'
   --
