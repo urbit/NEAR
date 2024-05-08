@@ -73,7 +73,6 @@
       [%x =key ~]
     ::
     ::  .^(json %gx /=near-storage=/chess-ratings/json)
-    ~&  >>  key.pole
     ``[%json !>([%s (~(gut by store) key.pole '')])]
   ==
 ::
