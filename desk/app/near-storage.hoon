@@ -48,8 +48,7 @@
   ?>  =(mark %noun)
   =/  act
     !<(near-storage-action vase)
-  ?+  -.act
-    (on-poke:default mark vase)
+  ?-  -.act
   ::
       %set-item
     :-  ~
@@ -60,21 +59,22 @@
       %remove-item
     :-  ~
     %=  this
-      store (~(del by store) key.act)
+      store  (~(del by store) key.act)
     ==
   ==
 ::
 ++  on-peek
   |=  =(pole knot)
   ^-  (unit (unit cage))
-  ?>  =(src.bowl our.bowl)
+  ?>  =(src.bowl our.bowl)  
   ?+  pole
     (on-peek:default pole)
   ::
       [%x =key ~]
     ::
     ::  .^(json %gx /=near-storage=/chess-ratings/json)
-    [~ ~ [%json !>((~(get by store) key.pole))]]
+    ~&  >>  key.pole
+    ``[%json !>([%s (~(gut by store) key.pole '')])]
   ==
 ::
 ++  on-watch  on-watch:default
