@@ -35,7 +35,7 @@
     |=  data=(map identifier metadata)
     ^-  json
     %-  en-vase:etch
-      !>  ^-  (list [identifier=[ship=@p id=@t] metadata=[name=@t url=@t about=@t thumbnail=@t]])
+      !>  ^-  (list [identifier=[ship=@p id=@t] metadata=[name=@t date=@da url=@t about=@t thumbnail=@t]])
       %+  turn  ~(tap by data)
       |=  arg=[=identifier =metadata]
       :-  :-  ship=ship.identifier.arg
@@ -100,6 +100,7 @@
     ++  to-metadata
     %-  ot
     :~  [%name so]
+        [%date (se %da)]
         [%url so]
         [%about so]
         [%thumbnail so]

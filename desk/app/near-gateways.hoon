@@ -96,7 +96,7 @@
   %-  emil
   :~
   [%pass /eyre/connect %arvo %e %connect [~ /apps/near] %near-gateways]
-  [%pass /publish-ui %agent [our.bowl %near-gateways] %poke %near-action !>([%publish 'ui-main' url '' ''])]
+  [%pass /publish-ui %agent [our.bowl %near-gateways] %poke %near-action !>([%publish 'ui-main' now.bowl url '' ''])]
   ==
 ::
 ++  load
@@ -122,10 +122,11 @@
     ?~  (find ~[metadata.act] ~(val by published))
       =/  id=identifier  [our.bowl (sham eny.bowl)]
       ~&  ['id' id]
+      ~&  ['date' now.bowl]
       ~&  ['glob url' url.metadata.act]
       ~&  ['about' about.metadata.act]
       ~&  ['thumbnail url' thumbnail.metadata.act]
-      ?:  =(metadata.act ['ui-main' url '' ''])
+      ?:  =(metadata.act ['ui-main' now.bowl url '' ''])
           =.  ui-glob  [id *glob]
           %+  get-gateway-glob
             metadata.act
@@ -259,6 +260,7 @@
   =/  id-path
   ;;  (list @ta)
     :~  name.data
+        now.bowl
         url.data
         (scot %p -.identifier)
         (scot %uv +.identifier)
@@ -343,11 +345,13 @@
         =/  path  ;;  (list @ta)  wire
         =/  got=metadata
           :*  (snag 2 path)
-              (snag 3 path)
+              (slav %da (snag 3 path))
+              (snag 4 path)
               +.result
-              (snag 6 path)
+              (snag 7 path)
           ==
-        ?:  =(got ['ui-main' url '' ''])
+        ~&  >>  got
+        ?:  =(got ['ui-main' now.bowl url '' ''])
           =.  ui-glob  [-.ui-glob glob]
           that
         ~&  >  'Gateway globbed successfully'

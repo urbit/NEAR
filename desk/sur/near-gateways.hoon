@@ -1,8 +1,15 @@
 |%
-+$  glob  (map path mime)
-+$  metadata  [name=@t url=@t about=@t thumbnail=@t]
-+$  identifier  [=ship id=@uvH]
++$  glob
+  $+  glob
+  (map path mime)
++$  metadata
+  $+  metadata
+  [name=@t date=@da url=@t about=@t thumbnail=@t]
++$  identifier
+  $+  identifier
+  [=ship id=@uvH]
 +$  gateway-action
+  $+  gateway-action
   $%  [%publish =metadata]
       [%install =identifier =metadata]
       [%delete =identifier]
@@ -10,6 +17,7 @@
   ==
 ::
 +$  scry
+  $+  scry
   $%  [%heard =(map identifier metadata)]
       [%published =(map identifier metadata)]
       [%installed =(list identifier)]
@@ -17,6 +25,7 @@
   ==
 ::
 +$  update
+  $+  update
   $%  [%installed =identifier =metadata]
       [%published =identifier =metadata]
       [%failed-glob date=@da url=@t]
