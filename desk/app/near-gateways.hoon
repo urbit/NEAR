@@ -350,7 +350,6 @@
               +.result
               (snag 7 path)
           ==
-        ~&  >>  got
         ?:  =(got ['ui-main' now.bowl url '' ''])
           =.  ui-glob  [-.ui-glob glob]
           that
