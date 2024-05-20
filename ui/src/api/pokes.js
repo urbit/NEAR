@@ -60,13 +60,10 @@ export function publishGateway(gateway) {
     'near-action',
     {
       publish: {
-        metadata: {
-          name: gateway.name || '',
-          url: gateway.url || '',
-          about: gateway.about || '',
-          thumbnail: gateway.thumbnail || ''
-        },
-        blob: ''
+        name: gateway.name || '',
+        url: gateway.url || '',
+        about: gateway.about || '',
+        thumbnail: gateway.thumbnail || ''
       }
     },
     () => {},

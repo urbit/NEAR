@@ -3,7 +3,7 @@
 +$  metadata  [name=@t url=@t about=@t thumbnail=@t]
 +$  identifier  [=ship id=@uvH]
 +$  gateway-action
-  $%  [%publish =metadata blob=@t]
+  $%  [%publish =metadata]
       [%install =identifier =metadata]
       [%delete =identifier]
       [%hide =identifier]
