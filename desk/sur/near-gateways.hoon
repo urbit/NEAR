@@ -2,6 +2,9 @@
 +$  glob
   $+  glob
   (map path mime)
++$  metadata-0
+  $+  metadata-0
+  [name=@t url=@t about=@t]
 +$  metadata
   $+  metadata
   [name=@t date=@da url=@t about=@t thumbnail=@t]

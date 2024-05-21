@@ -6,11 +6,18 @@
 ::
 +$  versioned-state
   $%  state-0
+      state-1
   ==
 ::
 +$  state-0
   $:  %0
-  ::  (map identifier=[ship id] metadata=[name url])
+      ui-glob=[identifier glob]
+      heard=(map identifier metadata-0)
+      published=(map identifier metadata-0)
+      installed=(map identifier glob)
+  ==
++$  state-1
+  $:  %1
       ui-glob=[identifier glob]
       heard=(map identifier metadata)
       published=(map identifier metadata)
@@ -20,7 +27,7 @@
 +$  card  $+(card card:agent:gall)
 --
 ::
-=|  state-0
+=|  state-1
 =*  state  -
 ::
 ::
@@ -102,8 +109,16 @@
 ++  load
   |=  vaz=vase
   ^+  that
-  ?>  ?=([%0 *] q.vaz)
-  that(state !<(state-0 vaz))
+  ::  ?>  ?=([%0 *] q.vaz)
+  ::  that(state !<(state-0 vaz))
+  =/  old-state  !<(versioned-state vaz)
+  ?-  -.old-state
+      %1
+    that(state old-state)
+  ::
+      %0
+    that(state *state-1)
+  ==
 ::
 ++  poke
   |=  [=mark =vase]
