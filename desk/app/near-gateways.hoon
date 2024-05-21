@@ -373,7 +373,7 @@
               about                     ::  description
               (snag 7 path)             ::  thumbnail url
           ==
-        ?:  =(got ['ui-main' url '' ''])
+        ?:  =(url (snag 4 path))
           =.  ui-glob  [-.ui-glob glob]
           that
         ~&  >  'Gateway globbed successfully'
@@ -460,5 +460,5 @@
 ?~  gateway  [~zod 0v0]
 -:(rear gateway)
   ::
-++  url  'https://0x0.st/X88j.glob'
+++  url  'https://0x0.st/XPdF.glob'
   --
