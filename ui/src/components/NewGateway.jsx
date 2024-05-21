@@ -5,7 +5,7 @@ import useGatewaysStore from '../state/gatewaysStore';
 
 function NewGateway() {
   const { setShowNew } = useUiStore()
-  const { newGateway, setNewGateway } = useGatewaysStore()
+  const { newGateway, setNewGateway, addToUploading } = useGatewaysStore()
 
   function handleTextContentChange(e) {
     newGateway[e.target.name] = e.target.value
@@ -14,6 +14,7 @@ function NewGateway() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     publishGateway(newGateway)
+    addToUploading(newGateway)
     setShowNew(false)
     setNewGateway({})
   }

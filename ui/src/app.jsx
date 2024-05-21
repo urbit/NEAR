@@ -16,7 +16,8 @@ export function App() {
     setInstalled,
     setPublished,
     addToInstalled,
-    addToPublished
+    addToPublished,
+    removeFromUploading
   } = useGatewaysStore()
   const {
     subEvent,
@@ -45,6 +46,7 @@ export function App() {
           break
         case 'published':
           addToPublished(update.gateways[0])
+          removeFromUploading(update.gateways[0])
           break
         case 'failed-glob':
           setSubEvent(update)
