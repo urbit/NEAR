@@ -21,8 +21,7 @@ const useGatewaysStore = create(set => ({
     uploading: state.uploading.filter(uploadingGateway => {
       return !(
         uploadingGateway.name === gateway.name &&
-        uploadingGateway.about === gateway.about &&
-        uploadingGateway.thumbnail === gateway.thumbnail
+        uploadingGateway.about === gateway.about
       )
     })
   })),
