@@ -38,7 +38,7 @@ export function App() {
 
   useEffect(() => {
     subscribeToUpdates(update => {
-      // console.log('Update:', update)
+      console.log('Update:', update)
       switch (update.updateTag) {
         case 'installed':
           appendToInstalled(update.gateways[0])
