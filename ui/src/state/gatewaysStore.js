@@ -5,13 +5,13 @@ const useGatewaysStore = create(set => ({
   setHeard: heard => set({ heard }),
   published: [],
   setPublished: published => set({ published }),
-  appendToPublished: gateway => set(state => ({ published: [...state.published, gateway] })),
+  addToPublished: gateway => set(state => ({
+    published: [gateway, ...state.published]
+  })),
   installed: [],
   setInstalled: installed => set({ installed }),
-  appendToInstalled: gateway => set(state => ({
-    installed: [...state.installed, gateway].sort((a, b) => {
-      return new Date(b.date) - new Date(a.date)
-    })
+  addToInstalled: gateway => set(state => ({
+    installed: [...state.installed, gateway]
   })),
   delGateway: {},
   setDelGateway: delGateway => set({ delGateway }),
