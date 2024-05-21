@@ -78,11 +78,10 @@
   ^-  gateway-action
   %.  json
   %-  of
-  :~
-  [%publish to-metadata]
-  [%install id-data]
-  [%delete to-identifier]
-  [%hide to-identifier]
+  :~  [%publish init-metadata]
+      [%install id-data]
+      [%delete to-identifier]
+      [%hide to-identifier]
   ==
   ::
     ++  id-data
@@ -101,6 +100,14 @@
     %-  ot
     :~  [%name so]
         [%date (se %da)]
+        [%url so]
+        [%about so]
+        [%thumbnail so]
+    ==
+  ::
+    ++  init-metadata
+    %-  ot
+    :~  [%name so]
         [%url so]
         [%about so]
         [%thumbnail so]

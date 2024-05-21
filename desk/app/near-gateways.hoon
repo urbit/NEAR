@@ -96,7 +96,7 @@
   %-  emil
   :~
   [%pass /eyre/connect %arvo %e %connect [~ /apps/near] %near-gateways]
-  [%pass /publish-ui %agent [our.bowl %near-gateways] %poke %near-action !>([%publish 'ui-main' now.bowl url '' ''])]
+  [%pass /publish-ui %agent [our.bowl %near-gateways] %poke %near-action !>([%publish 'ui-main' url '' ''])]
   ==
 ::
 ++  load
@@ -119,21 +119,28 @@
   ?-  -.act
     ::
       %publish
-    ?~  (find ~[metadata.act] ~(val by published))
+    ?~  (find ~[init-metadata.act] ~(val by published))
       =/  id=identifier  [our.bowl (sham eny.bowl)]
       ~&  ['id' id]
       ~&  ['date' now.bowl]
-      ~&  ['glob url' url.metadata.act]
-      ~&  ['about' about.metadata.act]
-      ~&  ['thumbnail url' thumbnail.metadata.act]
-      ?:  =(metadata.act ['ui-main' now.bowl url '' ''])
+      ~&  ['glob url' url.init-metadata.act]
+      ~&  ['about' about.init-metadata.act]
+      ~&  ['thumbnail url' thumbnail.init-metadata.act]
+      =/  new=metadata
+        :*  name.init-metadata.act
+            now.bowl
+            url.init-metadata.act
+            about.init-metadata.act
+            thumbnail.init-metadata.act
+        ==
+      ?:  =(init-metadata.act ['ui-main' url '' ''])
           =.  ui-glob  [id *glob]
           %+  get-gateway-glob
-            metadata.act
+            new
           id
-      =.  published  (~(put by published) id metadata.act)
+      =.  published  (~(put by published) id new)
       %+  get-gateway-glob
-        metadata.act
+        new
       id
     ~&  'Alredy globbed and installed'
     that
@@ -340,18 +347,18 @@
       ::
           %thread-done
         =/  result  !<([glob @t] q.cage.sign)
-        =/  glob    -.result
+        =*  glob    -.result
+        =*  about   +.result
         =/  id    (id-from-wire wire)
         =/  path  ;;  (list @ta)  wire
         =/  got=metadata
-          :*  (snag 2 path)
-              (slav %da (snag 3 path))
-              (snag 4 path)
-              +.result
-              (snag 7 path)
+          :*  (snag 2 path)             ::  name
+              (slav %da (snag 1 path))  ::  date
+              (snag 4 path)             ::  glob url
+              about                     ::  description
+              (snag 7 path)             ::  thumbnail url
           ==
-        ~&  >>  got
-        ?:  =(got ['ui-main' now.bowl url '' ''])
+        ?:  =(got ['ui-main' url '' ''])
           =.  ui-glob  [-.ui-glob glob]
           that
         ~&  >  'Gateway globbed successfully'
@@ -392,8 +399,8 @@
 ++  id-from-wire
 |=  =wire
 ^-  identifier
-:-  (slav %p (snag 4 wire))
-(slav %uv (snag 5 wire))
+:-  (slav %p (snag 5 wire))
+(slav %uv (snag 6 wire))
 ::
 ++  arvo
   |=  [=wire =sign-arvo]

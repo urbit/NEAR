@@ -5,12 +5,15 @@
 +$  metadata
   $+  metadata
   [name=@t date=@da url=@t about=@t thumbnail=@t]
++$  init-metadata
+  $+  init-metadata
+  [name=@t url=@t about=@t thumbnail=@t]
 +$  identifier
   $+  identifier
   [=ship id=@uvH]
 +$  gateway-action
   $+  gateway-action
-  $%  [%publish =metadata]
+  $%  [%publish =init-metadata]
       [%install =identifier =metadata]
       [%delete =identifier]
       [%hide =identifier]
