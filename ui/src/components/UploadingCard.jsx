@@ -20,7 +20,8 @@ function UploadingCard({ gateway }) {
             position: 'relative'
           }}
         >
-          <div
+          {gateway.thumbnail &&
+            <div
             style={{
               position: 'absolute',
               top: 0,
@@ -31,9 +32,9 @@ function UploadingCard({ gateway }) {
               opacity: 0.5,
               pointerEvents: 'none'
             }}
-          />
+          />}
           <img
-            src={gateway.thumbnail ? gateway.thumbnail : fallbackImage}
+            src={gateway.thumbnail || fallbackImage}
             alt={`${gateway.name} preview image`}
             className="gateway-image"
             style={{ display: 'block', width: '100%' }}

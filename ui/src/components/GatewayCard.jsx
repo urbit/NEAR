@@ -66,7 +66,7 @@ function GatewayCard({ gateway }) {
     >
       <div className='image-container'>
         <img
-          src={gateway.thumbnail ? gateway.thumbnail : fallbackImage }
+          src={gateway.thumbnail || fallbackImage }
           alt={`${gateway.name} preview image`}
           className='gateway-image'
         />

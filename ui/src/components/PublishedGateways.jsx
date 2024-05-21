@@ -12,8 +12,8 @@ function PublishedGateways() {
       <div className='published-gateways'>
         <div className='flex-box'>
           {Array.isArray(published) && published.length > 0 && <UploadCard />}
-          {Array.isArray(uploading) && uploading.map(gateway => {
-            return <UploadingCard key={gateway.id} gateway={gateway} />
+          {Array.isArray(uploading) && uploading.map((gateway, index) => {
+            return <UploadingCard key={index} gateway={gateway} />
           })}
           {Array.isArray(published) && published.map(gateway => {
             return <GatewayCard key={gateway.id} gateway={gateway} />
