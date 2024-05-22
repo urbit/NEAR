@@ -6,7 +6,9 @@ const useGatewaysStore = create(set => ({
   published: [],
   setPublished: published => set({ published }),
   addToPublished: gateway => set(state => ({
-    published: [gateway, ...state.published]
+    published: state.published.length === 0
+    ? [gateway]
+    : [gateway, ...state.published]
   })),
   installed: [],
   setInstalled: installed => set({ installed }),
