@@ -8,12 +8,17 @@ function HeardGateways() {
   const {
     installed,
     published,
+    uploading,
     newGateways,
     installedGateways,
     setHeard,
     setNewGateways,
     setInstalledGateways
   } = useGatewaysStore()
+
+  const hasPublishedOrIsUploading =
+    Array.isArray(published) && published.length > 0 ||
+    Array.isArray(uploading) && uploading.length > 0
 
   useEffect(() => {
     (async () => {
@@ -44,7 +49,7 @@ function HeardGateways() {
   if (newGateways.length === 0) {
     return (
       <>
-      {(!published || published.length === 0) && <><UploadCard /><br /></>}
+      {!hasPublishedOrIsUploading && <><UploadCard /><br /></>}
       <h2 className="headers" style={{ opacity: 0.5 }}>No heard gateways</h2>
       </>
     )
@@ -53,7 +58,7 @@ function HeardGateways() {
   return (
     <div>
       <div className='flex-box'>
-      {(!published || published.length === 0) && <UploadCard />}
+      {!hasPublishedOrIsUploading && <UploadCard />}
         {installedGateways.map((gateway) => (
           <GatewayCard
             key={gateway.id}

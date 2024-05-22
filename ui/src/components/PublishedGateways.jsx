@@ -7,11 +7,15 @@ import UploadingCard from './UploadingCard.jsx'
 function PublishedGateways() {
   const { published, uploading } = useGatewaysStore()
 
+  const hasPublishedOrIsUploading =
+    Array.isArray(published) && published.length > 0 ||
+    Array.isArray(uploading) && uploading.length > 0
+
   return (
     <div>
       <div className='published-gateways'>
         <div className='flex-box'>
-          {Array.isArray(published) && published.length > 0 && <UploadCard />}
+          {hasPublishedOrIsUploading && <UploadCard />}
           {Array.isArray(uploading) && uploading.map((gateway, index) => {
             return <UploadingCard key={index} gateway={gateway} />
           })}
