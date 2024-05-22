@@ -84,14 +84,14 @@ export function App() {
               <span>NEAR Gateways</span>
               <img src={helpIcon} alt="help icon" />
             </div>
-            {published &&
+            {Array.isArray(published) && published.length > 0 &&
             <>
               <h2 className='headers'>Published</h2>
               <div className='containerComponent'>
                 <PublishedGateways />
               </div>
             </>}
-            {published && <h2 className='headers'>Heard</h2>}
+            {Array.isArray(published) && published.length > 0 && <h2 className='headers'>Heard</h2>}
             <div className='containerComponent'>
               <HeardGateways />
             </div>
