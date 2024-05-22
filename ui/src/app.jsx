@@ -1,76 +1,107 @@
-import React, { useEffect, useState } from 'react';
-import Urbit from '@urbit/http-api';
+import React, { useEffect } from 'react';
 import HeardGateways from './components/HeardGateways.jsx'
 import PublishedGateways from './components/PublishedGateways.jsx'
 import DeleteGateway from './components/DeleteGateway.jsx'
-
+import InstallGatewayModal from './components/InstallGatewayModal.jsx'
+import useUiStore from './state/uiStore'
+import useGatewaysStore from './state/gatewaysStore.js';
+import { scryInstalled, scryPublished } from './api/scries.js';
+import { subscribeToUpdates } from './api/subscriptions.js';
+import NewGateway from './components/NewGateway.jsx';
+import helpIcon from './assets/help.svg'
 
 export function App() {
-  const [showDelete, setShowDelete] = useState(false)
-  const [delGateway, setDelGateway] = useState({})
-  const api = new Urbit('', '', 'near-handler');
-  api.ship = window.ship;
+  const {
+    published,
+    uploading,
+    setInstalled,
+    setPublished,
+    addToInstalled,
+    addToPublished,
+    removeFromUploading
+  } = useGatewaysStore()
+  const {
+    subEvent,
+    setSubEvent,
+    showNew,
+    showFailedGlob,
+    setShowFailedGlob,
+    showDelete,
+    installWindow
+  } = useUiStore()
 
+  const hasPublishedOrIsUploading =
+    Array.isArray(published) && published.length > 0 ||
+    Array.isArray(uploading) && uploading.length > 0
 
-
-  const [heard, setHeard] = useState([])
-  const [published, setPublished] = useState([])
-  const [installed, setInstalled] = useState([])
-  const [loading, setLoading] = useState(true)
-
-  async function scryToGateways() {
-    console.log('scrying to gateways')
-    let scryPublish = await api.scry({
-      app: 'near-gateways',
-      path: '/published'
-    })
-    console.log(scryPublish)
-    setPublished(scryPublish)
-    let scryInstalled = await api.scry({
-      app: 'near-gateways',
-      path: '/installed'
-    })
-    console.log(scryInstalled)
-    setInstalled(scryInstalled)
-    let scryHeard = await api.scry({ app: 'near-gateways', path: '/heard' })
-      setHeard(scryHeard)
-    setLoading(false)
-  }
- 
   useEffect(() => {
-  if (loading === true){
-    scryToGateways()
-  }
-}, [loading])
+    async function init() {
+      setInstalled(await scryInstalled())
+      setPublished(await scryPublished())
+    }
+    init()
+  }, [])
 
-async function deleteGateway(gateway) {
-  api.poke({
-      app: "near-gateways",
-      mark: "near-action",
-      json: {"delete": {"ship": gateway.ship, "id": gateway.id}},
-      onSuccess: () =>  {setDelGateway({}), window.location.reload(), setShowDelete(false)},
-      onError: () => setError('Failed to delete gateway')
-  }) 
-}
-
-
+  useEffect(() => {
+    subscribeToUpdates(update => {
+      console.log('Update:', update)
+      switch (update.updateTag) {
+        case 'installed':
+          addToInstalled(update.gateways[0])
+          break
+        case 'published':
+          addToPublished(update.gateways[0])
+          removeFromUploading(update.gateways[0])
+          break
+        case 'failed-glob':
+          setSubEvent(update)
+          setShowFailedGlob(true)
+          break
+        default:
+          console.error('Unrecognized update:', update)
+          break
+      }
+    })
+  }, [subEvent])
 
   return (
-    <div className='containerBody'>
-      <div className='containerMain'> 
-      {loading ? <div>loading</div> :
-        <div>
-          {showDelete ? 
-            <div><DeleteGateway gateway={delGateway} setShowDelete={setShowDelete} deleteGateway={deleteGateway}/></div> 
-          :<div></div>}
-        <h2 className='headers'>Published</h2>
-        <div className='containerComponent'>
-          <PublishedGateways published={published} loading={loading} api={api} showDelete={showDelete} setShowDelete={setShowDelete} delGateway={delGateway} setDelGateway={setDelGateway} deleteGateway={deleteGateway}/></div>
-          <h2 className='headers'>Heard</h2>
-          <div className='containerComponent'> 
-        <HeardGateways api={api} heard={heard} installed={installed} loading={loading} setShowDelete={setShowDelete} setDelGateway={setDelGateway}/></div>
+    <div className='container-body'>
+      <div className='container-main'>
+          <div>
+            {showFailedGlob &&
+              <div className='err-window'>
+                <h2>Couldn't find glob for gateway at {subEvent.url}</h2>
+                <button onClick={()=>{window.location.reload()}}>Reload</button>
+              </div>}
+            {showDelete &&
+              <div>
+                <DeleteGateway />
+              </div>}
+            {installWindow &&
+              <div>
+                <InstallGatewayModal />
+              </div>}
+            {showNew &&
+              <div>
+                <NewGateway />
+              </div>}
+            <div className="app-header">
+              <span>NEAR Gateways</span>
+              <img src={helpIcon} alt="help icon" />
+            </div>
+            {hasPublishedOrIsUploading &&
+            <>
+              <h2 className='headers'>Published</h2>
+              <div className='containerComponent'>
+                <PublishedGateways />
+              </div>
+            </>}
+            {hasPublishedOrIsUploading && <h2 className='headers'>Heard</h2>}
+            <div className='containerComponent'>
+              <HeardGateways />
+            </div>
+          </div>
       </div>
-  }</div>
     </div>
   )
 }

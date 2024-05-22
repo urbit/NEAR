@@ -1,51 +1,83 @@
-import React, {useState} from 'react'
+import React from 'react';
+import { publishGateway } from '../api/pokes';
+import useUiStore from '../state/uiStore';
+import useGatewaysStore from '../state/gatewaysStore';
 
-function NewGateway(props) {
-    const [newGateway, setNewGateway]= useState({})
-    const api = props.api
-    const setShowNew = props.setShowNew
-    function handleChange(e) {
-        newGateway[e.target.name] = e.target.value
-    }
+function NewGateway() {
+  const { setShowNew } = useUiStore()
+  const { newGateway, setNewGateway, addToUploading } = useGatewaysStore()
 
-    async function publishPoke(e) {
-        api.poke({
-            app: "near-gateways",
-            mark: "near-action",
-            json: {"publish": {"name":newGateway.name, "url":newGateway.url, "about":newGateway.about}},
-            onSuccess: () => setNewGateway({}),
-            onError: () => setError('Failed to fetch glob from ' + newGateway.url),
-          });
-    }
+  function handleTextContentChange(e) {
+    newGateway[e.target.name] = e.target.value
+  }
 
-    
-    return(
-        <div className='formContainer'>
-            <button className='closeNewBtn' onClick={()=>{setShowNew(false)}}>x</button>
-            <p className='paragraph'>
-                1. Glob gateway using -landscape!make-glob.
-            <br/>
-                2. Upload it to your s3 bucket.
-            <br/>
-                3. Publish gateway through form below.
-            <br/>
-            </p>
-            <form onSubmit={publishPoke} className='formStyle'>
-                <div className='nameForm'>
-                <h3 className='labelStyle'>name</h3>
-                <input name="name" value={newGateway.name} onChange={(e) => handleChange(e)} className='inputStyle' required="true" />
-                </div>
-                <div className='urlForm'>
-                <h3 className='labelStyle'>glob url</h3>
-                <input name="url" value={newGateway.url} onChange={(e) => handleChange(e)} className='inputStyle' required="true" />
-                </div>
-                <div className='aboutForm'>
-                <h3 className='labelStyle'>about</h3>
-                <textarea name="about" value={newGateway.url} onChange={(e) => handleChange(e)} className='inputStyle' maxlength="250" ></textarea>
-                </div>
-                <button type="submit" className='btnStyle'>publish gateway</button>
-            </form>
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    publishGateway(newGateway)
+    addToUploading(newGateway)
+    setShowNew(false)
+    setNewGateway({})
+  }
+
+  return (
+    <div className='form-container'>
+      <button className='close-new-btn' onClick={() => {setShowNew(false)}}>
+        <span>x</span>
+      </button>
+      <form className='form-style' onSubmit={handleSubmit}>
+        <div className='name-form'>
+          <h3 className='labelStyle'>Title</h3>
+          <input
+            name="name"
+            value={newGateway.name}
+            onChange={handleTextContentChange}
+            className='input-style'
+            required={true}
+            maxLength="30"
+          />
         </div>
-    )
+        <br />
+        <div className='url-form'>
+          <h3 className='labelStyle'>Glob URL</h3>
+          <input
+            name="url"
+            value={newGateway.url}
+            onChange={handleTextContentChange}
+            className='input-style'
+            required={true}
+          />
+        </div>
+        <br />
+        <div className='url-form'>
+          <h3 className='labelStyle'>Thumbnail URL</h3>
+          <input
+            name="thumbnail"
+            value={newGateway.thumbnail}
+            onChange={handleTextContentChange}
+            className='input-style'
+            required={false}
+          />
+        </div>
+        <br />
+        <div className='about-form'>
+          <h3 className='labelStyle'>Description</h3>
+          <textarea
+            name="about"
+            value={newGateway.about}
+            onChange={handleTextContentChange}
+            className='input-style'
+            maxLength="256"
+            required={true}
+          />
+        </div>
+        <div className="button-container">
+          <button type="submit" className='btn-style publish-gateway'>
+            Publish Gateway
+          </button>
+        </div>
+      </form>
+    </div>
+  );
 }
-export default NewGateway
+
+export default NewGateway;
