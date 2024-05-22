@@ -13,6 +13,7 @@ import helpIcon from './assets/help.svg'
 export function App() {
   const {
     published,
+    uploading,
     setInstalled,
     setPublished,
     addToInstalled,
@@ -28,6 +29,10 @@ export function App() {
     showDelete,
     installWindow
   } = useUiStore()
+
+  const hasPublishedOrIsUploading =
+    Array.isArray(published) && published.length > 0 ||
+    Array.isArray(uploading) && uploading.length > 0
 
   useEffect(() => {
     async function init() {
@@ -84,14 +89,14 @@ export function App() {
               <span>NEAR Gateways</span>
               <img src={helpIcon} alt="help icon" />
             </div>
-            {Array.isArray(published) && published.length > 0 &&
+            {hasPublishedOrIsUploading &&
             <>
               <h2 className='headers'>Published</h2>
               <div className='containerComponent'>
                 <PublishedGateways />
               </div>
             </>}
-            {Array.isArray(published) && published.length > 0 && <h2 className='headers'>Heard</h2>}
+            {hasPublishedOrIsUploading && <h2 className='headers'>Heard</h2>}
             <div className='containerComponent'>
               <HeardGateways />
             </div>
