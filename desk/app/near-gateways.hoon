@@ -103,7 +103,7 @@
   %-  emil
   :~
   [%pass /eyre/connect %arvo %e %connect [~ /apps/near] %near-gateways]
-  [%pass /publish-ui %agent [our.bowl %near-gateways] %poke %near-action !>([%publish 'ui-main' url '' ''])]
+  [%pass /publish-ui %agent [our.bowl %near-gateways] %poke %near-action !>([%publish 'ui-main' main-ui-url '' ''])]
   ==
 ::
 ++  load
@@ -148,7 +148,7 @@
             about.init-metadata.act
             thumbnail.init-metadata.act
         ==
-      ?:  =(init-metadata.act ['ui-main' url '' ''])
+      ?:  =(init-metadata.act ['ui-main' main-ui-url '' ''])
           =.  ui-glob  [id *glob]
           %+  get-gateway-glob
             new
@@ -373,7 +373,7 @@
               about                     ::  description
               (snag 7 path)             ::  thumbnail url
           ==
-        ?:  =(url (snag 4 path))
+        ?:  =(main-ui-url (snag 4 path))
           =.  ui-glob  [-.ui-glob glob]
           that
         ~&  >  'Gateway globbed successfully'
@@ -460,5 +460,5 @@
 ?~  gateway  [~zod 0v0]
 -:(rear gateway)
   ::
-++  url  'https://0x0.st/XPdF.glob'
+++  main-ui-url  'https://0x0.st/XPdF.glob'
   --
