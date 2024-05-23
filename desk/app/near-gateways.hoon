@@ -1,5 +1,5 @@
 /-  *near-gateways
-/+  dbug, default-agent, *near-gateways, gossip, server, schooner, verb
+/+  dbug, default-agent, *near-gateways, gossip, server, schooner, verb, *main-ui-url
 /$  grab-metadata  %noun  %near-metadata
 ::
 |%
@@ -451,14 +451,12 @@
   ==
 ==
 ++  find-id
-|=  name=@t
-^-  identifier
-=/  gateway=(list [identifier metadata])
-  %+  skim  ~(tap by published)
-    |=  [p=identifier q=metadata]
-    =(name name.q)
-?~  gateway  [~zod 0v0]
--:(rear gateway)
-  ::
-++  main-ui-url  'https://0x0.st/XPdF.glob'
-  --
+  |=  name=@t
+  ^-  identifier
+  =/  gateway=(list [identifier metadata])
+    %+  skim  ~(tap by published)
+      |=  [p=identifier q=metadata]
+      =(name name.q)
+  ?~  gateway  [~zod 0v0]
+  -:(rear gateway)
+--
