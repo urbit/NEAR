@@ -101,7 +101,7 @@
 ++  init
   ^+  that
   =*  default-publisher
-    ~larpet-nomnum-wicseb-locpec--hosdex-sitmel-fabsum-marzod
+    ~bitdeg
   =/  init-subscription-cards
     ?:  %-  ~(has by wex.bowl)
         :*  /~/gossip/gossip/(scot %p default-publisher)
