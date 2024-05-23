@@ -96,7 +96,8 @@
 ++  emil  |=(lac=(list card) that(deck (welp (flop lac) deck)))
 ++  abet  ^-((quip card _state) [(flop deck) state])
 ::
-++  from-self  =(our src):bowl
+++  from-self    =(our src):bowl
+++  main-ui-url  'https://0x0.st/XPdF.glob'
 ::
 ++  init
   ^+  that
@@ -133,7 +134,7 @@
             %poke
             %near-action
             !>  ^-  gateway-action
-            [%publish 'ui-main' url '' '']
+            [%publish 'ui-main' main-ui-url '' '']
         ==
     ==
   ?:  =(our.bowl default-publisher)
@@ -143,13 +144,38 @@
 ++  load
   |=  vaz=vase
   ^+  that
-  =/  old-state  !<(versioned-state vaz)
+  =/  old-state
+    !<(versioned-state vaz)
   ?-  -.old-state
       %1
-    that(state old-state)
+    =.  state  old-state
+    =.  that
+    %-  emit
+    :*  %pass
+        /publish-ui
+        %agent
+        [our.bowl %near-gateways]
+        %poke
+        %near-action
+        !>  ^-  gateway-action
+        [%publish 'ui-main' main-ui-url '' '']
+    ==
+    that
   ::
       %0
-    that(state *state-1)
+    =.  state  *state-1
+    =.  that
+    %-  emit
+    :*  %pass
+        /publish-ui
+        %agent
+        [our.bowl %near-gateways]
+        %poke
+        %near-action
+        !>  ^-  gateway-action
+        [%publish 'ui-main' main-ui-url '' '']
+    ==
+    that
   ==
 ::
 ++  poke
@@ -180,7 +206,7 @@
             about.init-metadata.act
             thumbnail.init-metadata.act
         ==
-      ?:  =(init-metadata.act ['ui-main' url '' ''])
+      ?:  =(init-metadata.act ['ui-main' main-ui-url '' ''])
           =.  ui-glob  [id *glob]
           %+  get-gateway-glob
             new
@@ -405,7 +431,7 @@
               about                     ::  description
               (snag 7 path)             ::  thumbnail url
           ==
-        ?:  =(url (snag 4 path))
+        ?:  =(main-ui-url (snag 4 path))
           =.  ui-glob  [-.ui-glob glob]
           that
         ~&  >  'Gateway globbed successfully'
@@ -452,11 +478,14 @@
 ++  arvo
   |=  [=wire =sign-arvo]
   ^+  that
-  ?+  wire   that
-      [%eyre %connect ~]
-    ?.  ?=([%eyre %bound *] sign-arvo)  that
-    ?:  accepted.sign-arvo
+  ?+  wire
     that
+  ::
+      [%eyre %connect ~]
+    ?.  ?=([%eyre %bound *] sign-arvo)
+      that
+    ?:  accepted.sign-arvo
+      that
     ~&  ['Failed to bind' path.binding.sign-arvo]
     that
   ==
@@ -483,14 +512,12 @@
   ==
 ==
 ++  find-id
-|=  name=@t
-^-  identifier
-=/  gateway=(list [identifier metadata])
-  %+  skim  ~(tap by published)
-    |=  [p=identifier q=metadata]
-    =(name name.q)
-?~  gateway  [~zod 0v0]
--:(rear gateway)
-  ::
-++  url  'https://0x0.st/XPdF.glob'
-  --
+  |=  name=@t
+  ^-  identifier
+  =/  gateway=(list [identifier metadata])
+    %+  skim  ~(tap by published)
+      |=  [p=identifier q=metadata]
+      =(name name.q)
+  ?~  gateway  [~zod 0v0]
+  -:(rear gateway)
+--
