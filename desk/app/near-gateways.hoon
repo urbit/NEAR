@@ -1,5 +1,5 @@
 /-  *near-gateways
-/+  dbug, default-agent, *near-gateways, gossip, server, schooner, verb, *main-ui-url
+/+  dbug, default-agent, *near-gateways, gossip, server, schooner, verb
 /$  grab-metadata  %noun  %near-metadata
 ::
 |%
@@ -96,28 +96,66 @@
 ++  emil  |=(lac=(list card) that(deck (welp (flop lac) deck)))
 ++  abet  ^-((quip card _state) [(flop deck) state])
 ::
-++  from-self  =(our src):bowl
+++  from-self    =(our src):bowl
+++  main-ui-url  'https://0x0.st/XPdF.glob'
 ::
 ++  init
   ^+  that
   %-  emil
-  :~
-  [%pass /eyre/connect %arvo %e %connect [~ /apps/near] %near-gateways]
-  [%pass /publish-ui %agent [our.bowl %near-gateways] %poke %near-action !>([%publish 'ui-main' main-ui-url '' ''])]
+  :~  :*  %pass
+          /eyre/connect
+          %arvo
+          %e
+          %connect
+          [~ /apps/near]
+          %near-gateways
+      ==
+      :*  %pass
+          /publish-ui
+          %agent
+          [our.bowl %near-gateways]
+          %poke
+          %near-action
+          !>  ^-  gateway-action
+          [%publish 'ui-main' main-ui-url '' '']
+      ==
   ==
 ::
 ++  load
   |=  vaz=vase
   ^+  that
-  ::  ?>  ?=([%0 *] q.vaz)
-  ::  that(state !<(state-0 vaz))
-  =/  old-state  !<(versioned-state vaz)
+  =/  old-state
+    !<(versioned-state vaz)
   ?-  -.old-state
       %1
-    that(state old-state)
+    =.  state  old-state
+    =.  that
+    %-  emit
+    :*  %pass
+        /publish-ui
+        %agent
+        [our.bowl %near-gateways]
+        %poke
+        %near-action
+        !>  ^-  gateway-action
+        [%publish 'ui-main' main-ui-url '' '']
+    ==
+    that
   ::
       %0
-    that(state *state-1)
+    =.  state  *state-1
+    =.  that
+    %-  emit
+    :*  %pass
+        /publish-ui
+        %agent
+        [our.bowl %near-gateways]
+        %poke
+        %near-action
+        !>  ^-  gateway-action
+        [%publish 'ui-main' main-ui-url '' '']
+    ==
+    that
   ==
 ::
 ++  poke
@@ -420,11 +458,14 @@
 ++  arvo
   |=  [=wire =sign-arvo]
   ^+  that
-  ?+  wire   that
-      [%eyre %connect ~]
-    ?.  ?=([%eyre %bound *] sign-arvo)  that
-    ?:  accepted.sign-arvo
+  ?+  wire
     that
+  ::
+      [%eyre %connect ~]
+    ?.  ?=([%eyre %bound *] sign-arvo)
+      that
+    ?:  accepted.sign-arvo
+      that
     ~&  ['Failed to bind' path.binding.sign-arvo]
     that
   ==
