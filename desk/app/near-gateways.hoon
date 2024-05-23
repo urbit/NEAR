@@ -100,17 +100,49 @@
 ::
 ++  init
   ^+  that
-  %-  emil
-  :~
-  [%pass /eyre/connect %arvo %e %connect [~ /apps/near] %near-gateways]
-  [%pass /publish-ui %agent [our.bowl %near-gateways] %poke %near-action !>([%publish 'ui-main' url '' ''])]
-  ==
+  =*  default-publisher
+    ~bitdeg
+  =/  init-subscription-cards
+    ?:  %-  ~(has by wex.bowl)
+        :*  /~/gossip/gossip/(scot %p default-publisher)
+            default-publisher
+            %near-gateways
+        ==
+      ~
+    :~  :*  %pass
+            /~/gossip/gossip/(scot %p default-publisher)
+            %agent
+            [default-publisher %near-gateways]
+            %watch
+            /~/gossip/gossip
+        ==
+    ==
+  =/  init-ui-cards
+    :~  :*  %pass
+            /eyre/connect
+            %arvo
+            %e
+            %connect
+            [~ /apps/near]
+            %near-gateways
+        ==
+        :*  %pass
+            /publish-ui
+            %agent
+            [our.bowl %near-gateways]
+            %poke
+            %near-action
+            !>  ^-  gateway-action
+            [%publish 'ui-main' url '' '']
+        ==
+    ==
+  ?:  =(our.bowl default-publisher)
+    (emil init-ui-cards)
+  (emil (welp init-ui-cards init-subscription-cards))
 ::
 ++  load
   |=  vaz=vase
   ^+  that
-  ::  ?>  ?=([%0 *] q.vaz)
-  ::  that(state !<(state-0 vaz))
   =/  old-state  !<(versioned-state vaz)
   ?-  -.old-state
       %1
