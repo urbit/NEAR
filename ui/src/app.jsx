@@ -34,13 +34,16 @@ export function App() {
     Array.isArray(published) && published.length > 0 ||
     Array.isArray(uploading) && uploading.length > 0
 
-  useEffect(() => {
-    async function init() {
-      setInstalled(await scryInstalled())
-      setPublished(await scryPublished())
-    }
-    init()
-  }, [])
+    useEffect(() => {
+      async function init() {
+        const initInstalled = await scryInstalled();
+        const initPublished = await scryPublished();
+
+        setInstalled(initInstalled === null ? [] : initInstalled)
+        setPublished(initPublished === null ? [] : initPublished)
+      }
+      init();
+    }, []);
 
   useEffect(() => {
     subscribeToUpdates(update => {

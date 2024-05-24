@@ -85,12 +85,12 @@ function GatewayCard({ gateway }) {
 
         {isInstalled && !isPublished &&
         <button onClick={handleDeleteClick}>
-          Delete
+          Uninstall
         </button>}
 
         {!isInstalled && !isPublished &&
         <button onClick={handleHideClick}>
-          Hide
+          Delete
         </button>}
 
         {/* 2nd button */}
