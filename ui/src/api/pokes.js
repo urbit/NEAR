@@ -44,8 +44,9 @@ export function installGateway(gateway) {
         ship: gateway.ship
       },
       metadata: {
-        url: gateway.url,
         name: gateway.name,
+        date: gateway.date,
+        url: gateway.url,
         about: gateway.about,
         thumbnail: gateway.thumbnail
       }

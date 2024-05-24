@@ -7,11 +7,12 @@ function DeleteGateway() {
   const { setShowDelete } = useUiStore()
   const { delGateway, installed, published, setDelGateway, setInstalled, setPublished } = useGatewaysStore()
 
-  const isPublished = published.some(publishedGateway => {
-    return publishedGateway.id === delGateway.id
-  })
-  const buttonText = isPublished ? 'Unpublish' : 'Delete'
-  const promptText = `Are you sure you want to ${isPublished ? 'unpublish' : 'delete'} ${delGateway.name}?`
+  const isPublished = Array.isArray(published) && published.length > 0 &&
+    published.some(publishedGateway => {
+      return publishedGateway.id === delGateway.id
+    })
+  const buttonText = isPublished ? 'Unpublish' : 'Uninstall'
+  const promptText = `Are you sure you want to ${isPublished ? 'unpublish' : 'uninstall'} ${delGateway.name}?`
 
   return(
       <div className="delete-gateway">
@@ -23,9 +24,7 @@ function DeleteGateway() {
           deleteGateway(
             delGateway,
             () => {
-            if (published.some(publishedGateway => {
-              return publishedGateway.id === delGateway.id
-            })) {
+            if (isPublished) {
               setPublished(published.filter(publishedGateway => {
                 return publishedGateway.id !== delGateway.id
               }))
