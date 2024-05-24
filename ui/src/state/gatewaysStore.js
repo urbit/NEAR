@@ -13,11 +13,15 @@ const useGatewaysStore = create(set => ({
   installed: [],
   setInstalled: installed => set({ installed }),
   addToInstalled: gateway => set(state => ({
-    installed: [...state.installed, gateway]
+    installed: state.installed.length === 0
+    ? [gateway]
+    : [...state.installed, gateway]
   })),
   uploading: [],
   addToUploading: gateway => set(state => ({
-    uploading: [gateway, ...state.uploading]
+    uploading: state.uploading.length === 0
+    ? [gateway]
+    : [gateway, ...state.uploading]
   })),
   removeFromUploading: gateway => set(state => ({
     uploading: state.uploading.filter(uploadingGateway => {
