@@ -1,13 +1,6 @@
+/-  *near-storage
 /+  dbug, default-agent, verb
 |%
-+$  key  cord
-+$  val  cord
-::
-+$  near-storage-action
-  $%  [%remove-item =key]
-      [%set-item =key =val]
-  ==
-::
 +$  versioned-state
   $%  state-0
   ==
@@ -45,9 +38,9 @@
 ++  on-poke
   |=  [=mark =vase]
   ^-  (quip card _this)
-  ?>  =(mark %noun)
+  ?>  =(mark %near-store)
   =/  act
-    !<(near-storage-action vase)
+    !<(storage-action vase)
   ?-  -.act
   ::
       %set-item
@@ -66,7 +59,7 @@
 ++  on-peek
   |=  =(pole knot)
   ^-  (unit (unit cage))
-  ?>  =(src.bowl our.bowl)  
+  ?>  =(src.bowl our.bowl)
   ?+  pole
     (on-peek:default pole)
   ::
