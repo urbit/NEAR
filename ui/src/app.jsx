@@ -90,7 +90,13 @@ export function App() {
               </div>}
             <div className="app-header">
               <span>NEAR Gateways</span>
-              <img src={helpIcon} alt="help icon" />
+              <a
+                href="https://docs.urbit.org/tools/near-gateways"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img src={helpIcon} alt="help icon" />
+              </a>
             </div>
             {hasPublishedOrIsUploading &&
             <>
