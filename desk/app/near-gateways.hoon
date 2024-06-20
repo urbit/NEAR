@@ -97,7 +97,7 @@
 ++  abet  ^-((quip card _state) [(flop deck) state])
 ::
 ++  from-self    =(our src):bowl
-++  main-ui-url  'https://0x0.st/XPdF.glob'
+++  main-ui-url  'https://storage.googleapis.com/media.urbit.org/apps/near-1.glob'
 ::
 ++  init
   ^+  that
